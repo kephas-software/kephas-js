@@ -1,2 +1,3 @@
-# kephas-webapp
-The web application implementation of Kephas Framework
+# Kephas Framework for Web Applications
+
+The web application implementation of Kephas Framework.

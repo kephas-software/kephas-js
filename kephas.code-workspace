@@ -5,6 +5,9 @@
 		},
 		{
 			"path": "kephas.reflection"
+		},
+		{
+			"path": "kephas.angular"
 		}
 	],
 	"settings": {

@@ -1,3 +1,5 @@
+import { Sealed } from "./sealed";
+
 /**
  * A deferrable value.
  *
@@ -5,6 +7,7 @@
  * @class Deferrable
  * @template T
  */
+@Sealed
 export class Deferrable<T> {
     /**
      * Gets the promise of this deferrable.

@@ -2,6 +2,9 @@
 	"folders": [
 		{
 			"path": "kephas.core"
+		},
+		{
+			"path": "kephas.reflection"
 		}
 	],
 	"settings": {

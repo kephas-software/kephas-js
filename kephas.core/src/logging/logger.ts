@@ -1,3 +1,7 @@
+import { SingletonAppServiceContract } from "../services/appServiceContract";
+import { AppService } from "../services/appService";
+import { Priority } from "../services/composition/appServiceMetadata";
+
 /**
  * Enumerates the logging levels.
  * 
@@ -40,9 +44,11 @@ export enum LogLevel {
  * 
  * @class Logger
  */
+@AppService({ overridePriority: Priority.Low })
+@SingletonAppServiceContract()
 export class Logger {
     private _logLevel: LogLevel = LogLevel.Info;
-    
+
     /**
      * Logs the information at the provided level.
      * 
@@ -77,7 +83,7 @@ export class Logger {
                 default:
                     break;
             }
-        }        
+        }
     }
 
     /**
@@ -88,7 +94,7 @@ export class Logger {
     isEnabled(level: LogLevel): boolean {
         return level <= this._logLevel;
     }
-    
+
     /**
      * Sets the logging level to the indicated one.
      * 
@@ -102,7 +108,7 @@ export class Logger {
 
         this._logLevel = level;
     }
-    
+
     /**
      * Logs the event at the fatal level.
      * 

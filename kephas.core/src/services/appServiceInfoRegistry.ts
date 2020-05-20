@@ -3,6 +3,7 @@ import { AppServiceInfo } from "./appServiceInfo";
 import { ServiceError } from "./serviceError";
 import { Requires } from "../diagnostics/contracts/requires";
 import { AppServiceMetadata } from "./composition/appServiceMetadata";
+import { AppServiceContract, SingletonAppServiceContract } from "./appServiceContract";
 
 /**
  * Registry for the application service information.
@@ -55,10 +56,11 @@ export class AppServiceInfoRegistry {
     * @param {AppServiceInfo} appServiceInfo The service information.
     * @memberof AppServiceInfoRegistry
     */
-    public registerServiceContract(ctor: Function, appServiceInfo: AppServiceInfo) {
+    public registerServiceContract(ctor: Function, appServiceInfo: AppServiceInfo): this {
         Requires.HasValue(ctor, 'ctor');
         ctor[AppServiceInfoRegistry._serviceContractKey] = appServiceInfo;
         this._serviceContracts.push(appServiceInfo);
+        return this;
     }
 
     /**
@@ -69,11 +71,11 @@ export class AppServiceInfoRegistry {
     * @param {AppServiceMetadata} [metadata] Optional. The service metadata.
     * @memberof AppServiceInfoRegistry
     */
-    public registerServiceType(ctor: Function, metadata?: AppServiceMetadata) {
+    public registerService(ctor: Function, metadata?: AppServiceMetadata): this {
         Requires.HasValue(ctor, 'ctor');
         let appServiceInfo = this._getContractOfService(ctor);
         if (!appServiceInfo) {
-            throw new ServiceError(`The service contract for '${ctor.name}' could not be identified. Check that the service or one of its bases is decorated as AppServiceContract or SingletonAppServiceContract.`);
+            throw new ServiceError(`The service contract for '${ctor.name}' could not be identified. Check that the service or one of its bases is decorated as ${AppServiceContract.name} or ${SingletonAppServiceContract.name}.`);
         }
 
         metadata = metadata ?? new AppServiceMetadata();
@@ -90,6 +92,8 @@ export class AppServiceInfoRegistry {
             ctor[AppServiceInfoRegistry._serviceMetadataKey] = metadata;
             this._services.push(metadata);
         }
+
+        return this;
     }
 
     /**

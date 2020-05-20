@@ -1,5 +1,6 @@
-export * from './deferrable';
 export * from './argumentError';
+export * from './deferrable';
+export * from './sealed';
 export * from './diagnostics/contracts/requires';
 export * from './logging/logger';
 export * from './serialization/serializable';

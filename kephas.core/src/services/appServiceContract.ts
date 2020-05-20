@@ -8,7 +8,14 @@ import { AppServiceInfoRegistry } from "./appServiceInfoRegistry";
  * @param {boolean} [allowMultiple=false] Indicates whether multiple services may be registered with the same contract or not.
  * @param {Function} [contractType] Indicates the contract type, if different from the decorated type.
  */
-export function AppServiceContract(allowMultiple: boolean = false, contractType?: Function) {
+export function AppServiceContract(
+    {
+        allowMultiple = false,
+        contractType
+    }: {
+        allowMultiple?: boolean;
+        contractType?: Function;
+    } = {}) {
     return (ctor: Function) => {
         const appServiceInfo = new AppServiceInfo({ contractType: contractType ?? ctor, allowMultiple, lifetime: AppServiceLifetime.Transient });
         AppServiceInfoRegistry.Instance.registerServiceContract(ctor, appServiceInfo);
@@ -22,7 +29,14 @@ export function AppServiceContract(allowMultiple: boolean = false, contractType?
  * @param {boolean} [allowMultiple=false] Indicates whether multiple services may be registered with the same contract or not.
  * @param {Function} [contractType] Indicates the contract type, if different from the decorated type.
  */
-export function SingletonAppServiceContract(allowMultiple: boolean = false, contractType?: Function) {
+export function SingletonAppServiceContract(
+    {
+        allowMultiple = false,
+        contractType
+    }: {
+        allowMultiple?: boolean;
+        contractType?: Function;
+    } = {}) {
     return (ctor: Function) => {
         const appServiceInfo = new AppServiceInfo({ contractType: contractType ?? ctor, allowMultiple, lifetime: AppServiceLifetime.Singleton });
         AppServiceInfoRegistry.Instance.registerServiceContract(ctor, appServiceInfo);

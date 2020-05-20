@@ -1,4 +1,4 @@
-import { LogLevel, Logger } from '../../src/logging/logger';
+import { LogLevel, Logger } from './logger';
 import { expect } from 'chai';
 import 'mocha';
 
@@ -11,7 +11,7 @@ class TestLogger extends Logger {
     }
 }
 
-describe('Fatal logging', () => {
+describe('Logger.fatal', () => {
     it('should set log level to fatal', () => {
         let logger = new TestLogger();
         logger.fatal('message');

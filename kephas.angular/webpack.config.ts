@@ -11,7 +11,8 @@ const config: webpack.Configuration = {
         filename: '[name].js',
         libraryTarget: 'umd',
         library: '@kephas/angular',
-        umdNamedDefine: true
+        umdNamedDefine: true,
+        globalObject: 'this'
     },
     mode: "production",
     devtool: 'source-map',

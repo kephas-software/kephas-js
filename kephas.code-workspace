@@ -8,6 +8,9 @@
 		},
 		{
 			"path": "kephas.angular"
+		},
+		{
+			"path": "kephas.ui"
 		}
 	],
 	"settings": {

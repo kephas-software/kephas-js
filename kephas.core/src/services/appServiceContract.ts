@@ -10,7 +10,7 @@ import { AppServiceInfoRegistry } from "./appServiceInfoRegistry";
  */
 export function AppServiceContract(allowMultiple: boolean = false, contractType?: Function) {
     return (ctor: Function) => {
-        const appServiceInfo = new AppServiceInfo(contractType ?? ctor, allowMultiple, AppServiceLifetime.Transient);
+        const appServiceInfo = new AppServiceInfo({ contractType: contractType ?? ctor, allowMultiple, lifetime: AppServiceLifetime.Transient });
         AppServiceInfoRegistry.Instance.registerServiceContract(ctor, appServiceInfo);
     };
 }
@@ -24,7 +24,7 @@ export function AppServiceContract(allowMultiple: boolean = false, contractType?
  */
 export function SingletonAppServiceContract(allowMultiple: boolean = false, contractType?: Function) {
     return (ctor: Function) => {
-        const appServiceInfo = new AppServiceInfo(contractType ?? ctor, allowMultiple, AppServiceLifetime.Singleton);
+        const appServiceInfo = new AppServiceInfo({ contractType: contractType ?? ctor, allowMultiple, lifetime: AppServiceLifetime.Singleton });
         AppServiceInfoRegistry.Instance.registerServiceContract(ctor, appServiceInfo);
     };
 }

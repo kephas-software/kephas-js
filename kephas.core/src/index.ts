@@ -3,6 +3,7 @@ export * from './argumentError';
 export * from './diagnostics/contracts/requires';
 export * from './logging/logger';
 export * from './serialization/serializable';
+export * from './services/composition/appServiceMetadata';
 export * from './services/appService';
 export * from './services/appServiceContract';
 export * from './services/appServiceInfo';

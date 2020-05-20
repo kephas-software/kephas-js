@@ -1,7 +1,8 @@
 {
   "name": "@kephas/reflection",
-  "version": "0.1.0-dev.5",
+  "version": "0.1.0",
   "description": "Provides reflection capabilities, like TypeInfo.",
+  "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -10,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/quartz-software/kephas/tree/master/src-js/kephas.reflection"
+    "url": "https://github.com/kephas-software/kephas-js/tree/master/kephas.reflection"
   },
   "keywords": [
     "kephas",
@@ -25,14 +26,15 @@
     "dist/"
   ],
   "dependencies": {
-    "@kephas/core": "^0.1.0-dev.5"
+    "@kephas/core": "^0.1.0"
   },
   "devDependencies": {
-    "@types/chai": "^4.1.3",
-    "@types/mocha": "^5.2.0",
-    "@types/webpack": "^4.1.4",
+    "@types/chai": "^4.2.11",
+    "@types/mocha": "^7.0.2",
+    "@types/webpack": "^4.41.13",
     "chai": "^4.2.0",
     "mocha": "^7.1.2",
+    "reify": "^0.20.12",
     "ts-node": "^8.10.1",
     "typescript": "^3.9.2",
     "webpack": "^4.43.0",

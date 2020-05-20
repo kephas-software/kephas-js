@@ -1,9 +1,9 @@
-import { TypeInfo } from '../src/typeInfo';
+import { TypeInfo } from './typeInfo';
 import { expect } from 'chai';
 import 'mocha';
 
-describe('Name is set', () => {
-    it('should set log level to fatal', () => {
+describe('TypeInfo.constructor', () => {
+    it('should set the name and full name', () => {
         let typeInfo = new TypeInfo({ name: "MyType", properties: [] });
         expect(typeInfo.name).to.equal('MyType');
         expect(typeInfo.fullName).to.equal('MyType');

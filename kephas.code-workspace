@@ -11,6 +11,9 @@
 		},
 		{
 			"path": "kephas.ui"
+		},
+		{
+			"path": "kephas.messaging"
 		}
 	],
 	"settings": {

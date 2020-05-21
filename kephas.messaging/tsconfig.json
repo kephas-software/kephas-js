@@ -1,0 +1,17 @@
+{
+    "extends": "../tsconfig.json",
+    "compilerOptions": {
+        "experimentalDecorators": true,
+        "downlevelIteration": true,
+        "baseUrl": "."
+    },
+    "include": [
+        "src/**/*",
+        "*.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist",
+        "**/*.spec.ts"
+    ]
+}

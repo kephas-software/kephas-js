@@ -1,4 +1,5 @@
 import { Requires } from "../diagnostics/contracts/requires";
+import { Type } from "../type";
 
 /**
  * Base class for serializable objects.
@@ -29,12 +30,13 @@ export abstract class Serializable {
      * Sets the type name for serialization/deserialization purposes.
      * 
      * @static
-     * @param {Function} type The type where the type name should be set.
+     * @template T
+     * @param {Type<T>} type The type where the type name should be set.
      * @param {string} typeName The type name.
      * 
      * @memberOf Serializable
      */
-    static setTypeName(type: Function, typeName: string): void {
+    static setTypeName<T>(type: Type<T>, typeName: string): void {
         (<any>type)[Serializable._typeNameProperty] = typeName;
     }
 
@@ -47,7 +49,7 @@ export abstract class Serializable {
      * 
      * @memberOf Serializable
      */
-    static getTypeName(typeOrInstance: {} | Function): string | undefined | null {
+    static getTypeName<T>(typeOrInstance: {} | Type<T>): string | undefined | null {
         return (<any>typeOrInstance)[Serializable._typeNameProperty];
     }
 
@@ -59,7 +61,7 @@ export abstract class Serializable {
      * @returns {*} The object containing the JSON representation.
      * @memberof Serializable
      */
-    public static getJSON(obj: object): any {
+    public static getJSON(obj: object): {} {
         let json: object = {};
 
         let type = obj.constructor;

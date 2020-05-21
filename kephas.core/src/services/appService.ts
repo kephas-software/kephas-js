@@ -1,5 +1,6 @@
 import { AppServiceInfoRegistry } from "./appServiceInfoRegistry";
 import { AppServiceMetadata, Priority } from "./composition/appServiceMetadata";
+import { Type } from "../type";
 
 /**
  * Marks a class as being an application service. Its closest base registered as service contract is
@@ -15,13 +16,15 @@ export function AppService(
     {
         overridePriority = Priority.Normal,
         processingPriority = Priority.Normal,
-        serviceName
+        serviceName,
+        registry
     }: {
         overridePriority?: number | Priority;
         processingPriority?: number | Priority;
         serviceName?: string;
+        registry?: AppServiceInfoRegistry;
     } = {}) {
-    return (ctor: Function) => {
-        AppServiceInfoRegistry.Instance.registerService(ctor, new AppServiceMetadata({ overridePriority, processingPriority, serviceName, implementationType: ctor }));
+    return (type: Type<any>) => {
+        (registry ?? AppServiceInfoRegistry.Instance).registerService(type, new AppServiceMetadata({ overridePriority, processingPriority, serviceName, serviceType: type }));
     };
 }

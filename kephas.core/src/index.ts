@@ -10,4 +10,5 @@ export * from './services/appServiceContract';
 export * from './services/appServiceInfo';
 export * from './services/appServiceInfoRegistry';
 export * from './services/serviceError';
+export * from './type';
 

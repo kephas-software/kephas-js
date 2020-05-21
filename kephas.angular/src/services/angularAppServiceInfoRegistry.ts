@@ -1,4 +1,5 @@
 import { AppServiceInfoRegistry, Requires } from "@kephas/core";
+import {Type} from "@angular/core";
 
 export class AngularAppServiceInfoRegistry {
 
@@ -27,5 +28,6 @@ export class AngularAppServiceInfoRegistry {
      */
     public getRootProviders() {
         // TODO
+        let x: Type = null;
     }
 }

@@ -1,4 +1,5 @@
 import { AppServiceInfo } from "../appServiceInfo";
+import { Type } from "../../type";
 
 /**
  * Enumerates the priority values.
@@ -51,7 +52,7 @@ export enum Priority {
  * @export
  * @class AppServiceMetadata
  */
-export class AppServiceMetadata {
+export class AppServiceMetadata<T> {
     /**
      * Gets the override priority.
      *
@@ -77,12 +78,12 @@ export class AppServiceMetadata {
     public readonly serviceName?: string;
 
     /**
-     * Gets the implementation type.
+     * Gets the service implementation type.
      *
      * @type {Function}
      * @memberof AppServiceMetadata
      */
-    public implementationType?: Function;
+    public serviceType?: Type<T>;
 
     /**
      * Gets the application service contract.
@@ -98,7 +99,7 @@ export class AppServiceMetadata {
      * @param {number|Priority} [overridePriority=Priority.Normal] Optional. The override priority.
      * @param {number|Priority} [processingPriority=Priority.Normal] Optional. The processing priority.
      * @param {string} [serviceName] Optional. The service name.
-     * @param {Function} [implementationType] Optional. The implementation type.
+     * @param {Type<T>} [serviceType] Optional. The service implementation type.
      * @memberof AppServiceMetadata
      */
     constructor(
@@ -106,16 +107,16 @@ export class AppServiceMetadata {
             overridePriority = Priority.Normal,
             processingPriority = Priority.Normal,
             serviceName,
-            implementationType
+            serviceType
         }: {
             overridePriority?: number | Priority;
             processingPriority?: number | Priority;
             serviceName?: string;
-            implementationType?: Function;
+            serviceType?: Type<T>;
         } = {}) {
         this.overridePriority = overridePriority;
         this.processingPriority = processingPriority;
         this.serviceName = serviceName;
-        this.implementationType = implementationType;
+        this.serviceType = serviceType;
     }
 }

@@ -1,24 +1,27 @@
 import { AppServiceInfo, AppServiceLifetime } from "./appServiceInfo";
 import { AppServiceInfoRegistry } from "./appServiceInfoRegistry";
+import { Type } from "../type";
 
 /**
  * Marks a class as being contract for transient application services.
  *
  * @export
  * @param {boolean} [allowMultiple=false] Indicates whether multiple services may be registered with the same contract or not.
- * @param {Function} [contractType] Indicates the contract type, if different from the decorated type.
+ * @param {Type<any>} [contractType] Indicates the contract type, if different from the decorated type.
  */
 export function AppServiceContract(
     {
         allowMultiple = false,
-        contractType
+        contractType,
+        registry
     }: {
         allowMultiple?: boolean;
-        contractType?: Function;
+        contractType?: Type<any>;
+        registry?: AppServiceInfoRegistry;
     } = {}) {
-    return (ctor: Function) => {
-        const appServiceInfo = new AppServiceInfo({ contractType: contractType ?? ctor, allowMultiple, lifetime: AppServiceLifetime.Transient });
-        AppServiceInfoRegistry.Instance.registerServiceContract(ctor, appServiceInfo);
+    return (type: Type<any>) => {
+        const appServiceInfo = new AppServiceInfo({ contractType: contractType ?? type, allowMultiple, lifetime: AppServiceLifetime.Transient });
+        (registry ?? AppServiceInfoRegistry.Instance).registerServiceContract(type, appServiceInfo);
     };
 }
 
@@ -27,18 +30,20 @@ export function AppServiceContract(
  *
  * @export
  * @param {boolean} [allowMultiple=false] Indicates whether multiple services may be registered with the same contract or not.
- * @param {Function} [contractType] Indicates the contract type, if different from the decorated type.
+ * @param {Type<any>} [contractType] Indicates the contract type, if different from the decorated type.
  */
 export function SingletonAppServiceContract(
     {
         allowMultiple = false,
-        contractType
+        contractType,
+        registry
     }: {
         allowMultiple?: boolean;
-        contractType?: Function;
+        contractType?: Type<any>;
+        registry?: AppServiceInfoRegistry;
     } = {}) {
-    return (ctor: Function) => {
-        const appServiceInfo = new AppServiceInfo({ contractType: contractType ?? ctor, allowMultiple, lifetime: AppServiceLifetime.Singleton });
-        AppServiceInfoRegistry.Instance.registerServiceContract(ctor, appServiceInfo);
+    return (type: Type<any>) => {
+        const appServiceInfo = new AppServiceInfo({ contractType: contractType ?? type, allowMultiple, lifetime: AppServiceLifetime.Singleton });
+        (registry ?? AppServiceInfoRegistry.Instance).registerServiceContract(type, appServiceInfo);
     };
 }

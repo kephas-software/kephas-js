@@ -1,12 +1,12 @@
 {
   "name": "@kephas/reflection",
-  "version": "0.1.0",
-  "description": "Provides reflection capabilities, like TypeInfo.",
+  "version": "0.1.1",
+  "description": "Provides reflection capabilities, like TypeInfoRegistry, ITypeInfo, and IProperty.",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "test": "mocha -r ts-node/register src/**/*.spec.ts",
+    "test": "mocha -r ts-node/register --require reify src/**/*.spec.ts",
     "build": "webpack"
   },
   "repository": {
@@ -26,7 +26,7 @@
     "dist/"
   ],
   "dependencies": {
-    "@kephas/core": "^0.1.0"
+    "@kephas/core": "^0.1.1"
   },
   "devDependencies": {
     "@types/chai": "^4.2.11",

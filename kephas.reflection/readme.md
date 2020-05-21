@@ -1,3 +1,3 @@
 # Kephas.Reflection
 
-Provides reflection capabilities, like TypeInfo.
+Provides reflection capabilities like TypeInfoRegistry, ITypeInfo, and IProperty.

@@ -1,6 +1,7 @@
 import { DisplayInfo } from "./displayInfo";
-import { TypeInfoRegistry } from "./typeInfoRegistry";
+import { ITypeInfoRegistry } from "./interfaces";
 import { ReflectionError } from "./reflectionError";
+import { IElementInfo } from "./interfaces";
 
 /**
  * Provides basic implementation of reflection elements.
@@ -8,7 +9,7 @@ import { ReflectionError } from "./reflectionError";
  * @export
  * @class ElementInfo
  */
-export abstract class ElementInfo implements ElementInfo {
+export abstract class ElementInfo implements IElementInfo {
     /**
      * Gets the element name.
      * 
@@ -34,22 +35,31 @@ export abstract class ElementInfo implements ElementInfo {
 
     /**
      * Creates an instance of ElementInfo.
-     * @param {ElementInfo} [info] The primary data for initializing this instance.
-     * @param {ElementInfo} [registry] The root type info registry.
+     * 
+     * @param {string} name The element name.
+     * @param {string} [fullName] Optional. The full name of the element.
+     * @param {DisplayInfo} [displayInfo] Optional. The display information.
+     * @param {ITypeInfoRegistry} [registry] The root type info registry.
      * @memberof ElementInfo
      */
-    constructor(info?: ElementInfo, registry?: TypeInfoRegistry) {
-        if (info) {
-            if (!info.name) {
-                throw new ReflectionError("The name must be provided.");
-            }
+    constructor(
+        {
+            name,
+            fullName,
+            displayInfo,
+            registry,
+        }: {
+            name: string;
+            fullName?: string;
+            displayInfo?: DisplayInfo;
+            registry?: ITypeInfoRegistry;
+        }) {
+        if (!name) {
+            throw new ReflectionError("The name must be provided.");
+        }
 
-            this.name = info.name;
-            this.fullName = info.fullName ?? this.name;
-            this.displayInfo = info.displayInfo || new DisplayInfo();
-        }
-        else {
-            this.displayInfo = new DisplayInfo();
-        }
+        this.name = name;
+        this.fullName = fullName ?? this.name;
+        this.displayInfo = displayInfo || new DisplayInfo();
     }
 }

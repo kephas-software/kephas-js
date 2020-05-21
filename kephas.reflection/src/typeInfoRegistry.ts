@@ -1,6 +1,6 @@
-import { TypeInfo } from "./typeInfo";
 import { ReflectionError } from "./reflectionError";
 import { Requires } from "@kephas/core";
+import { ITypeInfoRegistry, ITypeInfo } from "./interfaces";
 
 /**
  * Provides centralized access to the application's type system.
@@ -8,57 +8,54 @@ import { Requires } from "@kephas/core";
  * @export
  * @class TypeInfoRegistry
  */
-export class TypeInfoRegistry {
+export class TypeInfoRegistry implements ITypeInfoRegistry {
     /**
      * Gets the registerd types.
      *
-     * @type {TypeInfo[]}
-     * @memberof TypeSystem
+     * @type {ITypeInfo[]}
+     * @memberof TypeInfoRegistry
      */
-    readonly types: TypeInfo[];
+    readonly types: ITypeInfo[] = [];
 
     /**
-     * Gets the singleton instance of the type system.
+     * Gets the singleton instance of the type registry.
      *
      * @static
      * @type {TypeInfoRegistry}
-     * @memberof TypeSystem
+     * @memberof TypeInfoRegistry
      */
-    static Instance: TypeInfoRegistry = new TypeInfoRegistry();
+    static get Instance(): ITypeInfoRegistry{
+        return TypeInfoRegistry._instance ?? (TypeInfoRegistry._instance = new TypeInfoRegistry());
+    }
 
-    private _typesByFullName: { [key: string]: TypeInfo } = {}
+    private static _instance: ITypeInfoRegistry;
+    private _typesByFullName: { [key: string]: ITypeInfo } = {}
 
     /**
      * Creates an instance of TypeInfoRegistry.
      * @memberof TypeInfoRegistry
      */
     constructor() {
-        // super();
         this.types = [];
-
-        this
-            .register(new TypeInfo({ name: TypeInfo.AnyTypeName, properties: [] }, this))
-            .register(new TypeInfo({ name: TypeInfo.BooleanTypeName, properties: [] }, this))
-            .register(new TypeInfo({ name: TypeInfo.NumberTypeName, properties: [] }, this))
-            .register(new TypeInfo({ name: TypeInfo.ObjectTypeName, properties: [] }, this))
-            .register(new TypeInfo({ name: TypeInfo.StringTypeName, properties: [] }, this))
-            .register(new TypeInfo({ name: TypeInfo.ArrayTypeName, properties: [] }, this))
-            .register(new TypeInfo({ name: TypeInfo.SymbolTypeName, properties: [] }, this));
+        this.initialize(this);
     }
 
     /**
      * Gets the type in the registry by its name.
      *
      * @param {string} fullName The full name of the type.
-     * @param {boolean} [throwOnNotFound=true] True to throw if an 
+     * @param {boolean} [throwOnNotFound=true] True to throw if the type cannot be found.
      * @returns {TypeInfo}
      * @memberof TypeInfoRegistry
      */
-    public getType(fullName: string, throwOnNotFound: boolean = true): TypeInfo {
+    public getType(fullName: string, throwOnNotFound?: boolean): ITypeInfo {
         Requires.HasValue(fullName, 'fullName');
+        if (throwOnNotFound == undefined) {
+            throwOnNotFound = true;
+        }
 
         const type = this._typesByFullName[fullName];
-        if(!type && throwOnNotFound) {
+        if (!type && throwOnNotFound) {
             throw new ReflectionError(`The type with name '${fullName}' was not found.`);
         }
 
@@ -72,7 +69,7 @@ export class TypeInfoRegistry {
      * @returns {this}
      * @memberof TypeSystem
      */
-    public register(type: TypeInfo): this {
+    public register(type: ITypeInfo): this {
         if (!type) {
             throw new ReflectionError("The type must be provided.");
         }
@@ -86,5 +83,15 @@ export class TypeInfoRegistry {
         this.types.push(type);
 
         return this;
+    }
+
+    /**
+     * Initializes the registry.
+     *
+     * @protected
+     * @param {TypeInfoRegistry} registry
+     * @memberof TypeInfoRegistry
+     */
+    protected initialize(registry: TypeInfoRegistry) {
     }
 }

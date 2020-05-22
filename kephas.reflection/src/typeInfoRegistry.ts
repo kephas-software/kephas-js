@@ -24,7 +24,7 @@ export class TypeInfoRegistry implements ITypeInfoRegistry {
      * @type {TypeInfoRegistry}
      * @memberof TypeInfoRegistry
      */
-    static get Instance(): ITypeInfoRegistry{
+    static get Instance(): ITypeInfoRegistry {
         return TypeInfoRegistry._instance ?? (TypeInfoRegistry._instance = new TypeInfoRegistry());
     }
 
@@ -63,24 +63,26 @@ export class TypeInfoRegistry implements ITypeInfoRegistry {
     }
 
     /**
-     * Registers a new type in the type system.
+     * Registers the provided types.
      *
-     * @param {ITypeInfo} type
-     * @returns {this}
-     * @memberof TypeSystem
+     * @param {ITypeInfo[]} types The types to register.
+     * @returns {this} This registry.
+     * @memberof TypeInfoRegistry
      */
-    public register(type: ITypeInfo): this {
-        if (!type) {
-            throw new ReflectionError("The type must be provided.");
+    public register(...types: ITypeInfo[]): this {
+        if (!types) {
+            return this;
         }
 
-        const typeKey = type.fullName ?? type.name;
-        if (this._typesByFullName[type.fullName ?? type.name]) {
-            throw new ReflectionError(`The type ${typeKey} is already registered.`);
-        }
+        for (let type of types) {
+            const typeKey = type.fullName ?? type.name;
+            if (this._typesByFullName[type.fullName ?? type.name]) {
+                throw new ReflectionError(`The type ${typeKey} is already registered.`);
+            }
 
-        this._typesByFullName[typeKey] = type;
-        this.types.push(type);
+            this._typesByFullName[typeKey] = type;
+            this.types.push(type);
+        }
 
         return this;
     }

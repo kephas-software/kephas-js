@@ -1,4 +1,5 @@
 import { DisplayInfo } from "./displayInfo";
+import { Type } from "@kephas/core";
 
 /**
  * Registry for types.
@@ -34,19 +35,26 @@ export interface IElementInfo {
     readonly name: string;
 
     /**
-     * Gets the element full name.
+     * Gets the element's full name.
      * 
      * @type {string}
-     * @memberof ElementInfo
+     * @memberof IElementInfo
      */
-    readonly fullName?: string;
+    readonly fullName: string;
 
     /**
      * Gets the localized display information.
      *
-     * @memberof ElementInfo
+     * @memberof IElementInfo
      */
     readonly displayInfo?: DisplayInfo;
+
+    /**
+     * Gets or sets custom values.
+     *
+     * @memberof IElementInfo
+     */
+    [key: string]: any;
 }
 
 /**
@@ -98,6 +106,22 @@ export interface IPropertyInfo extends IValueElementInfo {
      * @memberof IPropertyInfo
      */
     readonly canRead: boolean;
+
+    /**
+     * Gets a value indicating whether a value is required for this property.
+     *
+     * @type {boolean}
+     * @memberof IPropertyInfo
+     */
+    readonly isRequired: boolean;
+
+    /**
+     * Gets the default value of the property.
+     *
+     * @type {*}
+     * @memberof IPropertyInfo
+     */
+    readonly defaultValue?: any;
 }
 
 /**
@@ -123,6 +147,13 @@ export interface ITypeInfo extends IElementInfo {
      * @memberof TypeInfo
      */
     readonly properties: IPropertyInfo[];
+
+    /**
+     * Gets the instantiable type.
+     *
+     * @memberof ITypeInfo
+     */
+    readonly type?: Type<any>;
 
     /**
      * Gets a value indicating whether this type is an array.

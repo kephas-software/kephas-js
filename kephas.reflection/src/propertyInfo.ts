@@ -38,6 +38,22 @@ export class PropertyInfo extends ValueElementInfo implements IPropertyInfo {
     readonly canRead: boolean = true;
 
     /**
+     * Gets a value indicating whether a value is required for this property.
+     *
+     * @type {boolean}
+     * @memberof PropertyInfo
+     */
+    readonly isRequired: boolean = false;
+
+    /**
+     * Gets the default value of the property.
+     *
+     * @type {*}
+     * @memberof PropertyInfo
+     */
+    readonly defaultValue?: any;
+
+    /**
      * Creates an instance of PropertyInfo.
      * 
      * @param {ITypeInfo} declaringType The declaring type.
@@ -47,6 +63,8 @@ export class PropertyInfo extends ValueElementInfo implements IPropertyInfo {
      * @param {ITypeInfo} [valueType] The value type.
      * @param {boolean} [canRead] True if the property can be read.
      * @param {boolean} [canWrite] True if the property can be written.
+     * @param {boolean} [isRequired] True if the property requires a value to be set.
+     * @param {*} [defaultValue] The default value of the property.
      * @param {ITypeInfoRegistry} [registry] The root type info registry.
      * @memberof PropertyInfo
      */
@@ -59,7 +77,10 @@ export class PropertyInfo extends ValueElementInfo implements IPropertyInfo {
             valueType,
             canRead,
             canWrite,
+            isRequired,
+            defaultValue,
             registry,
+            ...args
         }: {
             declaringType: ITypeInfo;
             name: string;
@@ -68,9 +89,12 @@ export class PropertyInfo extends ValueElementInfo implements IPropertyInfo {
             valueType?: ITypeInfo | string;
             canRead?: boolean;
             canWrite?: boolean;
+            isRequired?: boolean;
+            defaultValue?: any;
             registry?: ITypeInfoRegistry;
+            [key: string]: any;
         }) {
-        super({ name, fullName, displayInfo, valueType, registry });
+        super({ name, fullName, displayInfo, valueType, registry, ...args });
 
         if (!declaringType) {
             throw new ReflectionError("The declaring type is not set.");
@@ -79,5 +103,7 @@ export class PropertyInfo extends ValueElementInfo implements IPropertyInfo {
         this.declaringType = declaringType;
         this.canRead = canRead == undefined ? true : canRead;
         this.canWrite = canWrite == undefined ? true : canWrite;
+        this.isRequired = !!isRequired;
+        this.defaultValue = defaultValue;
     }
 }

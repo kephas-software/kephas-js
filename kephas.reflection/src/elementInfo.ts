@@ -24,7 +24,7 @@ export abstract class ElementInfo implements IElementInfo {
      * @type {string}
      * @memberof ElementInfo
      */
-    readonly fullName?: string;
+    readonly fullName: string;
 
     /**
      * Gets the localized display information.
@@ -48,11 +48,13 @@ export abstract class ElementInfo implements IElementInfo {
             fullName,
             displayInfo,
             registry,
+            ...args
         }: {
             name: string;
             fullName?: string;
             displayInfo?: DisplayInfo;
             registry?: ITypeInfoRegistry;
+            [key: string]: any;
         }) {
         if (!name) {
             throw new ReflectionError("The name must be provided.");
@@ -61,5 +63,6 @@ export abstract class ElementInfo implements IElementInfo {
         this.name = name;
         this.fullName = fullName ?? this.name;
         this.displayInfo = displayInfo || new DisplayInfo();
+        Object.assign(this, args);
     }
 }

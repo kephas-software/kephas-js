@@ -41,14 +41,16 @@ export abstract class ValueElementInfo extends ElementInfo implements IValueElem
             displayInfo,
             valueType,
             registry,
+            ...args
         }: {
             name: string;
             fullName?: string;
             displayInfo?: DisplayInfo;
             valueType?: ITypeInfo | string;
             registry?: ITypeInfoRegistry;
+            [key: string]: any;
         }) {
-        super({ name, fullName, displayInfo, registry });
+        super({ name, fullName, displayInfo, registry, ...args });
         if (!valueType) {
             this._valueTypeGetter = () => (this._valueType ?? (this._valueType = this.getValueType('any', registry)));
         }

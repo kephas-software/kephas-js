@@ -2,6 +2,8 @@ import { ElementInfo } from './elementInfo';
 import { PropertyInfo } from './propertyInfo';
 import { ITypeInfoRegistry, ITypeInfo, IPropertyInfo } from './interfaces';
 import { DisplayInfo } from './displayInfo';
+import { ReflectionError } from './reflectionError';
+import { Serializable, Type } from '@kephas/core';
 
 /**
  * Provides reflective information about a type.
@@ -84,6 +86,13 @@ export class TypeInfo extends ElementInfo implements ITypeInfo {
     readonly properties: IPropertyInfo[];
 
     /**
+     * Gets the instance constructor.
+     *
+     * @memberof ITypeInfo
+     */
+    readonly type?: Type<any>;
+
+    /**
      * Gets a value indicating whether this type is an array.
      *
      * @type {boolean} True if the type is an array, false otherwise.
@@ -157,6 +166,7 @@ export class TypeInfo extends ElementInfo implements ITypeInfo {
     * @param {string} [fullName] Optional. The full name of the type.
     * @param {DisplayInfo} [displayInfo] Optional. The display information.
     * @param {IPropertyInfo[]} [properties] Optional. The properties.
+    * @param {Type<*>} [type] Optional. The instantiable type.
     * @param {boolean} [isEnum] Optional. Indicates whether the type is an enumeration.
     * @param {boolean} [isArray] Optional. Indicates whether the type is an array.
     * @param {ITypeInfoRegistry} [registry] The root type info registry.
@@ -169,11 +179,13 @@ export class TypeInfo extends ElementInfo implements ITypeInfo {
             fullName,
             displayInfo,
             properties,
+            type,
             isArray,
             isEnum,
             registry,
+            ...args
         }: {
-            name: string;
+            name?: string;
             namespace?: string;
             fullName?: string;
             displayInfo?: DisplayInfo;
@@ -185,14 +197,48 @@ export class TypeInfo extends ElementInfo implements ITypeInfo {
                 canRead?: boolean;
                 canWrite?: boolean;
             }[];
+            type?: Type<any>;
             isArray?: boolean;
             isEnum?: boolean;
             registry?: ITypeInfoRegistry;
+            [key: string]: any;
         }) {
-        super({ name, fullName, displayInfo, registry });
-        this.namespace = namespace;
+        super({
+            name: TypeInfo._getName(name, type),
+            fullName: fullName ?? TypeInfo._getFullName(name, namespace, type),
+            displayInfo,
+            registry,
+            ...args
+        });
+        this.type = type;
+        this.namespace = TypeInfo._getNamespace(namespace, type);
         this.properties = properties?.map(p => new PropertyInfo({ ...p, declaringType: this, registry })) ?? [];
+        if (this.type) {
+            Serializable.setTypeName(this.type, this.fullName);
+        }
         this.isEnum = !!isEnum;
         this.isArray = !!isArray;
+    }
+
+    private static _getName(name?: string, type?: Type<any>): string {
+        if (name) {
+            return name;
+        }
+
+        if (type) {
+            return type.name;
+        }
+
+        throw new ReflectionError('Either the name or the type name should be provided.');
+    }
+
+    private static _getFullName(name?: string, namespace?: string, type?: Type<any>): string {
+        name = TypeInfo._getName(name, type);
+        namespace = TypeInfo._getNamespace(namespace, type);
+        return namespace ? `${namespace}.${name}` : name;
+    }
+
+    private static _getNamespace(namespace?: string | null, type?: Type<any>) {
+        return namespace ?? (type ? Serializable.getTypeNamespace(type) : null);
     }
 }

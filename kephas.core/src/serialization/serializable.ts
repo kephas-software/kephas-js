@@ -37,6 +37,7 @@ export abstract class Serializable {
      * @memberOf Serializable
      */
     static setTypeName<T>(type: Type<T>, typeName: string): void {
+        Requires.HasValue(typeName, 'typeName');
         type[Serializable._typeNameProperty] = typeName;
     }
 
@@ -59,12 +60,12 @@ export abstract class Serializable {
      * 
      * @static
      * @param {Function} typeOrInstance The type from where the type name should be retrieved.
-     * @returns {(string | undefined | null)} The type name.
+     * @returns {(string | undefined)} The type name.
      * 
      * @memberOf Serializable
      */
-    static getTypeName<T>(typeOrInstance: {} | Type<T>): string | undefined | null {
-        return typeOrInstance[Serializable._typeNameProperty];
+    static getTypeName<T>(typeOrInstance: {} | Type<T>): string | undefined {
+        return typeOrInstance[Serializable._typeNameProperty] ?? undefined;
     }
 
     /**
@@ -72,12 +73,12 @@ export abstract class Serializable {
      * 
      * @static
      * @param {Function} typeOrInstance The type from where the type name should be retrieved.
-     * @returns {(string | undefined | null)} The type name.
+     * @returns {(string | undefined)} The type name.
      * 
      * @memberOf Serializable
      */
-    static getTypeNamespace<T>(typeOrInstance: {} | Type<T>): string | undefined | null {
-        return typeOrInstance["__namespace"];
+    static getTypeNamespace<T>(typeOrInstance: {} | Type<T>): string | undefined {
+        return typeOrInstance["__namespace"] ?? undefined;
     }
 
     /**

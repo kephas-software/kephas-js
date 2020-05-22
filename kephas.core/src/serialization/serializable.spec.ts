@@ -13,6 +13,15 @@ describe('Serializable.setTypeName', () => {
     });
 });
 
+describe('Serializable.getTypeName', () => {
+    it('should return undefined if not set', () => {
+        class TestClass {};
+
+        let typeName = Serializable.getTypeName(TestClass);
+        expect(typeName).to.is.undefined;
+    });
+});
+
 describe('Serializable.setTypeNamespace', () => {
     it('should set and get the type namespace', () => {
         class TestClass {};
@@ -20,6 +29,15 @@ describe('Serializable.setTypeNamespace', () => {
         Serializable.setTypeNamespace(TestClass, "NS");
         const typeName = Serializable.getTypeNamespace(TestClass);
         expect(typeName).to.equal('NS');
+    });
+});
+
+describe('Serializable.getTypeNamespace', () => {
+    it('should return undefined if not set', () => {
+        class TestClass {};
+
+        let ns = Serializable.getTypeNamespace(TestClass);
+        expect(ns).to.is.undefined;
     });
 });
 

@@ -1,12 +1,12 @@
 {
   "name": "@kephas/ui",
-  "version": "0.1.0-dev.7",
+  "version": "0.1.5",
   "description": "Provides a common infrastructure for UI components.",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "test": "mocha -r ts-node/register --require reify src/**/*.spec.ts",
+    "test": "webpack & mocha -r ts-node/register --require reify src/**/*.spec.ts",
     "build": "webpack"
   },
   "repository": {
@@ -26,7 +26,7 @@
     "dist/"
   ],
   "dependencies": {
-    "@kephas/core": "0.1.0"
+    "@kephas/core": "0.1.5"
   },
   "devDependencies": {
     "@types/chai": "^4.2.11",

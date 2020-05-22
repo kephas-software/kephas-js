@@ -3,14 +3,14 @@ import { expect } from 'chai';
 import 'mocha';
 import { AppServiceInfo } from './appServiceInfo';
 import { AppService } from './appService';
-import { SingletonAppServiceContract } from './appServiceContract';
+import { SingletonAppServiceContract, AppServiceContract } from './appServiceContract';
 import { Priority } from './composition/appServiceMetadata';
 
-abstract class ManuallyRegisteredService {}
-class DefaultManuallyRegisteredService extends ManuallyRegisteredService {}
-
-describe('AppServiceInfoRegistry.registerService_manually', () => {
-    it('should connect properly the service type and the service contract', () => {
+describe('AppServiceInfoRegistry.registerService', () => {
+    it('should match the contract and the service (manual registration)', () => {
+        abstract class ManuallyRegisteredService {}
+        class DefaultManuallyRegisteredService extends ManuallyRegisteredService {}
+        
         let registry = new AppServiceInfoRegistry();
         registry
             .registerServiceContract(ManuallyRegisteredService, new AppServiceInfo({ contractType: ManuallyRegisteredService }))
@@ -22,10 +22,8 @@ describe('AppServiceInfoRegistry.registerService_manually', () => {
             expect(service.serviceContract!.contractType).to.equal(ManuallyRegisteredService);
         }
     });
-});
 
-describe('AppServiceInfoRegistry.registerService_with_decorators_override', () => {
-    it('should connect properly the service type and the service contract', () => {
+    it('should match the contract and the service with override (decorator registration)', () => {
         let registry = new AppServiceInfoRegistry();
 
         @AppService({ overridePriority: Priority.Low, registry: registry })
@@ -39,6 +37,39 @@ describe('AppServiceInfoRegistry.registerService_with_decorators_override', () =
             expect(service.serviceType).to.equal(OverriddenService);
             expect(service.serviceContract).to.not.null;
             expect(service.serviceContract!.contractType).to.equal(DefaultService);
+        }
+    });
+
+    it('should match the abstract contract and the service (decorator registration)', () => {
+        let registry = new AppServiceInfoRegistry();
+
+        @SingletonAppServiceContract({ registry: registry })
+        abstract class AbstractContract {}
+        
+        @AppService({ registry: registry })
+        class Service extends AbstractContract {}
+        
+        for(let service of registry.services) {
+            expect(service.serviceType).to.equal(Service);
+            expect(service.serviceContract).to.not.null;
+            expect(service.serviceContract!.contractType).to.equal(AbstractContract);
+        }
+    });
+
+
+    it('should match the transient contract and the service (decorator registration)', () => {
+        let registry = new AppServiceInfoRegistry();
+
+        @AppServiceContract({ registry: registry })
+        abstract class AbstractContract {}
+        
+        @AppService({ registry: registry })
+        class Service extends AbstractContract {}
+        
+        for(let service of registry.services) {
+            expect(service.serviceType).to.equal(Service);
+            expect(service.serviceContract).to.not.null;
+            expect(service.serviceContract!.contractType).to.equal(AbstractContract);
         }
     });
 });

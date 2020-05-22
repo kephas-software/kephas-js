@@ -238,7 +238,7 @@ export class TypeInfo extends ElementInfo implements ITypeInfo {
         return namespace ? `${namespace}.${name}` : name;
     }
 
-    private static _getNamespace(namespace?: string | null, type?: Type<any>) {
-        return namespace ?? (type ? Serializable.getTypeNamespace(type) : null);
+    private static _getNamespace(namespace?: string, type?: Type<any>): string | undefined {
+        return namespace ?? (type ? Serializable.getTypeNamespace(type) : undefined);
     }
 }

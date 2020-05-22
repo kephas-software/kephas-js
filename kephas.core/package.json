@@ -6,7 +6,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "test": "mocha -r ts-node/register --require reify src/**/*.spec.ts",
+    "test": "webpack & mocha -r ts-node/register --require reify src/**/*.spec.ts",
     "build": "webpack"
   },
   "repository": {

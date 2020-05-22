@@ -1,12 +1,12 @@
 {
   "name": "@kephas/angular",
-  "version": "0.1.1",
+  "version": "0.1.5",
   "description": "Provides integration capabilities with Angular.",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "test": "mocha -r ts-node/register --require reify src/**/*.spec.ts",
+    "test": "webpack & mocha -r ts-node/register --require reify src/**/*.spec.ts",
     "build": "webpack"
   },
   "repository": {
@@ -28,7 +28,7 @@
   ],
   "dependencies": {
     "@angular/core": "8.2.7",
-    "@kephas/core": "^0.1.1",
+    "@kephas/core": "^0.1.5",
     "rxjs": "^6.5.5",
     "zone.js": "^0.9.1"
   },

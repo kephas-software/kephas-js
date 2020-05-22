@@ -3,6 +3,7 @@ export * from './deferrable';
 export * from './sealed';
 export * from './diagnostics/contracts/requires';
 export * from './logging/logger';
+export * from './namespace';
 export * from './serialization/serializable';
 export * from './services/composition/appServiceMetadata';
 export * from './services/appService';

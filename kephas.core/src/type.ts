@@ -6,6 +6,7 @@
  * @extends {Function}
  */
 export interface AbstractType extends Function {
+    [key: string]: any;
 };
 
 /**

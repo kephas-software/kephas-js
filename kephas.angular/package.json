@@ -1,6 +1,6 @@
 {
   "name": "@kephas/angular",
-  "version": "0.1.11",
+  "version": "0.1.13",
   "description": "Provides integration capabilities with Angular.",
   "type": "module",
   "main": "dist/index.js",
@@ -31,9 +31,9 @@
     "@angular/core": "^8.2.7",
     "@angular/forms": "^8.2.7",
     "@angular/platform-browser": "^8.2.7",
-    "@kephas/core": "^0.1.11",
-    "@kephas/reflection": "^0.1.11",
-    "@kephas/ui": "^0.1.11",
+    "@kephas/core": "^0.1.13",
+    "@kephas/reflection": "^0.1.13",
+    "@kephas/ui": "^0.1.13",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^6.5.5",
     "zone.js": "^0.9.1"

@@ -1,3 +1,3 @@
 export { WidgetBase, provideValueAccessor, provideWidget } from './components/widgetBase';
-export * from './components/valueEditorBase';
-export * from './services/angularAppServiceInfoRegistry';
+export { ValueEditorBase } from './components/valueEditorBase';
+export { AngularAppServiceInfoRegistry } from './services/angularAppServiceInfoRegistry';

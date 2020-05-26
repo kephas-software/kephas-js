@@ -2,7 +2,7 @@ import {
     ElementRef, ViewContainerRef, ChangeDetectorRef,
     Input, SimpleChanges,
     OnInit, OnChanges, AfterViewInit,
-    Type, Provider, forwardRef, QueryList, ViewChildren
+    Type, Provider, forwardRef, QueryList, ViewChildren, OnDestroy
 } from "@angular/core";
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Logger } from "@kephas/core";
@@ -48,7 +48,7 @@ export function provideValueAccessor(componentType: Type<any>): Provider {
  * @export
  * @class WidgetBase
  */
-export abstract class WidgetBase implements OnInit, AfterViewInit, OnChanges {
+export abstract class WidgetBase implements OnInit, AfterViewInit, OnChanges, OnDestroy {
     /**
      * Gets the logger.
      *
@@ -189,6 +189,13 @@ export abstract class WidgetBase implements OnInit, AfterViewInit, OnChanges {
      * @memberof WidgetBase
      */
     ngOnChanges(changes: SimpleChanges): void {
+    }
+
+    /**
+     * A callback method that performs custom clean-up, invoked immediately
+     * after a directive, pipe, or service instance is destroyed.
+     */
+    ngOnDestroy(): void {
     }
 
     /**

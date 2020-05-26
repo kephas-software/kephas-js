@@ -6,6 +6,18 @@ const config: webpack.Configuration = {
     entry: {
         'index': './src/index.ts'
     },
+    externals: {
+        "@angular/common": "@angular/common",
+        "@angular/core": "@angular/core",
+        "@angular/forms": "@angular/forms",
+        "@angular/platform-browser": "@angular/platform-browser",
+        "@kephas/core": "@kephas/core",
+        "@kephas/reflection": "@kephas/reflection",
+        "@kephas/ui": "@kephas/ui",
+        "rxjs": "rxjs",
+        "zone.js": "zone.js",
+        "brace": "brace"
+    },
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].js',

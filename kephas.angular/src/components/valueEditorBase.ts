@@ -158,7 +158,7 @@ export abstract class ValueEditorBase<TValue>
      * Sets the value of the underlying editor.
      * 
      * @protected
-     * @param {TValue} value 
+     * @param {TValue} value The value to be set.
      * @memberof ValueEditorBase
      */
     protected abstract setEditorValue(value: TValue): void;
@@ -167,8 +167,7 @@ export abstract class ValueEditorBase<TValue>
      * Gets the underlying editor's value.
      * 
      * @protected
-     * @param {*} e The change event arguments.
-     * @returns {*} The widget value.
+     * @returns {TValue} The widget value.
      * @memberof ValueEditorBase
      */
     protected abstract getEditorValue(): TValue;
@@ -178,7 +177,7 @@ export abstract class ValueEditorBase<TValue>
      * 
      * @protected
      * @param {*} e The change event arguments.
-     * @returns {*} The widget value.
+     * @returns {TValue} The widget value.
      * @memberof ValueEditorBase
      */
     protected getEditorValueOnChange(e: any): TValue {

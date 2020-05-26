@@ -1,6 +1,6 @@
 import * as webpack from 'webpack'
-import * as path from 'path';
-import DtsBundlePlugin from 'webpack-dts-bundle';
+import * as path from 'path'
+import DtsBundlePlugin from 'webpack-dts-bundle'
 
 const config: webpack.Configuration = {
     entry: {
@@ -16,7 +16,15 @@ const config: webpack.Configuration = {
         "@kephas/ui": "@kephas/ui",
         "rxjs": "rxjs",
         "zone.js": "zone.js",
-        "brace": "brace"
+        "brace": "brace",
+        "brace/theme/monokai": "brace/theme/monokai",
+        "brace/mode/abap": "brace/mode/abap",
+        "brace/mode/lua": "brace/mode/lua",
+        "brace/mode/sh": "brace/mode/sh",
+        "brace/mode/sql": "brace/mode/sql",
+        "brace/mode/powershell": "brace/mode/powershell",
+        "brace/mode/text": "brace/mode/text",
+        "brace/mode/json": "brace/mode/json",
     },
     output: {
         path: path.resolve(__dirname, 'dist'),

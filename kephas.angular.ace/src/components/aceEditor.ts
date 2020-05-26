@@ -1,7 +1,7 @@
 import { ValueEditorBase, provideWidget, provideValueAccessor } from "@kephas/angular";
 import { ViewContainerRef, ElementRef, Component, Input } from '@angular/core'
 
-import * as ace from 'brace';
+import ace from 'brace';
 
 import 'brace/theme/monokai';
 
@@ -22,7 +22,7 @@ import 'brace/mode/json';
  */
 @Component({
     selector: 'ace',
-    template: `<div [attr.name]="property" class="form-control ace"></div>`,
+    template: `<div class="form-control ace"></div>`,
     providers: [provideWidget(AceEditor), provideValueAccessor(AceEditor)]
 })
 export class AceEditor extends ValueEditorBase<string | {} | null>
@@ -61,7 +61,7 @@ export class AceEditor extends ValueEditorBase<string | {} | null>
      * @memberof AceEditor
      */
     @Input()
-    public observeVisibilityOf: string | string[];
+    public observeVisibilityOf?: string | string[];
 
     /**
      * Gets or sets the editor type.
@@ -207,14 +207,14 @@ export class AceEditor extends ValueEditorBase<string | {} | null>
             });
 
             changedTargets.forEach(t => {
-                if (jQuery(t).is(':visible')) {
+                if (this._isVisible(t as Element)) {
                     this.editor?.resize(true);
                 }
             });
         });
 
         for (const queryString of queryStrings) {
-            const query = jQuery(queryString);
+            const query = top.document.querySelectorAll(queryString);
             for (let i = 0; i < query.length; i++) {
                 this._observer.observe(query[i], { attributes: true, attributeFilter: ['style'] });
             }
@@ -261,7 +261,7 @@ export class AceEditor extends ValueEditorBase<string | {} | null>
         let stringValue = '';
         if (typeof value === 'object') {
             this._valueIsObject = true;
-            stringValue = this._getFormattedJson(value);
+            stringValue = this._getFormattedJson(value!);
         } else if (typeof value == 'string') {
             if (value) {
                 this._valueIsObject = false;
@@ -360,13 +360,16 @@ export class AceEditor extends ValueEditorBase<string | {} | null>
         }
     }
 
+    /**
+     * Gets the editor mode based on the provided editor type.
+     *
+     * @protected
+     * @param {string} editorType The editor type.
+     * @returns {string}
+     * @memberof AceEditor
+     */
     protected getEditorMode(editorType: string): string {
-        const mappedType = ScriptEditorComponent._editorModeMap[editorType];
-        if (!mappedType) {
-            return ScriptEditorComponent._editorModeMap.default;
-        }
-
-        return mappedType;
+        return editorType;
     }
 
     /**
@@ -384,5 +387,10 @@ export class AceEditor extends ValueEditorBase<string | {} | null>
 
     private _getFormattedJson(obj: {}) {
         return JSON.stringify(obj, null, 4);
+    }
+
+    private _isVisible(element: Element): boolean {
+        var style = window.getComputedStyle(element);
+        return !(style.display === 'none')
     }
 }

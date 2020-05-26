@@ -1,8 +1,7 @@
-import { TypeInfo } from './typeInfo';
 import { expect } from 'chai';
 import 'mocha';
-import { Namespace } from '../../kephas.core/src/namespace';
-import { Serializable } from '@kephas/core';
+import { Serializable, Namespace } from '@kephas/core';
+import { TypeInfo } from '.';
 
 describe('TypeInfo.constructor', () => {
     it('should set the name and full name', () => {

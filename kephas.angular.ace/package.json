@@ -1,7 +1,7 @@
 {
-  "name": "@kephas/angular",
-  "version": "0.1.11",
-  "description": "Provides integration capabilities with Angular.",
+  "name": "@kephas/angular-ace",
+  "version": "0.1.5",
+  "description": "Provides the integration of the Ace editor with Kephas and Angular.",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -11,12 +11,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/kephas-software/kephas-js/tree/master/kephas.angular"
+    "url": "https://github.com/kephas-software/kephas-js/tree/master/kephas.angular.ace"
   },
   "keywords": [
     "kephas",
     "angular",
-    "ng"
+    "ace"
   ],
   "author": {
     "name": "Kephas Software SRL"
@@ -31,10 +31,9 @@
     "@angular/core": "^8.2.7",
     "@angular/forms": "^8.2.7",
     "@angular/platform-browser": "^8.2.7",
-    "@kephas/core": "^0.1.11",
-    "@kephas/reflection": "^0.1.11",
-    "@kephas/ui": "^0.1.11",
-    "reflect-metadata": "^0.1.13",
+    "@kephas/angular": "^0.1.6",
+    "@kephas/core": "^0.1.5",
+    "@kephas/ui": "^0.1.5",
     "rxjs": "^6.5.5",
     "zone.js": "^0.9.1"
   },

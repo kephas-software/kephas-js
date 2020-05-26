@@ -14,6 +14,9 @@
 		},
 		{
 			"path": "kephas.messaging"
+		},
+		{
+			"path": "kephas.angular.ace"
 		}
 	],
 	"settings": {

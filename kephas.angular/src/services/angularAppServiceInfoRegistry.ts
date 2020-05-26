@@ -1,5 +1,6 @@
-import { AppServiceInfoRegistry, Requires, AppServiceInfo, AppServiceMetadata, AbstractType } from "@kephas/core";
-import { Injectable } from "@angular/core";
+import { AppServiceInfoRegistry, Requires, AppServiceInfo, AppServiceMetadata } from "@kephas/core";
+import { Injectable, Type, StaticClassProvider } from "@angular/core";
+import "reflect-metadata";
 
 /**
  * Helper class for registering the services with the Angular injector.
@@ -36,19 +37,18 @@ export class AngularAppServiceInfoRegistry {
      * @returns {{ provide: AbstractType; useClass: AbstractType; multi: boolean; }[]} An array of providers.
      * @memberof AngularAppServiceInfoRegistry
      */
-    public getRootProviders(): { provide: AbstractType; useClass: AbstractType; multi: boolean; }[] {
-        let providers: { provide: AbstractType, useClass: AbstractType; multi: boolean; }[] = [];
+    public getRootProviders(): StaticClassProvider[] {
+        let providers: StaticClassProvider[] = [];
         for (let c of this.serviceRegistry.serviceContracts) {
             let serviceContract: AppServiceInfo = c;
             for (let m of serviceContract.services) {
                 let serviceMetadata: AppServiceMetadata<any> = m;
-                if (serviceMetadata.serviceType != serviceContract.contractType || serviceContract.allowMultiple) {
-                    providers.push({
-                        provide: serviceContract.contractType,
-                        useClass: serviceMetadata.serviceType!,
-                        multi: serviceContract.allowMultiple
-                    });
-                }
+                providers.push({
+                    provide: serviceContract.contractType as Type<any>,
+                    useClass: serviceMetadata.serviceType!,
+                    multi: serviceContract.allowMultiple,
+                    deps: Reflect.getMetadata("design:paramtypes", serviceMetadata.serviceType!) || [],
+                });
             }
         }
 

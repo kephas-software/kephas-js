@@ -1,3 +1,12 @@
+export { DisplayInfo } from './displayInfo';
+export { ITypeInfoRegistry, IElementInfo, IValueElementInfo, IPropertyInfo, ITypeInfo } from './interfaces';
+export { ReflectionError } from './reflectionError';
+export { ElementInfo } from './elementInfo';
+export { ValueElementInfo } from './valueElementInfo';
+export { PropertyInfo } from './propertyInfo';
+export { TypeInfo } from './typeInfo';
+export { TypeInfoRegistry } from './typeInfoRegistry';
+
 import { TypeInfoRegistry } from './typeInfoRegistry';
 import { TypeInfo } from './typeInfo';
 
@@ -12,11 +21,3 @@ import { TypeInfo } from './typeInfo';
         new TypeInfo({ name: TypeInfo.SymbolTypeName, registry }));
 }
 
-export * from './displayInfo';
-export * from './elementInfo';
-export * from './interfaces';
-export * from './propertyInfo';
-export * from './reflectionError';
-export * from './typeInfo';
-export * from './typeInfoRegistry';
-export * from './valueElementInfo';

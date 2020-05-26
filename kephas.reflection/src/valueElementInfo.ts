@@ -1,7 +1,7 @@
-import { ElementInfo } from "./elementInfo";
-import { ITypeInfoRegistry, IValueElementInfo, ITypeInfo } from "./interfaces";
-import { TypeInfoRegistry } from "./typeInfoRegistry";
-import { DisplayInfo } from "./displayInfo";
+import {
+    ElementInfo, ITypeInfoRegistry, IValueElementInfo, ITypeInfo,
+    TypeInfoRegistry, DisplayInfo
+} from ".";
 
 /**
  * Reflective element information holding a value.

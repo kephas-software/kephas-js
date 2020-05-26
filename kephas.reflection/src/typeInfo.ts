@@ -1,8 +1,7 @@
-import { ElementInfo } from './elementInfo';
-import { PropertyInfo } from './propertyInfo';
-import { ITypeInfoRegistry, ITypeInfo, IPropertyInfo } from './interfaces';
-import { DisplayInfo } from './displayInfo';
-import { ReflectionError } from './reflectionError';
+import {
+    ElementInfo, PropertyInfo, ITypeInfo, ITypeInfoRegistry,
+    IPropertyInfo, DisplayInfo, ReflectionError
+} from '.';
 import { Serializable, Type } from '@kephas/core';
 
 /**

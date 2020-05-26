@@ -1,7 +1,7 @@
-import { ValueElementInfo } from "./valueElementInfo";
-import { ITypeInfoRegistry, ITypeInfo, IPropertyInfo } from "./interfaces";
-import { ReflectionError } from "./reflectionError";
-import { DisplayInfo } from "./displayInfo";
+import {
+    ValueElementInfo, ITypeInfoRegistry, ITypeInfo, IPropertyInfo,
+    ReflectionError, DisplayInfo
+} from ".";
 
 /**
  * Provides reflection information about a property.

@@ -1,6 +1,5 @@
-import { ReflectionError } from "./reflectionError";
+import { ReflectionError, ITypeInfoRegistry, ITypeInfo } from ".";
 import { Requires } from "@kephas/core";
-import { ITypeInfoRegistry, ITypeInfo } from "./interfaces";
 
 /**
  * Provides centralized access to the application's type system.

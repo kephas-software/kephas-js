@@ -1,7 +1,4 @@
-import { DisplayInfo } from "./displayInfo";
-import { ITypeInfoRegistry } from "./interfaces";
-import { ReflectionError } from "./reflectionError";
-import { IElementInfo } from "./interfaces";
+import { DisplayInfo, ITypeInfoRegistry, ReflectionError, IElementInfo } from ".";
 
 /**
  * Provides basic implementation of reflection elements.

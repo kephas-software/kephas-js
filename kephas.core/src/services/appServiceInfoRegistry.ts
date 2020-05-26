@@ -1,10 +1,11 @@
-import { Sealed } from "../sealed";
-import { AppServiceInfo } from "./appServiceInfo";
-import { ServiceError } from "./serviceError";
-import { Requires } from "../diagnostics/contracts/requires";
-import { AppServiceMetadata } from "./composition/appServiceMetadata";
-import { AppServiceContract, SingletonAppServiceContract } from "./appServiceContract";
-import { AbstractType, Type } from "../type";
+import { Sealed } from "..";
+import { AppServiceInfo, AppServiceLifetime } from "..";
+import { ServiceError } from "..";
+import { Requires } from "..";
+import { AppServiceMetadata, Priority } from "..";
+import { AppServiceContract, SingletonAppServiceContract } from "..";
+import { AbstractType, Type } from "..";
+import 'reflect-metadata';
 
 interface IAppServiceInfo {
     /**
@@ -38,11 +39,32 @@ export class AppServiceInfoRegistry {
      */
     public static readonly Instance = new AppServiceInfoRegistry();
 
-    private static readonly _serviceContractKey = "__serviceContract";
-    private static readonly _serviceMetadataKey = "__serviceMetadata";
+    private static readonly _serviceContractKey = "kephas:serviceContract";
+    private static readonly _serviceMetadataKey = "kephas:serviceMetadata";
 
-    private readonly _serviceContracts: AppServiceInfo[] = [];
-    private readonly _services: AppServiceMetadata<any>[] = [];
+    private readonly _serviceContracts: AppServiceInfo[];
+    private readonly _services: AppServiceMetadata<any>[];
+
+    /**
+     * Creates an instance of AppServiceInfoRegistry.
+     * @memberof AppServiceInfoRegistry
+     */
+    constructor() {
+        this._serviceContracts = [];
+        this._services = [];
+
+        this.registerServiceContract(AppServiceInfoRegistry, new AppServiceInfo(
+            {
+                contractType: AppServiceInfoRegistry,
+                lifetime: AppServiceLifetime.Singleton
+            }));
+        this.registerService(AppServiceInfoRegistry, new AppServiceMetadata(
+            {
+                overridePriority: Priority.Low,
+                serviceType: AppServiceInfoRegistry,
+                serviceInstance: this,
+            }));
+    }
 
     /**
      * Gets an iterator over service contracts.
@@ -75,7 +97,7 @@ export class AppServiceInfoRegistry {
     */
     public registerServiceContract(type: AbstractType, appServiceInfo: AppServiceInfo): this {
         Requires.HasValue(type, 'type');
-        type[AppServiceInfoRegistry._serviceContractKey] = appServiceInfo;
+        Reflect.defineMetadata(AppServiceInfoRegistry._serviceContractKey, appServiceInfo, type);
         this._serviceContracts.push(appServiceInfo);
         return this;
     }
@@ -96,8 +118,8 @@ export class AppServiceInfoRegistry {
         }
 
         metadata = metadata ?? new AppServiceMetadata();
-        metadata.serviceType = type;
-        metadata.serviceContract = appServiceInfo;
+        metadata["_serviceType"] = type;
+        metadata["_serviceContract"] = appServiceInfo;
 
         let result = (<IAppServiceInfo><unknown>appServiceInfo).registerService(metadata);
         if (result instanceof ServiceError) {
@@ -117,8 +139,8 @@ export class AppServiceInfoRegistry {
         }
 
         if (result) {
-            type[AppServiceInfoRegistry._serviceContractKey] = appServiceInfo;
-            type[AppServiceInfoRegistry._serviceMetadataKey] = metadata;
+            Reflect.defineMetadata(AppServiceInfoRegistry._serviceContractKey, appServiceInfo, type);
+            Reflect.defineMetadata(AppServiceInfoRegistry._serviceMetadataKey, metadata, type);
         }
 
         return this;
@@ -133,7 +155,7 @@ export class AppServiceInfoRegistry {
      */
     public getServiceContract(type: AbstractType): AppServiceInfo | null {
         Requires.HasValue(type, 'type');
-        return type[AppServiceInfoRegistry._serviceContractKey] as AppServiceInfo || null;
+        return Reflect.getOwnMetadata(AppServiceInfoRegistry._serviceContractKey, type) as AppServiceInfo || null;
     }
 
     /**
@@ -145,7 +167,7 @@ export class AppServiceInfoRegistry {
      */
     public isServiceContract(type: AbstractType): boolean {
         Requires.HasValue(type, 'type');
-        return !!type[AppServiceInfoRegistry._serviceContractKey];
+        return Reflect.hasOwnMetadata(AppServiceInfoRegistry._serviceContractKey, type);
     }
 
     /**
@@ -157,7 +179,7 @@ export class AppServiceInfoRegistry {
      */
     public getServiceMetadata(type: AbstractType): AppServiceMetadata<any> | null {
         Requires.HasValue(type, 'type');
-        return type[AppServiceInfoRegistry._serviceMetadataKey] as AppServiceMetadata<any> || null;
+        return Reflect.getOwnMetadata(AppServiceInfoRegistry._serviceMetadataKey, type) as AppServiceMetadata<any> || null;
     }
 
     /**
@@ -169,7 +191,7 @@ export class AppServiceInfoRegistry {
      */
     public isService(type: AbstractType): boolean {
         Requires.HasValue(type, 'type');
-        return !!type[AppServiceInfoRegistry._serviceMetadataKey];
+        return Reflect.hasOwnMetadata(AppServiceInfoRegistry._serviceMetadataKey, type);
     }
 
     private _getContractOfService(type: AbstractType): AppServiceInfo | null {

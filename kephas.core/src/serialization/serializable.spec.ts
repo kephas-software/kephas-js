@@ -1,7 +1,7 @@
-import { Serializable } from './serializable';
-import { Namespace } from '../namespace';
 import { expect } from 'chai';
 import 'mocha';
+
+import { Serializable, Namespace } from '..';
 
 describe('Serializable.setTypeName', () => {
     it('should set and get the type name', () => {

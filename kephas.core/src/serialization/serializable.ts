@@ -1,5 +1,6 @@
-import { Requires } from "../diagnostics/contracts/requires";
-import { Type } from "../type";
+import { Requires } from "..";
+import { AbstractType } from "..";
+import "reflect-metadata";
 
 /**
  * Base class for serializable objects.
@@ -9,7 +10,8 @@ import { Type } from "../type";
  * @class Serializable
  */
 export abstract class Serializable {
-    private static _typeNameProperty: string = "$type";
+    private static _typeNameKey: string = "$type";
+    private static _typeNamespaceKey: string = "kephas:namespace";
     /**
      * Gets or sets the name of the property holding the instance type name.
      *
@@ -18,12 +20,12 @@ export abstract class Serializable {
      * @memberof Serializable
      */
     static get TypeNameProperty(): string {
-        return Serializable._typeNameProperty;
+        return Serializable._typeNameKey;
     }
 
     static set TypeNameProperty(value: string) {
         Requires.HasValue(value, 'value');
-        Serializable._typeNameProperty = value;
+        Serializable._typeNameKey = value;
     }
 
     /**
@@ -31,14 +33,14 @@ export abstract class Serializable {
      * 
      * @static
      * @template T
-     * @param {Type<T>} type The type where the type name should be set.
+     * @param {AbstractType} type The type where the type name should be set.
      * @param {string} typeName The type name.
      * 
      * @memberOf Serializable
      */
-    static setTypeName<T>(type: Type<T>, typeName: string): void {
+    static setTypeName(type: AbstractType, typeName: string): void {
         Requires.HasValue(typeName, 'typeName');
-        type[Serializable._typeNameProperty] = typeName;
+        Reflect.defineMetadata(Serializable._typeNameKey, typeName, type);
     }
 
     /**
@@ -46,39 +48,43 @@ export abstract class Serializable {
      * 
      * @static
      * @template T
-     * @param {Type<T>} type The type where the type name should be set.
+     * @param {AbstractType} type The type where the type name should be set.
      * @param {string} namespace The type namespace.
      * 
      * @memberOf Serializable
      */
-    static setTypeNamespace<T>(type: Type<T>, namespace: string): void {
-        type["__namespace"] = namespace;
+    static setTypeNamespace(type: AbstractType, namespace: string): void {
+        Reflect.defineMetadata(Serializable._typeNamespaceKey, namespace, type);
     }
 
     /**
      * Gets the type name for serialization/deserialization purposes.
      * 
      * @static
-     * @param {Function} typeOrInstance The type from where the type name should be retrieved.
+     * @param {{} | AbstractType} typeOrInstance The type from where the type name should be retrieved.
      * @returns {(string | undefined)} The type name.
      * 
      * @memberOf Serializable
      */
-    static getTypeName<T>(typeOrInstance: {} | Type<T>): string | undefined {
-        return typeOrInstance[Serializable._typeNameProperty] ?? undefined;
+    static getTypeName(typeOrInstance: {} | AbstractType): string | undefined {
+        if (typeOrInstance instanceof Function) {
+            return Reflect.getOwnMetadata(Serializable._typeNameKey, typeOrInstance);
+        }
+
+        return Reflect.getOwnMetadata(Serializable._typeNameKey, typeOrInstance.constructor);
     }
 
     /**
      * Gets the type namespace for serialization/deserialization purposes.
      * 
      * @static
-     * @param {Function} typeOrInstance The type from where the type name should be retrieved.
+     * @param {AbstractType} typeOrInstance The type from where the type name should be retrieved.
      * @returns {(string | undefined)} The type name.
      * 
      * @memberOf Serializable
      */
-    static getTypeNamespace<T>(typeOrInstance: {} | Type<T>): string | undefined {
-        return typeOrInstance["__namespace"] ?? undefined;
+    static getTypeNamespace(typeOrInstance: AbstractType): string | undefined {
+        return Reflect.getOwnMetadata(Serializable._typeNamespaceKey, typeOrInstance);
     }
 
     /**
@@ -102,7 +108,7 @@ export abstract class Serializable {
             }
         }
         if (typeName) {
-            json[Serializable._typeNameProperty] = typeName;
+            json[Serializable._typeNameKey] = typeName;
         }
 
         Object.keys(obj).forEach(propName => {

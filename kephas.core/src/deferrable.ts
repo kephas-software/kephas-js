@@ -1,4 +1,4 @@
-import { Sealed } from "./sealed";
+import { Sealed } from ".";
 
 /**
  * A deferrable value.

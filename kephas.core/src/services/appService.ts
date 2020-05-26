@@ -1,6 +1,6 @@
-import { AppServiceInfoRegistry } from "./appServiceInfoRegistry";
-import { AppServiceMetadata, Priority } from "./composition/appServiceMetadata";
-import { Type } from "../type";
+import { AppServiceInfoRegistry } from "..";
+import { AppServiceMetadata, Priority } from "..";
+import { Type } from "..";
 
 /**
  * Marks a class as being an application service. Its closest base registered as service contract is

@@ -1,6 +1,6 @@
 {
   "name": "@kephas/core",
-  "version": "0.1.5",
+  "version": "0.1.10",
   "description": "Provides a common infrastructure for all the other Kephas Framework components: ambient services, dynamic reflection, composition, application management, and others.",
   "type": "module",
   "main": "dist/index.js",
@@ -25,7 +25,9 @@
     "README.md",
     "dist/"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "reflect-metadata": "^0.1.13"
+  },
   "devDependencies": {
     "@types/chai": "^4.2.11",
     "@types/mocha": "^7.0.2",

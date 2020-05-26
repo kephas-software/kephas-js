@@ -1,5 +1,5 @@
-import { AppServiceInfo } from "../appServiceInfo";
-import { Type } from "../../type";
+import { AppServiceInfo, CompositionContext } from "../..";
+import { Type } from "../..";
 
 /**
  * Enumerates the priority values.
@@ -83,15 +83,41 @@ export class AppServiceMetadata<T> {
      * @type {Function}
      * @memberof AppServiceMetadata
      */
-    public serviceType?: Type<T>;
+    public get serviceType(): Type<T> | undefined {
+        return this._serviceType;
+    }
 
     /**
-     * Gets the application service contract.
+     * Gets the application service contract information.
      *
      * @type {AppServiceInfo}
      * @memberof AppServiceMetadata
      */
-    public serviceContract?: AppServiceInfo;
+    public get serviceContract(): AppServiceInfo | undefined {
+        return this._serviceContract;
+    }
+    
+    /**
+     * Gets the service instance.
+     *
+     * @type {T}
+     * @memberof AppServiceMetadata
+     */
+    public get serviceInstance(): T | undefined {
+        return this._serviceInstance;
+    }
+
+    /**
+     * Gets or sets the service factory.
+     *
+     * @type {(c: CompositionContext) => T}
+     * @memberof AppServiceMetadata
+     */
+    public readonly serviceFactory?: (c: CompositionContext) => T;
+
+    private _serviceContract?: AppServiceInfo;
+    private _serviceType?: Type<T>;
+    private _serviceInstance?: T;
 
     /**
      * Creates an instance of AppServiceMetadata.
@@ -100,6 +126,9 @@ export class AppServiceMetadata<T> {
      * @param {number|Priority} [processingPriority=Priority.Normal] Optional. The processing priority.
      * @param {string} [serviceName] Optional. The service name.
      * @param {Type<T>} [serviceType] Optional. The service implementation type.
+     * @param {() => T} [serviceFactory] Optional. The service factory.
+     * @param {T} [serviceInstance] Optional. The service instance.
+     * @param {AppServiceInfo} [serviceContract] Optional. The service contract.
      * @memberof AppServiceMetadata
      */
     constructor(
@@ -107,16 +136,28 @@ export class AppServiceMetadata<T> {
             overridePriority = Priority.Normal,
             processingPriority = Priority.Normal,
             serviceName,
-            serviceType
+            serviceType,
+            serviceFactory,
+            serviceInstance,
+            serviceContract,
+            ...args
         }: {
             overridePriority?: number | Priority;
             processingPriority?: number | Priority;
             serviceName?: string;
             serviceType?: Type<T>;
+            serviceFactory?: (c: CompositionContext) => T;
+            serviceInstance?: T;
+            serviceContract?: AppServiceInfo;
+            [key: string]: any;
         } = {}) {
         this.overridePriority = overridePriority;
         this.processingPriority = processingPriority;
         this.serviceName = serviceName;
-        this.serviceType = serviceType;
+        this.serviceFactory = serviceFactory;
+        this._serviceInstance = serviceInstance;
+        this._serviceType = serviceType;
+        this._serviceContract = serviceContract;
+        Object.assign(this, args);
     }
 }

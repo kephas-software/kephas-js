@@ -1,6 +1,6 @@
-import { AppServiceMetadata } from "./composition/appServiceMetadata";
-import { ServiceError } from "./serviceError";
-import { AbstractType } from "../type";
+import { AppServiceMetadata } from "..";
+import { ServiceError } from "..";
+import { AbstractType } from "..";
 
 /**
  * Enumerates the lifetime values for application services.
@@ -80,15 +80,18 @@ export class AppServiceInfo {
         {
             contractType,
             allowMultiple = false,
-            lifetime = AppServiceLifetime.Singleton
+            lifetime = AppServiceLifetime.Singleton,
+            ...args
         }: {
             contractType: AbstractType;
             allowMultiple?: boolean;
             lifetime?: AppServiceLifetime;
+            [key: string]: any;
         }) {
         this.contractType = contractType;
         this.allowMultiple = allowMultiple;
         this.lifetime = lifetime;
+        Object.assign(this, args);
     }
 
     /**

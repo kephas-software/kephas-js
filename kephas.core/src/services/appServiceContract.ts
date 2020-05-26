@@ -1,6 +1,6 @@
-import { AppServiceInfo, AppServiceLifetime } from "./appServiceInfo";
-import { AppServiceInfoRegistry } from "./appServiceInfoRegistry";
-import { Type, AbstractType } from "../type";
+import { AppServiceInfo, AppServiceLifetime } from "..";
+import { AppServiceInfoRegistry } from "..";
+import { AbstractType } from "..";
 
 /**
  * Marks a class as being contract for transient application services.
@@ -13,14 +13,16 @@ export function AppServiceContract(
     {
         allowMultiple = false,
         contractType,
-        registry
+        registry,
+        ...args
     }: {
         allowMultiple?: boolean;
         contractType?: AbstractType;
         registry?: AppServiceInfoRegistry;
+        [key: string]: any;
     } = {}) {
     return (type: AbstractType) => {
-        const appServiceInfo = new AppServiceInfo({ contractType: contractType ?? type, allowMultiple, lifetime: AppServiceLifetime.Transient });
+        const appServiceInfo = new AppServiceInfo({ contractType: contractType ?? type, allowMultiple, lifetime: AppServiceLifetime.Transient, ...args });
         (registry ?? AppServiceInfoRegistry.Instance).registerServiceContract(type, appServiceInfo);
     };
 }
@@ -36,14 +38,16 @@ export function SingletonAppServiceContract(
     {
         allowMultiple = false,
         contractType,
-        registry
+        registry,
+        ...args
     }: {
         allowMultiple?: boolean;
         contractType?: AbstractType;
         registry?: AppServiceInfoRegistry;
+        [key: string]: any;
     } = {}) {
     return (type: AbstractType) => {
-        const appServiceInfo = new AppServiceInfo({ contractType: contractType ?? type, allowMultiple, lifetime: AppServiceLifetime.Singleton });
+        const appServiceInfo = new AppServiceInfo({ contractType: contractType ?? type, allowMultiple, lifetime: AppServiceLifetime.Singleton, ...args });
         (registry ?? AppServiceInfoRegistry.Instance).registerServiceContract(type, appServiceInfo);
     };
 }

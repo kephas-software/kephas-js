@@ -1,5 +1,5 @@
-import { Type } from './type'
-import { Serializable } from './serialization/serializable';
+import { Type } from '.'
+import { Serializable } from '.';
 
 /**
  * Class decorator for annotating the namespace of a class.

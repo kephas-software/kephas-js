@@ -1,6 +1,6 @@
-import { SingletonAppServiceContract } from "../services/appServiceContract";
-import { AppService } from "../services/appService";
-import { Priority } from "../services/composition/appServiceMetadata";
+import { SingletonAppServiceContract } from "..";
+import { AppService } from "..";
+import { Priority } from "..";
 
 /**
  * Enumerates the logging levels.

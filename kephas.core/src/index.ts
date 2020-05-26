@@ -1,15 +1,24 @@
-export * from './argumentError';
-export * from './deferrable';
-export * from './sealed';
+/*
+    Warning! Do not change the export order, otherwise the tests will not run.
+*/
+
 export * from './diagnostics/contracts/requires';
-export * from './logging/logger';
-export * from './namespace';
-export * from './serialization/serializable';
+export * from './argumentError';
+export * from './sealed';
+
+export * from './services/serviceError';
 export * from './services/composition/appServiceMetadata';
-export * from './services/appService';
-export * from './services/appServiceContract';
 export * from './services/appServiceInfo';
 export * from './services/appServiceInfoRegistry';
-export * from './services/serviceError';
+export * from './services/appService';
+export * from './services/appServiceContract';
+
+export * from './logging/logger';
+
+export * from './composition/compositionError';
+export * from './composition/compositionContext';
+export * from './serialization/serializable';
+export * from './deferrable';
+export * from './namespace';
 export * from './type';
 

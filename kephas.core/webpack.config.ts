@@ -6,6 +6,9 @@ const config: webpack.Configuration = {
     entry: {
         'index': './src/index.ts'
     },
+    externals: {
+        "reflect-metadata": "reflect-metadata"
+    },
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].js',

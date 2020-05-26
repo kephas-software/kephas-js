@@ -6,6 +6,9 @@ const config: webpack.Configuration = {
     entry: {
         'index': './src/index.ts'
     },
+    externals: {
+        "@kephas/core": "@kephas/core"
+    },
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].js',

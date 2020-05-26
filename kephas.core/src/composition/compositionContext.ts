@@ -121,7 +121,7 @@ export class CompositionContext {
         }
 
         const serviceType = serviceMetadata.serviceType!;
-        const paramTypes: Type<any>[] = Reflect.getOwnMetadata("design:paramTypes", serviceType);
+        const paramTypes: Type<any>[] = Reflect.getOwnMetadata("design:paramtypes", serviceType);
         if (paramTypes) {
             const ctorArgs = paramTypes.map(t => this.get(t));
             return new serviceType(...ctorArgs);

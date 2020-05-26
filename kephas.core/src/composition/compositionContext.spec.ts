@@ -42,7 +42,7 @@ describe('CompositionContext.get', () => {
             }
         }
 
-        Reflect.defineMetadata("design:paramTypes", [ CompositionContext ], Test);
+        Reflect.defineMetadata("design:paramtypes", [ CompositionContext ], Test);
 
         let injector = new CompositionContext(testRegistry);
         let test = injector.get(Test);
@@ -60,7 +60,7 @@ describe('CompositionContext.get', () => {
             }
         }
 
-        Reflect.defineMetadata("design:paramTypes", [ CompositionContext ], Test);
+        Reflect.defineMetadata("design:paramtypes", [ CompositionContext ], Test);
 
         let injector = new CompositionContext(testRegistry);
         let test = injector.get(Test);
@@ -78,7 +78,7 @@ describe('CompositionContext.get', () => {
             }
         }
 
-        Reflect.defineMetadata("design:paramTypes", [ CompositionContext ], Test);
+        Reflect.defineMetadata("design:paramtypes", [ CompositionContext ], Test);
 
         let injector = new CompositionContext(testRegistry);
         let test = injector.get(Test);

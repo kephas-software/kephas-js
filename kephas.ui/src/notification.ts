@@ -9,6 +9,13 @@ import { SingletonAppServiceContract, AppService, Priority, Logger, LogLevel } f
 @AppService({ overridePriority: Priority.Low })
 @SingletonAppServiceContract()
 export class Notification {
+    /**
+     * Gets or sets the logger.
+     *
+     * @protected
+     * @type {Logger}
+     * @memberof Notification
+     */
     protected logger: Logger;
 
     /**

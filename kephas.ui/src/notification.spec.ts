@@ -1,7 +1,8 @@
-import { AppServiceInfoRegistry } from '@kephas/core';
-import { Notification } from './notification';
 import { expect } from 'chai';
 import 'mocha';
+
+import { AppServiceInfoRegistry } from '@kephas/core';
+import { Notification } from '.';
 
 describe('Notification.composition', () => {
     it('should be registered as service', () => {

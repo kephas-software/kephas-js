@@ -2,23 +2,23 @@
     Warning! Do not change the export order, otherwise the tests will not run.
 */
 
-export * from './diagnostics/contracts/requires';
-export * from './argumentError';
-export * from './sealed';
+export { Requires } from './diagnostics/contracts/requires';
+export { ArgumentError } from './argumentError';
+export { Sealed } from './sealed';
 
-export * from './services/serviceError';
-export * from './services/composition/appServiceMetadata';
-export * from './services/appServiceInfo';
-export * from './services/appServiceInfoRegistry';
-export * from './services/appService';
-export * from './services/appServiceContract';
+export { ServiceError } from './services/serviceError';
+export { Priority, AppServiceMetadata } from './services/composition/appServiceMetadata';
+export { AppServiceLifetime, AppServiceInfo } from './services/appServiceInfo';
+export { AppServiceInfoRegistry } from './services/appServiceInfoRegistry';
+export { AppService } from './services/appService';
+export { AppServiceContract, SingletonAppServiceContract } from './services/appServiceContract';
 
-export * from './logging/logger';
+export { LogLevel, Logger } from './logging/logger';
 
-export * from './composition/compositionError';
-export * from './composition/compositionContext';
-export * from './serialization/serializable';
-export * from './deferrable';
-export * from './namespace';
-export * from './type';
+export { CompositionError } from './composition/compositionError';
+export { CompositionContext } from './composition/compositionContext';
+export { Serializable } from './serialization/serializable';
+export { Deferrable } from './deferrable';
+export { Namespace } from './namespace';
+export { AbstractType, Type } from './type';
 

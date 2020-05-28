@@ -1,6 +1,6 @@
 {
   "name": "@kephas/angular-ace",
-  "version": "0.1.20",
+  "version": "0.1.21",
   "description": "Provides the integration of the Ace editor with Kephas and Angular.",
   "type": "module",
   "main": "dist/index.js",
@@ -40,7 +40,7 @@
     "@angular/core": "^8.2.7",
     "@angular/forms": "^8.2.7",
     "@angular/platform-browser": "^8.2.7",
-    "@kephas/angular": "^0.1.20",
+    "@kephas/angular": "^0.1.21",
     "@kephas/core": "^0.1.20",
     "@kephas/ui": "^0.1.20",
     "rxjs": "^6.5.5",

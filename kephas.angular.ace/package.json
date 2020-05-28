@@ -1,13 +1,22 @@
 {
   "name": "@kephas/angular-ace",
-  "version": "0.1.14",
+  "version": "0.1.20",
   "description": "Provides the integration of the Ace editor with Kephas and Angular.",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "test": "webpack & mocha -r ts-node/register --require reify src/**/*.spec.ts",
+    "test": "webpack & mocha",
     "build": "webpack"
+  },
+  "mocha": {
+    "require": [
+      "ts-node/register",
+      "reify"
+    ],
+    "spec": [
+      "src/**/*.spec.ts"
+    ]
   },
   "repository": {
     "type": "git",
@@ -31,26 +40,29 @@
     "@angular/core": "^8.2.7",
     "@angular/forms": "^8.2.7",
     "@angular/platform-browser": "^8.2.7",
-    "@kephas/angular": "^0.1.14",
-    "@kephas/core": "^0.1.13",
-    "@kephas/ui": "^0.1.13",
+    "@kephas/angular": "^0.1.20",
+    "@kephas/core": "^0.1.20",
+    "@kephas/ui": "^0.1.20",
     "rxjs": "^6.5.5",
     "zone.js": "^0.9.1",
     "brace": "^0.11.1"
   },
   "devDependencies": {
     "@types/chai": "^4.2.11",
+    "@types/jsdom": "^16.2.3",
     "@types/mocha": "^7.0.2",
     "@types/webpack": "^4.41.13",
+    "@angular/compiler": "^8.2.7",
     "chai": "^4.2.0",
+    "jsdom": "^16.2.2",
     "mocha": "^7.1.2",
+    "path": "^0.12.7",
     "reify": "^0.20.12",
+    "ts-loader": "^7.0.4",
     "ts-node": "^8.10.1",
     "typescript": "^3.9.2",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11",
-    "webpack-dts-bundle": "^0.0.2",
-    "path": "^0.12.7",
-    "ts-loader": "^7.0.4"
+    "webpack-dts-bundle": "^0.0.2"
   }
 }

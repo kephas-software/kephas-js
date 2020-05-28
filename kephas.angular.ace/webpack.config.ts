@@ -11,6 +11,7 @@ const config: webpack.Configuration = {
         "@angular/core": "@angular/core",
         "@angular/forms": "@angular/forms",
         "@angular/platform-browser": "@angular/platform-browser",
+        "@kephas/angular": "@kephas/angular",
         "@kephas/core": "@kephas/core",
         "@kephas/reflection": "@kephas/reflection",
         "@kephas/ui": "@kephas/ui",

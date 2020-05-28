@@ -24,7 +24,7 @@ export class TypeInfoRegistry implements ITypeInfoRegistry {
      * @memberof TypeInfoRegistry
      */
     static get Instance(): ITypeInfoRegistry {
-        return TypeInfoRegistry._instance ?? (TypeInfoRegistry._instance = new TypeInfoRegistry());
+        return TypeInfoRegistry._instance || (TypeInfoRegistry._instance = new TypeInfoRegistry());
     }
 
     private static _instance: ITypeInfoRegistry;
@@ -74,8 +74,8 @@ export class TypeInfoRegistry implements ITypeInfoRegistry {
         }
 
         for (let type of types) {
-            const typeKey = type.fullName ?? type.name;
-            if (this._typesByFullName[type.fullName ?? type.name]) {
+            const typeKey = type.fullName || type.name;
+            if (this._typesByFullName[typeKey]) {
                 throw new ReflectionError(`The type ${typeKey} is already registered.`);
             }
 

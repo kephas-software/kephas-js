@@ -204,14 +204,15 @@ export class TypeInfo extends ElementInfo implements ITypeInfo {
         }) {
         super({
             name: TypeInfo._getName(name, type),
-            fullName: fullName ?? TypeInfo._getFullName(name, namespace, type),
+            fullName: fullName || TypeInfo._getFullName(name, namespace, type),
             displayInfo,
             registry,
             ...args
         });
         this.type = type;
         this.namespace = TypeInfo._getNamespace(namespace, type);
-        this.properties = properties?.map(p => new PropertyInfo({ ...p, declaringType: this, registry })) ?? [];
+        properties = properties && properties.map(p => new PropertyInfo({ ...p, declaringType: this, registry }));
+        this.properties = (properties || []) as IPropertyInfo[];
         if (this.type) {
             Serializable.setTypeName(this.type, this.fullName);
         }
@@ -238,6 +239,6 @@ export class TypeInfo extends ElementInfo implements ITypeInfo {
     }
 
     private static _getNamespace(namespace?: string, type?: Type<any>): string | undefined {
-        return namespace ?? (type ? Serializable.getTypeNamespace(type) : undefined);
+        return namespace || (type ? Serializable.getTypeNamespace(type) : undefined);
     }
 }

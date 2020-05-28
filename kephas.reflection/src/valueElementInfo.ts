@@ -21,7 +21,7 @@ export abstract class ValueElementInfo extends ElementInfo implements IValueElem
      * @memberof ValueElementInfo
      */
     get valueType(): ITypeInfo {
-        return this._valueType ?? (this._valueType = this._valueTypeGetter!());
+        return this._valueType || (this._valueType = this._valueTypeGetter!());
     }
 
     /**
@@ -52,10 +52,10 @@ export abstract class ValueElementInfo extends ElementInfo implements IValueElem
         }) {
         super({ name, fullName, displayInfo, registry, ...args });
         if (!valueType) {
-            this._valueTypeGetter = () => (this._valueType ?? (this._valueType = this.getValueType('any', registry)));
+            this._valueTypeGetter = () => (this._valueType || (this._valueType = this.getValueType('any', registry)));
         }
         else if (typeof valueType == 'string') {
-            this._valueTypeGetter = () => (this._valueType ?? (this._valueType = this.getValueType(<string><unknown>valueType, registry)));
+            this._valueTypeGetter = () => (this._valueType || (this._valueType = this.getValueType(<string><unknown>valueType, registry)));
         }
         else {
             this._valueType = valueType;
@@ -72,6 +72,6 @@ export abstract class ValueElementInfo extends ElementInfo implements IValueElem
      * @memberof ValueElementInfo
      */
     protected getValueType(valueType: string, registry?: ITypeInfoRegistry) {
-        return (registry ?? TypeInfoRegistry.Instance).getType(valueType);
+        return (registry || TypeInfoRegistry.Instance).getType(valueType);
     }
 }

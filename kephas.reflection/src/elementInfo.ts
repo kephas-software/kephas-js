@@ -58,7 +58,7 @@ export abstract class ElementInfo implements IElementInfo {
         }
 
         this.name = name;
-        this.fullName = fullName ?? this.name;
+        this.fullName = fullName || this.name;
         this.displayInfo = displayInfo || new DisplayInfo();
         Object.assign(this, args);
     }

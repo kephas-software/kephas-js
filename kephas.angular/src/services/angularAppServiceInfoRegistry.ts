@@ -11,19 +11,6 @@ import "reflect-metadata";
 export class AngularAppServiceInfoRegistry {
 
     /**
-     * Gets or sets the modules which should be by default imported for extracting the service metadata.
-     *
-     * @static
-     * @type {string[]}
-     * @memberof AngularAppServiceInfoRegistry
-     */
-    public static defaultModules: string[] = [
-        "@kephas/core",
-        "@kephas/reflection",
-        "@kephas/ui",
-    ]
-
-    /**
      * Creates an instance of AngularAppServiceInfoRegistry.
      * 
      * @param {AppServiceInfoRegistry} serviceRegistry The service registry.
@@ -39,10 +26,7 @@ export class AngularAppServiceInfoRegistry {
      * @param {...string[]} modules The modules to import to collect the service metadata.
      * @memberof AngularAppServiceInfoRegistry
      */
-    public registerServices(...modules: string[]) {
-        const toImportModules = new Set([...AngularAppServiceInfoRegistry.defaultModules, ...modules]);
-        toImportModules.forEach(module => import(module));
-
+    public registerServices() {
         for (let serviceMetadata of this.serviceRegistry.services) {
             Injectable({ providedIn: 'root' })(serviceMetadata.serviceType!);
         }

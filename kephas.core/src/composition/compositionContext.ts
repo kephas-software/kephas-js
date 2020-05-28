@@ -23,7 +23,7 @@ export class CompositionContext {
      * @memberof CompositionContext
      */
     constructor(registry?: AppServiceInfoRegistry) {
-        this._registry = registry ? registry : AppServiceInfoRegistry.Instance;
+        this._registry = registry || AppServiceInfoRegistry.Instance;
         if (registry && registry != AppServiceInfoRegistry.Instance) {
             registry.registerServiceContract(CompositionContext, new AppServiceInfo({
                 contractType: CompositionContext,
@@ -37,7 +37,7 @@ export class CompositionContext {
             }))
         }
         else {
-            var serviceMetadata = registry ? registry.getServiceMetadata(CompositionContext) : null;
+            var serviceMetadata = registry && registry.getServiceMetadata(CompositionContext);
             serviceMetadata!["_serviceInstance"] = this;
         }
     }

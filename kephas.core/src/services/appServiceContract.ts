@@ -23,7 +23,7 @@ export function AppServiceContract(
     } = {}) {
     return (type: AbstractType) => {
         const appServiceInfo = new AppServiceInfo({ contractType: contractType ? contractType : type, allowMultiple, lifetime: AppServiceLifetime.Transient, ...args });
-        (registry ? registry : AppServiceInfoRegistry.Instance).registerServiceContract(type, appServiceInfo);
+        (registry || AppServiceInfoRegistry.Instance).registerServiceContract(type, appServiceInfo);
     };
 }
 
@@ -48,6 +48,6 @@ export function SingletonAppServiceContract(
     } = {}) {
     return (type: AbstractType) => {
         const appServiceInfo = new AppServiceInfo({ contractType: contractType ? contractType : type, allowMultiple, lifetime: AppServiceLifetime.Singleton, ...args });
-        (registry ? registry : AppServiceInfoRegistry.Instance).registerServiceContract(type, appServiceInfo);
+        (registry || AppServiceInfoRegistry.Instance).registerServiceContract(type, appServiceInfo);
     };
 }

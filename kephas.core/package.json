@@ -1,13 +1,17 @@
 {
   "name": "@kephas/core",
-  "version": "0.1.13",
+  "version": "0.1.20",
   "description": "Provides a common infrastructure for all the other Kephas Framework components: ambient services, dynamic reflection, composition, application management, and others.",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "test": "webpack & mocha -r ts-node/register --require reify src/**/*.spec.ts",
+    "test": "webpack & mocha",
     "build": "webpack"
+  },
+  "mocha": {
+    "require": [ "ts-node/register", "reify" ],
+    "spec": [ "src/**/*.spec.ts" ]
   },
   "repository": {
     "type": "git",

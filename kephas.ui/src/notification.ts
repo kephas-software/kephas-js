@@ -35,8 +35,8 @@ export class Notification {
      */
     public notifyError(data: any) {
         // debugger;
-        const severityString = data.severity || 'Error';
-        const severity = severityString === 'Warning' ? LogLevel.Warning : LogLevel.Error;
+        const severityString = data.severity || LogLevel[LogLevel.Error];
+        const severity = severityString === LogLevel[LogLevel.Warning] ? LogLevel.Warning : LogLevel.Error;
         this.show(this.formatData(data), severity);
     }
 
@@ -48,8 +48,8 @@ export class Notification {
      */
     public notifyWarning(data: any) {
         // debugger;
-        const severityString = data.severity || 'Warning';
-        const severity = severityString === 'Warning' ? LogLevel.Warning : LogLevel.Error;
+        const severityString = data.severity || LogLevel[LogLevel.Warning];
+        const severity = severityString === LogLevel[LogLevel.Warning] ? LogLevel.Warning : LogLevel.Error;
         this.show(this.formatData(data), severity);
     }
 

@@ -2,7 +2,7 @@ import {
     Input, ElementRef, ViewContainerRef
 } from '@angular/core';
 import { ControlValueAccessor } from "@angular/forms";
-import { WidgetBase } from './widgetBase';
+import { WidgetBase } from '..';
 
 /**
  * Provides a base implementation for value editors.

@@ -120,7 +120,8 @@ export class AppServiceInfo {
             }
 
             if (this._services[0].overridePriority == service.overridePriority) {
-                return new ServiceError(`Multiple services registered with the same override priority '${service.overridePriority}' as singleton: '${this._services[0].serviceType?.name}' and '${service.serviceType?.name}'.`);
+                const firstServiceType = this._services[0].serviceType;
+                return new ServiceError(`Multiple services registered with the same override priority '${service.overridePriority}' as singleton: '${firstServiceType && firstServiceType.name}' and '${service.serviceType && service.serviceType.name}'.`);
             }
 
             return false;

@@ -117,7 +117,7 @@ export class AppServiceInfoRegistry {
             throw new ServiceError(`The service contract for '${type.name}' could not be identified. Check that the service or one of its bases is decorated as ${AppServiceContract.name} or ${SingletonAppServiceContract.name}.`);
         }
 
-        metadata = metadata ?? new AppServiceMetadata();
+        metadata = metadata ? metadata : new AppServiceMetadata();
         metadata["_serviceType"] = type;
         metadata["_serviceContract"] = appServiceInfo;
 
@@ -201,7 +201,8 @@ export class AppServiceInfoRegistry {
                 return contract;
             }
 
-            type = Object.getPrototypeOf(type.prototype)?.constructor;
+            const typePrototype = Object.getPrototypeOf(type.prototype);
+            type = typePrototype && typePrototype.constructor;
         }
 
         return null;

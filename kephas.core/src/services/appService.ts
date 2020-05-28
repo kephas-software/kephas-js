@@ -25,6 +25,6 @@ export function AppService(
         registry?: AppServiceInfoRegistry;
     } = {}) {
     return (type: Type<any>) => {
-        (registry ?? AppServiceInfoRegistry.Instance).registerService(type, new AppServiceMetadata({ overridePriority, processingPriority, serviceName, serviceType: type }));
+        (registry ? registry : AppServiceInfoRegistry.Instance).registerService(type, new AppServiceMetadata({ overridePriority, processingPriority, serviceName, serviceType: type }));
     };
 }

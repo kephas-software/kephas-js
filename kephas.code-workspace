@@ -27,6 +27,7 @@
 		},
 		"mocha.requires": [
 			"ts-node/register"
-		]
+		],
+		"typescript.tsdk": "kephas.core\\node_modules\\typescript\\lib"
 	}
 }

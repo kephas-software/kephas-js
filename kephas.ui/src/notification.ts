@@ -24,7 +24,7 @@ export class Notification {
      * @memberof Notification
      */
     constructor(logger?: Logger) {
-        this.logger = logger ?? new Logger();
+        this.logger = logger || new Logger();
     }
 
     /**

@@ -29,7 +29,6 @@ interface IAppServiceInfo {
  * @export
  * @class AppServiceInfoRegistry
  */
-@Sealed
 export class AppServiceInfoRegistry {
     /**
      * Gets the static instance of the registry.

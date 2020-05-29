@@ -1,6 +1,5 @@
 import { Priority, AppService, SingletonAppServiceContract, Requires } from '@kephas/core';
-import { IMessage } from './interfaces';
-import { MessagingError } from './messagingError';
+import { IMessage, MessagingError } from '.';
 
 /**
  * The messaging processor.

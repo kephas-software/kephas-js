@@ -16,6 +16,7 @@ const config: webpack.Configuration = {
         "@kephas/reflection": "@kephas/reflection",
         "@kephas/ui": "@kephas/ui",
         "rxjs": "rxjs",
+        "rxjs/operators": "rxjs/operators",
         "zone.js": "zone.js",
         "brace": "brace",
         "brace/theme/monokai": "brace/theme/monokai",

@@ -88,10 +88,12 @@ export class AceEditor extends ValueEditorBase<string | {} | null>
      * @memberof AceEditor
      */
     @Input() set options(value: any) {
-        this.editor?.setOptions(value || {});
+        if (this.editor) {
+            this.editor.setOptions(value || {});
+        }
     }
     get options(): any {
-        return this.editor?.getOptions();
+        return this.editor && this.editor.getOptions();
     }
 
     /**
@@ -207,8 +209,8 @@ export class AceEditor extends ValueEditorBase<string | {} | null>
             });
 
             changedTargets.forEach(t => {
-                if (this._isVisible(t as Element)) {
-                    this.editor?.resize(true);
+                if (this._isVisible(t as Element) && this.editor) {
+                    this.editor.resize(true);
                 }
             });
         });
@@ -268,10 +270,10 @@ export class AceEditor extends ValueEditorBase<string | {} | null>
             }
             stringValue = value;
         } else {
-            stringValue = value?.toString();
+            stringValue = value && value.toString();
         }
 
-        this.editor.setValue(stringValue ?? '');
+        this.editor.setValue(stringValue || '');
         this.editor.clearSelection();
     }
 
@@ -381,7 +383,7 @@ export class AceEditor extends ValueEditorBase<string | {} | null>
      * @memberof AceEditor
      */
     protected updateEditor(value: string): boolean {
-        value = value ?? '';
+        value = value || '';
         return super.updateEditor(value);
     }
 

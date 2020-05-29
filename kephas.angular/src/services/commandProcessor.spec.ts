@@ -10,6 +10,44 @@ import { of, throwError } from 'rxjs';
 
 
 describe('CommandProcessor.process', () => {
+    it('should call the proper URL with proper base URL ending', async () => {
+        let httpClient = createStubInstance(HttpClient);
+        httpClient.get.returns(of({ severity: "Info", message: "Test" }));
+
+        let notification = createStubInstance(Notification);
+
+        let logger = createStubInstance(Logger);
+        let command = new CommandProcessor(
+            { baseUrl: "https://my.server.com/" },
+            <HttpClient><any>httpClient,
+            <Notification><any>notification,
+            <Logger><any>logger);
+
+        await command.process("test", { hi: "there" }).toPromise();
+
+        expect(httpClient.get.callCount).is.equal(1);
+        expect(httpClient.get.getCall(0).args[0]).is.equal('https://my.server.com/api/cmd/test/?hi=there');
+    });
+
+    it('should call the proper URL without proper base URL ending', async () => {
+        let httpClient = createStubInstance(HttpClient);
+        httpClient.get.returns(of({ severity: "Info", message: "Test" }));
+
+        let notification = createStubInstance(Notification);
+
+        let logger = createStubInstance(Logger);
+        let command = new CommandProcessor(
+            { baseUrl: "https://my.server.com" },
+            <HttpClient><any>httpClient,
+            <Notification><any>notification,
+            <Logger><any>logger);
+
+        await command.process("test", { hi: "there" }).toPromise();
+
+        expect(httpClient.get.callCount).is.equal(1);
+        expect(httpClient.get.getCall(0).args[0]).is.equal('https://my.server.com/api/cmd/test/?hi=there');
+    });
+
     it('should fail and notify when get fails', async () => {
         let httpClient = createStubInstance(HttpClient);
         httpClient.get.returns(throwError(new Error("Bad request.")));

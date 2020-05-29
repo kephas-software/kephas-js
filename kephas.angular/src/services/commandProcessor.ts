@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { LogLevel, AppService, SingletonAppServiceContract, Priority, Logger } from "@kephas/core";
 import { Notification } from "@kephas/ui";
 import { AppSettings } from "..";
@@ -122,15 +122,9 @@ export class CommandProcessor {
      * @param {CommandOptions} [options] Optional. Options controlling the command processing.
      * @returns {Promise{T}} A promise of the result.
      */
-    process<T extends CommandResponse>(command: string, args?: {}, options?: CommandOptions): Observable<T> {
-        let url = `${this.appSettings.baseUrl}${this.baseRoute}${command}/`;
-        if (args) {
-            url = url + Object.keys(args)
-                .map(key => `${key}=${args[key]}`)
-                .join("&");
-        }
-
-        var obs = this.http.get<T>(url);
+    public process<T extends CommandResponse>(command: string, args?: {}, options?: CommandOptions): Observable<T> {
+        let url = this.getHttpGetUrl(command, args, options);
+        var obs = this.http.get<T>(url, this.getHttpGetOptions(command, args, options));
         if (options && options.retries) {
             obs = obs.pipe(
                 retry(options.retries),
@@ -144,6 +138,68 @@ export class CommandProcessor {
         }
 
         return obs;
+    }
+
+    /**
+     * Gets the HTTP GET URL.
+     *
+     * @protected
+     * @param {string} command The command.
+     * @param {{}} [args] Optional. The arguments.
+     * @param {CommandOptions} [options] Optional. Options controlling the command processing.
+     * @returns {string} The HTTP GET URL.
+     * @memberof CommandProcessor
+     */
+    protected getHttpGetUrl(command: string, args?: {}, options?: CommandOptions): string {
+        let baseUrl = this.appSettings.baseUrl;
+        if (!baseUrl.endsWith('/')) {
+            baseUrl = baseUrl + '/';
+        }
+
+        let url = `${baseUrl}${this.baseRoute}${command}/`;
+        if (args) {
+            url = url + '?' + Object.keys(args)
+                .map(key => `${key}=${args[key]}`)
+                .join("&");
+        }
+
+        return url;
+    }
+
+    /**
+     * Gets the HTTP GET options. By default it does not return any options.
+     *
+     * @protected
+     * @param {string} command The command.
+     * @param {{}} [args] Optional. The arguments.
+     * @param {CommandOptions} [options] Optional. Options controlling the command processing.
+     * @returns {({
+     *             headers?: HttpHeaders | {
+     *                 [header: string]: string | string[];
+     *             };
+     *             observe?: 'body';
+     *             params?: HttpParams | {
+     *                 [param: string]: string | string[];
+     *             };
+     *             reportProgress?: boolean;
+     *             responseType?: 'json';
+     *             withCredentials?: boolean;
+     *         } | undefined)} The options or undefined.
+     * @memberof CommandProcessor
+     */
+    protected getHttpGetOptions(command: string, args?: {}, options?: CommandOptions): {
+        headers?: HttpHeaders | {
+            [header: string]: string | string[];
+        };
+        observe?: 'body';
+        params?: HttpParams | {
+            [param: string]: string | string[];
+        };
+        reportProgress?: boolean;
+        responseType?: 'json';
+        withCredentials?: boolean;
+    } | undefined {
+        return undefined;
     }
 
     private _processResponse<T extends CommandResponse>(response: T, options?: CommandOptions): T {

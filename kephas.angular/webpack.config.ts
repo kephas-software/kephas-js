@@ -8,6 +8,7 @@ const config: webpack.Configuration = {
     },
     externals: {
         "@angular/common": "@angular/common",
+        "@angular/common/http": "@angular/common/http",
         "@angular/core": "@angular/core",
         "@angular/forms": "@angular/forms",
         "@angular/platform-browser": "@angular/platform-browser",
@@ -16,6 +17,7 @@ const config: webpack.Configuration = {
         "@kephas/ui": "@kephas/ui",
         "reflect-metadata": "reflect-metadata",
         "rxjs": "rxjs",
+        "rxjs/operators": "rxjs/operators",
         "zone.js": "zone.js"
     },
     output: {

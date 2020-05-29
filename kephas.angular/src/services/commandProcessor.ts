@@ -1,20 +1,22 @@
 import { HttpClient } from "@angular/common/http";
-import { LogLevel, AppService, SingletonAppServiceContract, Priority } from "@kephas/core";
+import { LogLevel, AppService, SingletonAppServiceContract, Priority, Logger } from "@kephas/core";
 import { Notification } from "@kephas/ui";
 import { AppSettings } from "..";
+import { Observable, ObservableInput } from "rxjs";
+import { retry, map, catchError } from "rxjs/operators";
 
 /**
- * The base message response.
+ * The base command response.
  *
  * @export
- * @interface MessageResponse
+ * @interface CommandResponse
  */
-export interface MessageResponse {
+export interface CommandResponse {
     /**
      * The severity.
      *
      * @type {LogLevel}
-     * @memberof MessageResponse
+     * @memberof CommandResponse
      */
     severity: LogLevel;
 
@@ -22,7 +24,7 @@ export interface MessageResponse {
      * The message.
      *
      * @type {string}
-     * @memberof MessageResponse
+     * @memberof CommandResponse
      */
     message?: string;
 
@@ -30,14 +32,54 @@ export interface MessageResponse {
 }
 
 /**
+ * Signals that a command error occurred.
+ *
+ * @export
+ * @class CommandError
+ * @extends {Error}
+ */
+export class CommandError extends Error {
+    /**
+     * Creates an instance of CommandError.
+     * @param {string} message The error message.
+     * @param {CommandResponse} [response] Optional. The command response.
+     * @memberof CommandError
+     */
+    constructor(message: string, public readonly response?: CommandResponse) {
+        super(message);
+    }
+}
+
+/**
  * Options for controlling the command execution.
  *
  * @export
- * @interface ProcessOptions
+ * @interface CommandOptions
  */
-export interface ProcessOptions {
-    hideWarnings?: boolean;
-    hideErrors?: boolean;
+export interface CommandOptions {
+    /**
+     * Indicates whether warnings should be notified. Default is true.
+     *
+     * @type {boolean}
+     * @memberof CommandOptions
+     */
+    notifyWarnings?: boolean;
+
+    /**
+     * Indicates whether errors should be notified. Default is true.
+     *
+     * @type {boolean}
+     * @memberof CommandOptions
+     */
+    notifyErrors?: boolean;
+
+    /**
+     * Indicates the number of retries if the operation fails. Default is none.
+     *
+     * @type {number}
+     * @memberof CommandOptions
+     */
+    retries?: number;
 }
 
 /**
@@ -66,9 +108,10 @@ export class CommandProcessor {
    * @param {AppSettings} appSettings The application settings.
    */
     constructor(
-        protected notification: Notification,
+        protected appSettings: AppSettings,
         protected http: HttpClient,
-        protected appSettings: AppSettings) {
+        protected notification: Notification,
+        protected logger: Logger) {
     }
 
     /**
@@ -76,10 +119,10 @@ export class CommandProcessor {
      * @tparam T The message response type.
      * @param {string} command The command.
      * @param {{}} [args] Optional. The arguments.
-     * @param {ProcessOptions} [options] Optional. Options controlling the processing.
+     * @param {CommandOptions} [options] Optional. Options controlling the command processing.
      * @returns {Promise{T}} A promise of the result.
      */
-    async processAsync<T extends MessageResponse>(command: string, args?: {}, options?: ProcessOptions): Promise<T> {
+    process<T extends CommandResponse>(command: string, args?: {}, options?: CommandOptions): Observable<T> {
         let url = `${this.appSettings.baseUrl}${this.baseRoute}${command}/`;
         if (args) {
             url = url + Object.keys(args)
@@ -87,30 +130,50 @@ export class CommandProcessor {
                 .join("&");
         }
 
-        try {
-            let response = await this.http.get<T>(url).toPromise();
-            if (typeof response.severity === "string") {
-                response.severity = LogLevel[response.severity as string];
-            }
+        var obs = this.http.get<T>(url);
+        if (options && options.retries) {
+            obs = obs.pipe(
+                retry(options.retries),
+                map(response => this._processResponse(response, options)),
+                catchError(error => this._processError<T>(error, options)));
+        }
+        else {
+            obs = obs.pipe(
+                map(response => this._processResponse(response, options)),
+                catchError(error => this._processError<T>(error, options)));
+        }
 
-            if (response.severity != LogLevel.Info && !options?.hideErrors) {
-                this.notification.notifyError(response);
-            }
-            else if (response.severity == LogLevel.Warning && !options?.hideWarnings) {
+        return obs;
+    }
+
+    private _processResponse<T extends CommandResponse>(response: T, options?: CommandOptions): T {
+        if (typeof response.severity === "string") {
+            response.severity = LogLevel[response.severity as string];
+        }
+
+        if (response.severity <= LogLevel.Error) {
+            throw new CommandError(response.message!, response);
+        }
+
+        if (response.severity == LogLevel.Warning) {
+            this.logger.log(response.severity, null, response.message!);
+            if (!(options && (options.notifyWarnings == undefined || options.notifyWarnings))) {
                 this.notification.notifyWarning(response);
             }
-
-            if (response.severity <= LogLevel.Error) {
-                throw new Error(response.message);
-            }
-            return response;
         }
-        catch (error) {
-            if (!options?.hideErrors) {
-                this.notification.notifyError(error);
-            }
 
-            throw error;
+        if (response.severity <= LogLevel.Error) {
+            throw new Error(response.message);
         }
+        return response;
+    }
+
+    private _processError<T extends CommandResponse>(error: any, options?: CommandOptions): ObservableInput<T> {
+        this.logger.error(error);
+        if (!(options && (options.notifyErrors == undefined || options.notifyErrors))) {
+            this.notification.notifyError(error);
+        }
+
+        throw error;
     }
 }

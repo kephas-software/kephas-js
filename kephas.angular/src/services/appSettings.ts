@@ -17,6 +17,8 @@ export class AppSettings {
      * @memberof AppSettings
      */
     get baseUrl(): string {
-        return document.getElementsByTagName('base')[0].href ?? document.baseURI ?? "/";
+        const baseQuery = document.getElementsByTagName('base');
+        const baseElement = baseQuery && baseQuery[0];
+        return (baseElement && baseElement.href) || document.baseURI || "/";
     }
 }

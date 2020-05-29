@@ -1,4 +1,4 @@
-import { DisplayInfo } from "./displayInfo";
+import { DisplayInfo } from ".";
 import { Type } from "@kephas/core";
 
 /**

@@ -1,8 +1,7 @@
 import { expect } from 'chai';
 import 'mocha';
 
-import { LogLevel, Logger, AppServiceInfoRegistry } from '..';
-import { AppService } from '../services/appService';
+import { LogLevel, Logger, AppServiceInfoRegistry, AppService } from '..';
 
 describe('Logger.log', () => {
     class TestLogger extends Logger {

@@ -1,7 +1,7 @@
 import { ValueEditorBase, provideWidget, provideValueAccessor } from "@kephas/angular";
 import { ViewContainerRef, ElementRef, Component, Input } from '@angular/core'
 
-import ace from 'brace';
+import { Editor, edit } from 'brace';
 
 import 'brace/theme/monokai';
 
@@ -33,7 +33,7 @@ export class AceEditor extends ValueEditorBase<string | {} | null>
      * @type {ace.Editor}
      * @memberof AceEditor
      */
-    public editor?: ace.Editor;
+    public editor?: Editor;
 
     private _theme = 'monokai';
     private _editorType: string = 'json';
@@ -144,7 +144,7 @@ export class AceEditor extends ValueEditorBase<string | {} | null>
 
         const hostElement = (this.elementRef.nativeElement as HTMLElement).children[0] as HTMLElement;
 
-        this.editor = ace.edit(hostElement);
+        this.editor = edit(hostElement);
         this.editor.setShowPrintMargin(false);
         this.setEditorTheme(this._theme);
         this.setEditorType(this._editorType);
@@ -155,7 +155,7 @@ export class AceEditor extends ValueEditorBase<string | {} | null>
         this.editor.commands.addCommand({
             name: 'formatDocumentCommand',
             bindKey: { win: 'Ctrl-Shift-F', mac: 'Command-Shift-F' },
-            exec: (e: ace.Editor) => {
+            exec: (e: Editor) => {
                 this.formatDocument();
             }
         });

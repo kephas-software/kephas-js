@@ -12,7 +12,7 @@ import { of, throwError } from 'rxjs';
 describe('MessageProcessor.process', () => {
     it('should call the proper URL with proper base URL ending', async () => {
         let httpClient = createStubInstance(HttpClient);
-        httpClient.post.returns(of({ severity: "Info", message: "Test" }));
+        httpClient.post.returns(of({ message: { severity: "Info", message: "Test" } }));
 
         let notification = createStubInstance(Notification);
 
@@ -32,7 +32,7 @@ describe('MessageProcessor.process', () => {
 
     it('should call the proper URL without proper base URL ending', async () => {
         let httpClient = createStubInstance(HttpClient);
-        httpClient.post.returns(of({ severity: "Info", message: "Test" }));
+        httpClient.post.returns(of({ message: { severity: "Info", message: "Test" } }));
 
         let notification = createStubInstance(Notification);
 
@@ -79,7 +79,7 @@ describe('MessageProcessor.process', () => {
 
     it('should fail and notify when server returns error severity', async () => {
         let httpClient = createStubInstance(HttpClient);
-        httpClient.post.returns(of({ severity: "Error", message: "Test" }));
+        httpClient.post.returns(of({ exception: { severity: "Error", message: "Test" } }));
 
         let notification = createStubInstance(Notification);
 
@@ -106,7 +106,7 @@ describe('MessageProcessor.process', () => {
 
     it('should succeed and notify when server returns warning severity', async () => {
         let httpClient = createStubInstance(HttpClient);
-        httpClient.post.returns(of({ severity: "Warning", message: "Test" }));
+        httpClient.post.returns(of({ message: { severity: "Warning", message: "Test" } }));
 
         let notification = createStubInstance(Notification);
 
@@ -127,7 +127,7 @@ describe('MessageProcessor.process', () => {
 
     it('should succeed when server returns response', async () => {
         let httpClient = createStubInstance(HttpClient);
-        httpClient.post.returns(of({ severity: "Info", message: "Success!" }));
+        httpClient.post.returns(of({ message: { severity: "Info", message: "Success!" } }));
 
         let notification = createStubInstance(Notification);
 

@@ -124,7 +124,7 @@ export class CommandProcessor {
      */
     public process<T extends CommandResponse>(command: string, args?: {}, options?: CommandOptions): Observable<T> {
         let url = this.getHttpGetUrl(command, args, options);
-        var obs = this.http.get<T>(url, this.getHttpGetOptions(command, args, options));
+        let obs = this.http.get<T>(url, this.getHttpGetOptions(command, args, options));
         if (options && options.retries) {
             obs = obs.pipe(
                 retry(options.retries),

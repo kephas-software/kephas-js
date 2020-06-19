@@ -123,7 +123,7 @@ export class MessageProcessor {
      */
     public process<T extends MessageResponse>(message: {}, options?: MessageOptions): Observable<T> {
         let url = this.getHttpPostUrl(message, options);
-        var obs = this.http.post<T>(url, message, this.getHttpPostOptions(message, options));
+        let obs = this.http.post<T>(url, message, this.getHttpPostOptions(message, options));
         if (options && options.retries) {
             obs = obs.pipe(
                 retry(options.retries),

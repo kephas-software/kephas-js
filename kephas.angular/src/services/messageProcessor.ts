@@ -6,17 +6,17 @@ import { Observable, ObservableInput } from "rxjs";
 import { retry, map, catchError } from "rxjs/operators";
 
 /**
- * The base command response.
+ * The base message response.
  *
  * @export
- * @interface CommandResponse
+ * @interface ResponseMessage
  */
-export interface CommandResponse {
+export interface ResponseMessage {
     /**
      * The severity.
      *
      * @type {LogLevel}
-     * @memberof CommandResponse
+     * @memberof ResponseMessage
      */
     severity: LogLevel;
 
@@ -24,7 +24,7 @@ export interface CommandResponse {
      * The message.
      *
      * @type {string}
-     * @memberof CommandResponse
+     * @memberof ResponseMessage
      */
     message?: string;
 
@@ -32,36 +32,62 @@ export interface CommandResponse {
 }
 
 /**
- * Signals that a command error occurred.
+ * The error information.
  *
  * @export
- * @class CommandError
+ * @interface ErrorInfo
+ */
+export interface ErrorInfo {
+    /**
+     * The error severity.
+     *
+     * @type {LogLevel}
+     * @memberof ErrorInfo
+     */
+    severity: LogLevel;
+
+    /**
+     * The error message.
+     *
+     * @type {string}
+     * @memberof ErrorInfo
+     */
+    message?: string;
+
+    [key: string]: any;
+}
+
+/**
+ * Signals that a message error occurred.
+ *
+ * @export
+ * @class MessageError
  * @extends {Error}
  */
-export class CommandError extends Error {
+export class MessageError extends Error {
     /**
-     * Creates an instance of CommandError.
+     * Creates an instance of MessageError.
      * @param {string} message The error message.
-     * @param {CommandResponse} [response] Optional. The command response.
-     * @memberof CommandError
+     * @param {ErrorInfo} [response] Optional. The extended error information.
+     * @memberof MessageError
      */
-    constructor(message: string, public readonly response?: CommandResponse) {
+    constructor(message: string, public readonly response?: ErrorInfo) {
         super(message);
     }
 }
 
 /**
- * Options for controlling the command execution.
+ * Options for controlling the message processing.
  *
  * @export
- * @interface CommandOptions
+ * @interface MessageOptions
  */
-export interface CommandOptions {
+export interface MessageOptions {
     /**
      * Indicates whether warnings should be notified. Default is true.
      *
      * @type {boolean}
-     * @memberof CommandOptions
+     * @memberof MessageOptions
      */
     notifyWarnings?: boolean;
 
@@ -69,7 +95,7 @@ export interface CommandOptions {
      * Indicates whether errors should be notified. Default is true.
      *
      * @type {boolean}
-     * @memberof CommandOptions
+     * @memberof MessageOptions
      */
     notifyErrors?: boolean;
 
@@ -77,32 +103,50 @@ export interface CommandOptions {
      * Indicates the number of retries if the operation fails. Default is none.
      *
      * @type {number}
-     * @memberof CommandOptions
+     * @memberof MessageOptions
      */
     retries?: number;
 }
 
+interface RawResponseMessage<T extends ResponseMessage> {
+    /**
+     * The exception information.
+     *
+     * @type {ErrorInfo}
+     * @memberof RawResponseMessage
+     */
+    exception: ErrorInfo;
+
+    /**
+     * The response message.
+     *
+     * @type {T}
+     * @memberof RawResponseMessage
+     */
+    message: T;
+}
+
 /**
- * Provides command execution.
+ * Provides message processing.
  *
  * @export
- * @class CommandProcessor
+ * @class MessageProcessor
  */
 @AppService({ overridePriority: Priority.Low })
 @SingletonAppServiceContract()
-export class CommandProcessor {
+export class MessageProcessor {
 
     /**
      * Gets or sets the base route for the command execution.
      *
      * @protected
      * @type {string}
-     * @memberof CommandProcessor
+     * @memberof MessageProcessor
      */
-    protected baseRoute: string = "api/cmd/";
+    protected baseRoute: string = "api/msg/";
 
     /**
-   * Initializes a new instance of the CommandProcessor class.
+   * Initializes a new instance of the MessageProcessor class.
    * @param {Notification} notification The notification service.
    * @param {HttpClient} http The HTTP client.
    * @param {AppSettings} appSettings The application settings.
@@ -115,54 +159,43 @@ export class CommandProcessor {
     }
 
     /**
-     * Processes the command asynchronously.
+     * Processes the message asynchronously.
      * @tparam T The message response type.
-     * @param {string} command The command.
-     * @param {{}} [args] Optional. The arguments.
-     * @param {CommandOptions} [options] Optional. Options controlling the command processing.
+     * @param {{}} message The message.
+     * @param {MessageOptions} [options] Optional. Options controlling the command processing.
      * @returns {Promise{T}} A promise of the result.
      */
-    public process<T extends CommandResponse>(command: string, args?: {}, options?: CommandOptions): Observable<T> {
-        let url = this.getHttpGetUrl(command, args, options);
-        let obs = this.http.get<T>(url, this.getHttpGetOptions(command, args, options));
-        if (options && options.retries) {
-            obs = obs.pipe(
+    public process<T extends ResponseMessage>(message: {}, options?: MessageOptions): Observable<T> {
+        let url = this.getHttpPostUrl(message, options);
+        let obs = this.http.post<RawResponseMessage<T>>(url, message, this.getHttpPostOptions(message, options));
+        let responseObj = (options && options.retries) 
+            ? obs.pipe(
                 retry(options.retries),
-                map(response => this._processResponse(response, options)),
+                map(response => this._processResponse<T>(response, options)),
+                catchError(error => this._processError<T>(error, options)))
+            : obs.pipe(
+                map(response => this._processResponse<T>(response, options)),
                 catchError(error => this._processError<T>(error, options)));
-        }
-        else {
-            obs = obs.pipe(
-                map(response => this._processResponse(response, options)),
-                catchError(error => this._processError<T>(error, options)));
-        }
 
-        return obs;
+        return responseObj;
     }
 
     /**
      * Gets the HTTP GET URL.
      *
      * @protected
-     * @param {string} command The command.
-     * @param {{}} [args] Optional. The arguments.
-     * @param {CommandOptions} [options] Optional. Options controlling the command processing.
+     * @param {{}} message The message.
+     * @param {MessageOptions} [options] Optional. Options controlling the command processing.
      * @returns {string} The HTTP GET URL.
-     * @memberof CommandProcessor
+     * @memberof MessageProcessor
      */
-    protected getHttpGetUrl(command: string, args?: {}, options?: CommandOptions): string {
+    protected getHttpPostUrl(message: {}, options?: MessageOptions): string {
         let baseUrl = this.appSettings.baseUrl;
         if (!baseUrl.endsWith('/')) {
             baseUrl = baseUrl + '/';
         }
 
-        let url = `${baseUrl}${this.baseRoute}${command}/`;
-        if (args) {
-            url = url + '?' + Object.keys(args)
-                .map(key => `${key}=${args[key]}`)
-                .join("&");
-        }
-
+        let url = `${baseUrl}${this.baseRoute}`;
         return url;
     }
 
@@ -172,7 +205,7 @@ export class CommandProcessor {
      * @protected
      * @param {string} command The command.
      * @param {{}} [args] Optional. The arguments.
-     * @param {CommandOptions} [options] Optional. Options controlling the command processing.
+     * @param {MessageOptions} [options] Optional. Options controlling the command processing.
      * @returns {({
      *             headers?: HttpHeaders | {
      *                 [header: string]: string | string[];
@@ -185,9 +218,9 @@ export class CommandProcessor {
      *             responseType?: 'json';
      *             withCredentials?: boolean;
      *         } | undefined)} The options or undefined.
-     * @memberof CommandProcessor
+     * @memberof MessageProcessor
      */
-    protected getHttpGetOptions(command: string, args?: {}, options?: CommandOptions): {
+    protected getHttpPostOptions(message: {}, options?: MessageOptions): {
         headers?: HttpHeaders | {
             [header: string]: string | string[];
         };
@@ -202,13 +235,23 @@ export class CommandProcessor {
         return undefined;
     }
 
-    private _processResponse<T extends CommandResponse>(response: T, options?: CommandOptions): T {
+    private _processResponse<T extends ResponseMessage>(rawResponse: RawResponseMessage<T>, options?: MessageOptions): T {
+        if (rawResponse.exception) {
+            const errorInfo = rawResponse.exception;
+            if (typeof errorInfo.severity === "string") {
+                errorInfo.severity = LogLevel[errorInfo.severity as string];
+            }
+
+            throw new MessageError(errorInfo.message!, errorInfo)
+        }
+
+        const response = rawResponse.message;
         if (typeof response.severity === "string") {
             response.severity = LogLevel[response.severity as string];
         }
 
         if (response.severity <= LogLevel.Error) {
-            throw new CommandError(response.message!, response);
+            throw new MessageError(response.message!, response);
         }
 
         if (response.severity == LogLevel.Warning) {
@@ -219,12 +262,12 @@ export class CommandProcessor {
         }
 
         if (response.severity <= LogLevel.Error) {
-            throw new Error(response.message);
+            throw new MessageError(response.message!, response);
         }
         return response;
     }
 
-    private _processError<T extends CommandResponse>(error: any, options?: CommandOptions): ObservableInput<T> {
+    private _processError<T extends ResponseMessage>(error: any, options?: MessageOptions): ObservableInput<T> {
         this.logger.error(error);
         if (!(options && (options.notifyErrors == undefined || options.notifyErrors))) {
             this.notification.notifyError(error);

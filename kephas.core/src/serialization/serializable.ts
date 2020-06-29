@@ -10,22 +10,22 @@ import "reflect-metadata";
  * @class Serializable
  */
 export abstract class Serializable {
-    private static _typeNameKey: string = "$type";
+    private static _typeFullNameKey: string = "$type";
     private static _typeNamespaceKey: string = "kephas:namespace";
     /**
-     * Gets or sets the name of the property holding the instance type name.
+     * Gets or sets the name of the key holding the type's full name.
      *
      * @static
      * @type {string}
      * @memberof Serializable
      */
-    static get TypeNameProperty(): string {
-        return Serializable._typeNameKey;
+    static get TypeFullNameKey(): string {
+        return Serializable._typeFullNameKey;
     }
 
-    static set TypeNameProperty(value: string) {
+    static set TypeFullNameKey(value: string) {
         Requires.HasValue(value, 'value');
-        Serializable._typeNameKey = value;
+        Serializable._typeFullNameKey = value;
     }
 
     /**
@@ -33,14 +33,14 @@ export abstract class Serializable {
      * 
      * @static
      * @template T
-     * @param {AbstractType} type The type where the type name should be set.
-     * @param {string} typeName The type name.
+     * @param {AbstractType} type The type where the full name should be set.
+     * @param {string} typeFullName The type's full name.
      * 
      * @memberOf Serializable
      */
-    static setTypeName(type: AbstractType, typeName: string): void {
-        Requires.HasValue(typeName, 'typeName');
-        Reflect.defineMetadata(Serializable._typeNameKey, typeName, type);
+    static setTypeFullName(type: AbstractType, typeFullName: string): void {
+        Requires.HasValue(typeFullName, 'typeFullName');
+        Reflect.defineMetadata(Serializable._typeFullNameKey, typeFullName, type);
     }
 
     /**
@@ -58,20 +58,20 @@ export abstract class Serializable {
     }
 
     /**
-     * Gets the type name for serialization/deserialization purposes.
+     * Gets the type's full name for serialization/deserialization purposes.
      * 
      * @static
      * @param {{} | AbstractType} typeOrInstance The type from where the type name should be retrieved.
-     * @returns {(string | undefined)} The type name.
+     * @returns {(string | undefined)} The type's full name.
      * 
      * @memberOf Serializable
      */
-    static getTypeName(typeOrInstance: {} | AbstractType): string | undefined {
+    static getTypeFullName(typeOrInstance: {} | AbstractType): string | undefined {
         if (typeOrInstance instanceof Function) {
-            return Reflect.getOwnMetadata(Serializable._typeNameKey, typeOrInstance);
+            return Reflect.getOwnMetadata(Serializable._typeFullNameKey, typeOrInstance);
         }
 
-        return Reflect.getOwnMetadata(Serializable._typeNameKey, typeOrInstance.constructor);
+        return Reflect.getOwnMetadata(Serializable._typeFullNameKey, typeOrInstance.constructor);
     }
 
     /**
@@ -99,7 +99,7 @@ export abstract class Serializable {
         let json: object = {};
 
         let type = obj.constructor;
-        let typeName = Serializable.getTypeName(type) || Serializable.getTypeName(obj);
+        let typeName = Serializable.getTypeFullName(type) || Serializable.getTypeFullName(obj);
         if (!typeName) {
             typeName = type.name;
             const namespace = Serializable.getTypeNamespace(type);
@@ -108,7 +108,7 @@ export abstract class Serializable {
             }
         }
         if (typeName) {
-            json[Serializable._typeNameKey] = typeName;
+            json[Serializable._typeFullNameKey] = typeName;
         }
 
         Object.keys(obj).forEach(propName => {

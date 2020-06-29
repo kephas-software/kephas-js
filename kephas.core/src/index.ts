@@ -19,6 +19,6 @@ export { CompositionError } from './composition/compositionError';
 export { CompositionContext } from './composition/compositionContext';
 export { Serializable } from './serialization/serializable';
 export { Deferrable } from './deferrable';
-export { Namespace } from './namespace';
+export { Namespace, FullName } from './namespace';
 export { AbstractType, Type } from './type';
 

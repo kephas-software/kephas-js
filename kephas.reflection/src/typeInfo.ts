@@ -214,7 +214,7 @@ export class TypeInfo extends ElementInfo implements ITypeInfo {
         properties = properties && properties.map(p => new PropertyInfo({ ...p, declaringType: this, registry }));
         this.properties = (properties || []) as IPropertyInfo[];
         if (this.type) {
-            Serializable.setTypeName(this.type, this.fullName);
+            Serializable.setTypeFullName(this.type, this.fullName);
         }
         this.isEnum = !!isEnum;
         this.isArray = !!isArray;

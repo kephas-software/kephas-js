@@ -34,7 +34,7 @@ describe('TypeInfo.constructor', () => {
         expect(typeInfo.namespace).to.equal('This.Is.Namespace');
         expect(typeInfo.fullName).to.equal('This.Is.Namespace.MyType');
 
-        expect(Serializable.getTypeName(MyType)).to.equal('This.Is.Namespace.MyType');
+        expect(Serializable.getTypeFullName(MyType)).to.equal('This.Is.Namespace.MyType');
     });
 
     it('should set the properties', () => {

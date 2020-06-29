@@ -45,7 +45,7 @@ export class AngularAppServiceInfoRegistry {
             for (let m of serviceContract.services) {
                 let serviceMetadata: AppServiceMetadata<any> = m;
                 providers.push({
-                    provide: serviceContract.contractType as Type<any>,
+                    provide: serviceContract.contractToken || serviceContract.contractType,
                     useClass: serviceMetadata.serviceType!,
                     multi: serviceContract.allowMultiple,
                     deps: Reflect.getMetadata("design:paramtypes", serviceMetadata.serviceType!) || [],

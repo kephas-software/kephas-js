@@ -12,6 +12,9 @@ export { AppServiceLifetime, AppServiceInfo } from './services/appServiceInfo';
 export { AppServiceInfoRegistry } from './services/appServiceInfoRegistry';
 export { AppService } from './services/appService';
 export { AppServiceContract, SingletonAppServiceContract } from './services/appServiceContract';
+export { Context } from './services/context';
+export { Initializable, AsyncInitializable } from './services/initializable';
+export { ServiceHelper } from './services/serviceHelper';
 
 export { LogLevel, Logger } from './logging/logger';
 

@@ -13,7 +13,7 @@ export interface Initializable {
      * @param {Context} [context] Contextual information.
      * @memberof Initializable
      */
-    Initialize(context?: Context): void;
+    initialize(context?: Context): void;
 }
 
 /**
@@ -29,5 +29,5 @@ export interface AsyncInitializable {
      * @param {Context} [context] Contextual information.
      * @memberof Initializable
      */
-    InitializeAsync(context?: Context): Promise<void>;
+    initializeAsync(context?: Context): Promise<void>;
 }

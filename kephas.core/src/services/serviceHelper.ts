@@ -17,16 +17,16 @@ export class ServiceHelper {
      * @returns {Promise<void>} A promise returning the asynchronous result.
      * @memberof ServiceHelper
      */
-    static InitializeAsync(service: { [key: string]: any }, context?: Context): Promise<void> {
-        if (service.InitializeAsync) {
-            return service.InitializeAsync(context);
+    static initializeAsync(service: { [key: string]: any }, context?: Context): Promise<void> {
+        if (service.initializeAsync) {
+            return service.initializeAsync(context);
         }
 
         var deferrable = new Deferrable();
 
-        if (service.Initialize) {
+        if (service.initialize) {
             deferrable.resolve(true);
-            service.Initialize(context);
+            service.initialize(context);
         }
         else {
             deferrable.resolve(false);

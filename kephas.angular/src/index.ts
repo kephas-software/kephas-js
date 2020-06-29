@@ -10,3 +10,5 @@ export { HttpInterceptor } from './services/http/httpInterceptor';
 export { TokenService } from './services/security/token.service';
 export { TokenInterceptor } from './services/security/token.interceptor';
 export { JwtInterceptorBase } from './services/security/jwt.interceptor';
+
+export { Configuration } from './services/configuration';

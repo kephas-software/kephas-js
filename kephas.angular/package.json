@@ -1,6 +1,6 @@
 {
   "name": "@kephas/angular",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "Provides integration capabilities with Angular.",
   "type": "module",
   "main": "dist/index.js",

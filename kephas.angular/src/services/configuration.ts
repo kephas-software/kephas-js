@@ -1,4 +1,4 @@
-import { Injectable, Type } from '@angular/core';
+import { Type } from '@angular/core';
 import { HttpClient, HttpResponse as HttpResponse } from '@angular/common/http';
 import { SingletonAppServiceContract, AppService, Priority, AsyncInitializable } from '@kephas/core';
 
@@ -13,16 +13,16 @@ export class Configuration implements AsyncInitializable {
     /**
      * Ensures that the configuration file is initialized.
      *
-     * @param {Http} http The http service.
-     * @returns {Promise<void>} The promise.
+     * @param {{ http: HttpClient, configurationFileUrl?: string }} context The context containing initialization data.
+     * @returns {Promise<void>}
      * @memberof Configuration
      */
-    public async initializeAsync(http: HttpClient): Promise<void> {
+    public async initializeAsync(context: { http: HttpClient, configurationFileUrl?: string }): Promise<void> {
         if (Configuration.configurationFile) {
             return;
         }
 
-        const response = await http.get(Configuration.configurationFileUrl).toPromise();
+        const response = await context.http.get(context.configurationFileUrl ? context.configurationFileUrl : Configuration.configurationFileUrl).toPromise();
         Configuration.configurationFile = response || {};
     }
 
@@ -34,11 +34,19 @@ export class Configuration implements AsyncInitializable {
      * @returns {T} The settings.
      * @memberof Configuration
      */
-    public getSettings<T>(sectionName: string): T {
+    public getSettings<T>(settingsType: Type<T>): T {
 
         if (!Configuration.configurationFile) {
             throw new Error('The configuration manager must be initialized prior to requesting settings from it.');
         }
+
+        let sectionName = settingsType.name;
+        const ending = 'Settings';
+        if (sectionName.endsWith(ending)) {
+            sectionName = sectionName.substr(0, sectionName.length - ending.length);
+        }
+
+        sectionName = sectionName[0].toLowerCase() + sectionName.substr(1, sectionName.length - 1);
 
         return Configuration.configurationFile[sectionName];
     }

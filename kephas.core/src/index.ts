@@ -25,3 +25,4 @@ export { Deferrable } from './deferrable';
 export { Namespace, FullName } from './namespace';
 export { AbstractType, Type } from './type';
 
+export { HashingService } from './cryptography/hashingService';

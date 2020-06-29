@@ -1,8 +1,7 @@
 import { expect } from 'chai';
 import 'mocha';
 
-import { Serializable, Namespace } from '..';
-import { FullName } from '../namespace';
+import { Serializable, Namespace, FullName } from '..';
 
 describe('Serializable.setTypeFullName', () => {
     it('should set and get the type full name', () => {

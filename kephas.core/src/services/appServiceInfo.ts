@@ -57,6 +57,14 @@ export class AppServiceInfo {
     public readonly contractType: AbstractType;
 
     /**
+     * Gets the contract token of the service.
+     *
+     * @type {*}
+     * @memberof AppServiceInfo
+     */
+    public readonly contractToken: any;
+
+    /**
      * Gets an iteration of registered services.
      *
      * @readonly
@@ -72,6 +80,7 @@ export class AppServiceInfo {
     /**
      * Creates an instance of AppServiceInfo.
      * @param {Type<T>} contractType The contract type.
+     * @param {*} contractToken The contract token.
      * @param {boolean} [allowMultiple=false] Indicates whether multiple instances of the provided
      * @param {AppServiceLifetime} [lifetime=AppServiceLifetime.Singleton] The application service lifetime.
      * @memberof AppServiceInfo
@@ -79,16 +88,19 @@ export class AppServiceInfo {
     constructor(
         {
             contractType,
+            contractToken = undefined,
             allowMultiple = false,
             lifetime = AppServiceLifetime.Singleton,
             ...args
         }: {
             contractType: AbstractType;
+            contractToken?: any;
             allowMultiple?: boolean;
             lifetime?: AppServiceLifetime;
             [key: string]: any;
         }) {
         this.contractType = contractType;
+        this.contractToken = contractToken;
         this.allowMultiple = allowMultiple;
         this.lifetime = lifetime;
         Object.assign(this, args);

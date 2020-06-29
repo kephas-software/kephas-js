@@ -52,7 +52,7 @@ describe('AppServiceInfoRegistry.registerService', () => {
         }
     });
 
-    it('should match the abstract contract and the service (decorator registration)', () => {
+    it('should match the singleton contract and the service (decorator registration)', () => {
         let registry = new AppServiceInfoRegistry();
 
         @SingletonAppServiceContract({ registry: registry })
@@ -65,9 +65,26 @@ describe('AppServiceInfoRegistry.registerService', () => {
             expect(service.serviceType).to.equal(Service);
             expect(service.serviceContract).to.not.null;
             expect(service.serviceContract!.contractType).to.equal(AbstractContract);
+            expect(service.serviceContract!.contractToken).to.equal(AbstractContract);
         }
     });
 
+    it('should match the singleton contract and the service (decorator registration with token)', () => {
+        let registry = new AppServiceInfoRegistry();
+
+        @SingletonAppServiceContract({ registry: registry, contractToken: "hello" })
+        abstract class AbstractContract { }
+
+        @AppService({ registry: registry })
+        class Service extends AbstractContract { }
+
+        for (let service of [...registry.services].filter(s => s.serviceContract!.contractType != AppServiceInfoRegistry)) {
+            expect(service.serviceType).to.equal(Service);
+            expect(service.serviceContract).to.not.null;
+            expect(service.serviceContract!.contractType).to.equal(AbstractContract);
+            expect(service.serviceContract!.contractToken).to.equal("hello");
+        }
+    });
 
     it('should match the transient contract and the service (decorator registration)', () => {
         let registry = new AppServiceInfoRegistry();
@@ -82,6 +99,24 @@ describe('AppServiceInfoRegistry.registerService', () => {
             expect(service.serviceType).to.equal(Service);
             expect(service.serviceContract).to.not.null;
             expect(service.serviceContract!.contractType).to.equal(AbstractContract);
+            expect(service.serviceContract!.contractToken).to.equal(AbstractContract);
+        }
+    });
+
+    it('should match the transient contract and the service (decorator registration with token)', () => {
+        let registry = new AppServiceInfoRegistry();
+
+        @AppServiceContract({ registry: registry, contractToken: "hello" })
+        abstract class AbstractContract { }
+
+        @AppService({ registry: registry })
+        class Service extends AbstractContract { }
+
+        for (let service of [...registry.services].filter(s => s.serviceContract!.contractType != AppServiceInfoRegistry)) {
+            expect(service.serviceType).to.equal(Service);
+            expect(service.serviceContract).to.not.null;
+            expect(service.serviceContract!.contractType).to.equal(AbstractContract);
+            expect(service.serviceContract!.contractToken).to.equal("hello");
         }
     });
 });

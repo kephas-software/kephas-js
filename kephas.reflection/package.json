@@ -1,6 +1,6 @@
 {
   "name": "@kephas/reflection",
-  "version": "0.2.1",
+  "version": "0.2.6",
   "description": "Provides reflection capabilities, like TypeInfoRegistry, ITypeInfo, and IProperty.",
   "type": "module",
   "main": "dist/index.js",

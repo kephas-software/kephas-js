@@ -1,5 +1,5 @@
 import { ReflectionError, ITypeInfoRegistry, ITypeInfo } from ".";
-import { Requires } from "@kephas/core";
+import { Requires, SingletonAppServiceContract } from "@kephas/core";
 
 /**
  * Provides centralized access to the application's type system.
@@ -7,6 +7,7 @@ import { Requires } from "@kephas/core";
  * @export
  * @class TypeInfoRegistry
  */
+@SingletonAppServiceContract()
 export class TypeInfoRegistry implements ITypeInfoRegistry {
     /**
      * Gets the registerd types.

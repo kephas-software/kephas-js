@@ -46,6 +46,14 @@ export class PropertyInfo extends ValueElementInfo implements IPropertyInfo {
     readonly isRequired: boolean = false;
 
     /**
+     * Gets a value indicating whether this property is class bound, not instance bound.
+     *
+     * @type {boolean}
+     * @memberof PropertyInfo
+     */
+    readonly isStatic: boolean = false;
+
+    /**
      * Gets the default value of the property.
      *
      * @type {*}
@@ -78,6 +86,7 @@ export class PropertyInfo extends ValueElementInfo implements IPropertyInfo {
             canRead,
             canWrite,
             isRequired,
+            isStatic,
             defaultValue,
             registry,
             ...args
@@ -90,6 +99,7 @@ export class PropertyInfo extends ValueElementInfo implements IPropertyInfo {
             canRead?: boolean;
             canWrite?: boolean;
             isRequired?: boolean;
+            isStatic?: boolean;
             defaultValue?: any;
             registry?: ITypeInfoRegistry;
             [key: string]: any;
@@ -104,6 +114,7 @@ export class PropertyInfo extends ValueElementInfo implements IPropertyInfo {
         this.canRead = canRead == undefined ? true : canRead;
         this.canWrite = canWrite == undefined ? true : canWrite;
         this.isRequired = !!isRequired;
+        this.isStatic = !!isStatic;
         this.defaultValue = defaultValue;
     }
 }

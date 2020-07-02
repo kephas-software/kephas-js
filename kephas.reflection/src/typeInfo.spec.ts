@@ -10,6 +10,26 @@ describe('TypeInfo.constructor', () => {
         expect(typeInfo.fullName).to.equal('MyType');
     });
 
+    it('should set the properties', () => {
+        let typeInfo = new TypeInfo({
+            name: "MyType",
+            properties: [
+                {
+                    name: "name",
+                    valueType: "string",
+                    isRequired: true,
+                }
+            ]
+        });
+        expect(typeInfo.name).to.equal('MyType');
+        expect(typeInfo.fullName).to.equal('MyType');
+        expect(typeInfo.properties.length).to.equal(1);
+
+        let property = typeInfo.properties[0];
+        expect(property.name).to.equal("name");
+        expect(property.isRequired).to.true;
+    });
+
     it('should set the name and full name if namespace set (no type)', () => {
         let typeInfo = new TypeInfo({ name: "MyType", namespace: "This.Is.Namespace" });
         expect(typeInfo.name).to.equal('MyType');
@@ -18,7 +38,7 @@ describe('TypeInfo.constructor', () => {
     });
 
     it('should set the name and full name if namespace set (with type)', () => {
-        class MyType {};
+        class MyType { };
         let typeInfo = new TypeInfo({ type: MyType, namespace: "This.Is.Namespace" });
         expect(typeInfo.name).to.equal('MyType');
         expect(typeInfo.namespace).to.equal('This.Is.Namespace');
@@ -27,7 +47,7 @@ describe('TypeInfo.constructor', () => {
 
     it('should set the name and full name if namespace set in decorator (with type)', () => {
         @Namespace("This.Is.Namespace")
-        class MyType {};
+        class MyType { };
 
         let typeInfo = new TypeInfo({ type: MyType });
         expect(typeInfo.name).to.equal('MyType');

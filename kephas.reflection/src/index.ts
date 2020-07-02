@@ -18,6 +18,7 @@ import { TypeInfo } from './typeInfo';
         new TypeInfo({ name: TypeInfo.ObjectTypeName, registry }),
         new TypeInfo({ name: TypeInfo.StringTypeName, registry }),
         new TypeInfo({ name: TypeInfo.ArrayTypeName, registry }),
-        new TypeInfo({ name: TypeInfo.SymbolTypeName, registry }));
+        new TypeInfo({ name: TypeInfo.SymbolTypeName, registry }),
+        new TypeInfo({ name: TypeInfo.DateTypeName, registry }));
 }
 

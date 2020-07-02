@@ -69,6 +69,14 @@ export class TypeInfo extends ElementInfo implements ITypeInfo {
     static readonly SymbolTypeName = "symbol";
 
     /**
+     * The name of the 'Date' type.
+     *
+     * @static
+     * @memberof TypeInfo
+     */
+    static readonly DateTypeName = "Date";
+
+    /**
      * Gets the type's namespace.
      * 
      * @type {string}
@@ -195,6 +203,10 @@ export class TypeInfo extends ElementInfo implements ITypeInfo {
                 valueType?: ITypeInfo | string;
                 canRead?: boolean;
                 canWrite?: boolean;
+                isRequired?: boolean;
+                isStatic?: boolean;
+                defaultValue?: any;
+                [key: string]: any;
             }[];
             type?: Type<any>;
             isArray?: boolean;

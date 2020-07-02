@@ -7,21 +7,19 @@ import {
 } from '..';
 import "reflect-metadata";
 
-describe('CompositionContext.constructor', () => {
-    it('should add itself to the custom registry', () => {
-
-        let registry = new AppServiceInfoRegistry();
-        let injector = new CompositionContext(registry);
-
-        for (let service of [...registry.services].filter(s => s.serviceContract!.contractType != AppServiceInfoRegistry)) {
-            expect(service.serviceType).to.equal(CompositionContext);
-            expect(service.serviceContract).to.not.null;
-            expect(service.serviceContract!.contractType).to.equal(CompositionContext);
-        }
-    });
-});
-
 describe('CompositionContext.get', () => {
+    /*
+        This test should be the first in the row, otherwise will fail.
+    */
+    it('should get its registry as the AppServiceInfoRegistry (default)', () => {
+        let registry = AppServiceInfoRegistry.Instance;
+        let injector = CompositionContext.Instance;
+
+        let actualRegistry = injector.get(AppServiceInfoRegistry);
+        let sameRegistry = AppServiceInfoRegistry.Instance;
+        expect(actualRegistry === registry).to.be.true;
+    });
+
     it('should get itself as the CompositionContext', () => {
         let registry = new AppServiceInfoRegistry();
         let injector = new CompositionContext(registry);
@@ -34,15 +32,6 @@ describe('CompositionContext.get', () => {
         let injector = new CompositionContext(registry);
 
         expect(injector.get(AppServiceInfoRegistry) === registry).to.be.true;
-    });
-
-    it('should get its registry as the AppServiceInfoRegistry (default)', () => {
-        let registry = AppServiceInfoRegistry.Instance;
-        let injector = CompositionContext.Instance;
-
-        let actualRegistry = injector.get(AppServiceInfoRegistry);
-        let sameRegistry = AppServiceInfoRegistry.Instance;
-        expect(actualRegistry === registry).to.be.true;
     });
 
     it('should resolve dependencies', () => {
@@ -97,5 +86,19 @@ describe('CompositionContext.get', () => {
         let test2 = injector.get(Test);
 
         expect(test).is.equal(test2);
+    });
+});
+
+describe('CompositionContext.constructor', () => {
+    it('should add itself to the custom registry', () => {
+
+        let registry = new AppServiceInfoRegistry();
+        let injector = new CompositionContext(registry);
+
+        for (let service of [...registry.services].filter(s => s.serviceContract!.contractType != AppServiceInfoRegistry)) {
+            expect(service.serviceType).to.equal(CompositionContext);
+            expect(service.serviceContract).to.not.null;
+            expect(service.serviceContract!.contractType).to.equal(CompositionContext);
+        }
     });
 });

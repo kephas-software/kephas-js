@@ -1,6 +1,6 @@
-import { AppServiceInfoRegistry, CompositionContext } from "..";
-import { AppServiceMetadata, Priority } from "..";
-import { Type } from "..";
+import {
+    AppServiceInfoRegistry, ICompositionContext, AppServiceMetadata, Priority, Type
+} from "..";
 
 /**
  * Marks a class as being an application service. Its closest base registered as service contract is
@@ -23,7 +23,7 @@ export function AppService(
         overridePriority?: number | Priority;
         processingPriority?: number | Priority;
         serviceName?: string;
-        provider?: ((c: CompositionContext) => any) | {};
+        provider?: ((c: ICompositionContext) => any) | {};
         registry?: AppServiceInfoRegistry;
     } = {}) {
     return (type: Type<any>) => {
@@ -35,7 +35,7 @@ export function AppService(
                 serviceName,
                 serviceType: type,
                 serviceInstance: typeof provider === 'object' ? provider : undefined,
-                serviceFactory: <(c: CompositionContext) => any>(typeof provider === 'function' ? provider : undefined),
+                serviceFactory: <(c: ICompositionContext) => any>(typeof provider === 'function' ? provider : undefined),
             }));
     };
 }

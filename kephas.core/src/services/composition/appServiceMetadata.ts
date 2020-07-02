@@ -1,5 +1,4 @@
-import { AppServiceInfo, CompositionContext } from "../..";
-import { Type } from "../..";
+import { AppServiceInfo, ICompositionContext, Type } from "../..";
 
 /**
  * Enumerates the priority values.
@@ -110,10 +109,10 @@ export class AppServiceMetadata<T> {
     /**
      * Gets or sets the service factory.
      *
-     * @type {(c: CompositionContext) => T}
+     * @type {(c: ICompositionContext) => T}
      * @memberof AppServiceMetadata
      */
-    public readonly serviceFactory?: (c: CompositionContext) => T;
+    public readonly serviceFactory?: (c: ICompositionContext) => T;
 
     private _serviceContract?: AppServiceInfo;
     private _serviceType?: Type<T>;
@@ -146,7 +145,7 @@ export class AppServiceMetadata<T> {
             processingPriority?: number | Priority;
             serviceName?: string;
             serviceType?: Type<T>;
-            serviceFactory?: (c: CompositionContext) => T;
+            serviceFactory?: (c: ICompositionContext) => T;
             serviceInstance?: T;
             serviceContract?: AppServiceInfo;
             [key: string]: any;

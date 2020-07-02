@@ -18,6 +18,7 @@ export { ServiceHelper } from './services/serviceHelper';
 
 export { LogLevel, Logger } from './logging/logger';
 
+export { ICompositionContext } from './composition/compositionContext.interface';
 export { CompositionError } from './composition/compositionError';
 export { CompositionContext } from './composition/compositionContext';
 export { Serializable } from './serialization/serializable';

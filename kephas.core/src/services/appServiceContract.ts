@@ -1,6 +1,6 @@
-import { AppServiceInfo, AppServiceLifetime } from "..";
-import { AppServiceInfoRegistry } from "..";
-import { AbstractType } from "..";
+import {
+    AppServiceInfo, AppServiceLifetime, AppServiceInfoRegistry, AbstractType
+} from "..";
 
 /**
  * Marks a class as being contract for transient application services.

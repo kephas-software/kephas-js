@@ -1,23 +1,23 @@
 import { expect } from 'chai';
 import 'mocha';
 
-import { AppServiceInfoRegistry, AppServiceInfo, AppService, AppServiceLifetime } from '..';
-import { SingletonAppServiceContract, AppServiceContract, Priority } from '..';
-import { CompositionContext } from '../composition/compositionContext';
+import {
+    AppServiceInfoRegistry, AppService, SingletonAppServiceContract, Priority, CompositionContext
+} from '..';
 
 describe('AppService', () => {
     it('should register factory', () => {
         const registry = new AppServiceInfoRegistry();
 
         @SingletonAppServiceContract({ registry: registry })
-        class MyService {};
+        class MyService { };
         const thisService = new MyService();
-        
-        AppService({registry: registry, overridePriority: Priority.High, provider: container => thisService})
+
+        AppService({ registry: registry, overridePriority: Priority.High, provider: container => thisService })
             (MyService);
 
         const container = new CompositionContext(registry);
-        
+
         expect(container.get(MyService)).equal(thisService);
     });
 
@@ -25,14 +25,14 @@ describe('AppService', () => {
         const registry = new AppServiceInfoRegistry();
 
         @SingletonAppServiceContract({ registry: registry })
-        class MyService {};
+        class MyService { };
         const thisService = new MyService();
-        
-        AppService({registry: registry, overridePriority: Priority.High, provider: thisService})
+
+        AppService({ registry: registry, overridePriority: Priority.High, provider: thisService })
             (MyService);
 
         const container = new CompositionContext(registry);
-        
+
         expect(container.get(MyService)).equal(thisService);
     });
 
@@ -40,14 +40,14 @@ describe('AppService', () => {
         const registry = new AppServiceInfoRegistry();
 
         @SingletonAppServiceContract({ registry: registry })
-        class MyService {};
+        class MyService { };
         const thisService = new MyService();
-        
-        AppService({registry: registry, overridePriority: Priority.High})
+
+        AppService({ registry: registry, overridePriority: Priority.High })
             (MyService);
 
         const container = new CompositionContext(registry);
-        
+
         expect(container.get(MyService)).is.instanceOf(MyService);
     });
 });

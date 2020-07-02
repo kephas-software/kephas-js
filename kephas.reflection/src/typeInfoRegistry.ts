@@ -1,5 +1,5 @@
 import { ReflectionError, ITypeInfoRegistry, ITypeInfo } from ".";
-import { Requires, SingletonAppServiceContract } from "@kephas/core";
+import { Requires, SingletonAppServiceContract, AppService, Priority } from "@kephas/core";
 
 /**
  * Provides centralized access to the application's type system.
@@ -7,6 +7,7 @@ import { Requires, SingletonAppServiceContract } from "@kephas/core";
  * @export
  * @class TypeInfoRegistry
  */
+@AppService({ overridePriority: Priority.Low, provider: _ => TypeInfoRegistry.Instance })
 @SingletonAppServiceContract()
 export class TypeInfoRegistry implements ITypeInfoRegistry {
     /**

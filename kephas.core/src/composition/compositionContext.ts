@@ -1,7 +1,7 @@
-import { SingletonAppServiceContract, Type, AppServiceInfoRegistry } from "..";
-import { AppService, Priority, AbstractType } from "..";
-import { AppServiceInfo, AppServiceLifetime, AppServiceMetadata } from "..";
-import { CompositionError } from "..";
+import { 
+    SingletonAppServiceContract, Type, AppServiceInfoRegistry, AppService,
+    Priority, AbstractType, AppServiceInfo, AppServiceLifetime,
+    AppServiceMetadata, CompositionError, ICompositionContext } from "..";
 
 import "reflect-metadata";
 
@@ -11,11 +11,26 @@ import "reflect-metadata";
  * @export
  * @class CompositionContext
  */
-@AppService({ overridePriority: Priority.Low })
+@AppService({ overridePriority: Priority.Low, provider: _ => CompositionContext.Instance })
 @SingletonAppServiceContract()
-export class CompositionContext {
+export class CompositionContext implements ICompositionContext {
+    private static _instance: CompositionContext;
     private _registry: AppServiceInfoRegistry;
     private _singletons = new WeakMap<AbstractType, any>();
+
+    /**
+     * Gets the static instance of the CompositionContext.
+     *
+     * @readonly
+     * @static
+     * @type {CompositionContext}
+     * @memberof CompositionContext
+     */
+    public static get Instance() : ICompositionContext {
+        return CompositionContext._instance
+            ? CompositionContext._instance
+            : (CompositionContext._instance = new CompositionContext());
+    }
 
     /**
      * Creates an instance of CompositionContext.
@@ -23,8 +38,8 @@ export class CompositionContext {
      * @memberof CompositionContext
      */
     constructor(registry?: AppServiceInfoRegistry) {
-        this._registry = registry || AppServiceInfoRegistry.Instance;
-        if (registry && registry != AppServiceInfoRegistry.Instance) {
+        this._registry = registry || (registry = AppServiceInfoRegistry.Instance);
+        if (registry !== AppServiceInfoRegistry.Instance) {
             registry.registerServiceContract(CompositionContext, new AppServiceInfo({
                 contractType: CompositionContext,
                 allowMultiple: false,
@@ -35,10 +50,6 @@ export class CompositionContext {
                 serviceType: CompositionContext,
                 serviceInstance: this,
             }))
-        }
-        else {
-            var serviceMetadata = registry && registry.getServiceMetadata(CompositionContext);
-            serviceMetadata!["_serviceInstance"] = this;
         }
     }
 

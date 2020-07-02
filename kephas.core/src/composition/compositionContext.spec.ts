@@ -1,7 +1,10 @@
 import { expect } from 'chai';
 import 'mocha';
 
-import { CompositionContext, AppServiceInfoRegistry, AppService, AppServiceContract, SingletonAppServiceContract } from '..';
+import {
+    CompositionContext, AppServiceInfoRegistry, AppService,
+    AppServiceContract, SingletonAppServiceContract
+} from '..';
 import "reflect-metadata";
 
 describe('CompositionContext.constructor', () => {
@@ -26,23 +29,32 @@ describe('CompositionContext.get', () => {
         expect(injector.get(CompositionContext)).is.equal(injector);
     });
 
-    it('should get its registry as the AppServiceInfoRegistry', () => {
+    it('should get its registry as the AppServiceInfoRegistry (custom)', () => {
         let registry = new AppServiceInfoRegistry();
         let injector = new CompositionContext(registry);
 
-        expect(injector.get(AppServiceInfoRegistry)).is.equal(registry);
+        expect(injector.get(AppServiceInfoRegistry) === registry).to.be.true;
+    });
+
+    it('should get its registry as the AppServiceInfoRegistry (default)', () => {
+        let registry = AppServiceInfoRegistry.Instance;
+        let injector = CompositionContext.Instance;
+
+        let actualRegistry = injector.get(AppServiceInfoRegistry);
+        let sameRegistry = AppServiceInfoRegistry.Instance;
+        expect(actualRegistry === registry).to.be.true;
     });
 
     it('should resolve dependencies', () => {
         let testRegistry = new AppServiceInfoRegistry();
-        @AppService({registry: testRegistry})
-        @AppServiceContract({registry: testRegistry})
+        @AppService({ registry: testRegistry })
+        @AppServiceContract({ registry: testRegistry })
         class Test {
             constructor(public injector: CompositionContext) {
             }
         }
 
-        Reflect.defineMetadata("design:paramtypes", [ CompositionContext ], Test);
+        Reflect.defineMetadata("design:paramtypes", [CompositionContext], Test);
 
         let injector = new CompositionContext(testRegistry);
         let test = injector.get(Test);
@@ -53,14 +65,14 @@ describe('CompositionContext.get', () => {
 
     it('should respect transitive services', () => {
         let testRegistry = new AppServiceInfoRegistry();
-        @AppService({registry: testRegistry})
-        @AppServiceContract({registry: testRegistry})
+        @AppService({ registry: testRegistry })
+        @AppServiceContract({ registry: testRegistry })
         class Test {
             constructor(public injector: CompositionContext) {
             }
         }
 
-        Reflect.defineMetadata("design:paramtypes", [ CompositionContext ], Test);
+        Reflect.defineMetadata("design:paramtypes", [CompositionContext], Test);
 
         let injector = new CompositionContext(testRegistry);
         let test = injector.get(Test);
@@ -71,14 +83,14 @@ describe('CompositionContext.get', () => {
 
     it('should respect singleton services', () => {
         let testRegistry = new AppServiceInfoRegistry();
-        @AppService({registry: testRegistry})
-        @SingletonAppServiceContract({registry: testRegistry})
+        @AppService({ registry: testRegistry })
+        @SingletonAppServiceContract({ registry: testRegistry })
         class Test {
             constructor(public injector: CompositionContext) {
             }
         }
 
-        Reflect.defineMetadata("design:paramtypes", [ CompositionContext ], Test);
+        Reflect.defineMetadata("design:paramtypes", [CompositionContext], Test);
 
         let injector = new CompositionContext(testRegistry);
         let test = injector.get(Test);

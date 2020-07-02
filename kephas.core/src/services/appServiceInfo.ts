@@ -1,6 +1,6 @@
-import { AppServiceMetadata } from "..";
-import { ServiceError } from "..";
-import { AbstractType } from "..";
+import {
+    AppServiceMetadata, ServiceError, AbstractType
+} from "..";
 
 /**
  * Enumerates the lifetime values for application services.

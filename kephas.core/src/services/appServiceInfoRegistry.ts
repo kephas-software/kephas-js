@@ -1,10 +1,8 @@
-import { Sealed } from "..";
-import { AppServiceInfo, AppServiceLifetime } from "..";
-import { ServiceError } from "..";
-import { Requires } from "..";
-import { AppServiceMetadata, Priority } from "..";
-import { AppServiceContract, SingletonAppServiceContract } from "..";
-import { AbstractType, Type } from "..";
+import {
+    AppServiceInfo, AppServiceLifetime, ServiceError, Requires,
+    AppServiceMetadata, Priority,
+    AbstractType, Type
+} from "..";
 import 'reflect-metadata';
 
 interface IAppServiceInfo {
@@ -30,16 +28,24 @@ interface IAppServiceInfo {
  * @class AppServiceInfoRegistry
  */
 export class AppServiceInfoRegistry {
+    // metadata keys should be defined before the instance is created,
+    // otherwise they will be null when registering the contracts.
+    private static readonly _serviceContractKey = "kephas:serviceContract";
+    private static readonly _serviceMetadataKey = "kephas:serviceMetadata";
+
+    private static _instance: AppServiceInfoRegistry;
+
     /**
      * Gets the static instance of the registry.
      *
      * @static
      * @memberof AppServiceInfoRegistry
      */
-    public static readonly Instance = new AppServiceInfoRegistry();
-
-    private static readonly _serviceContractKey = "kephas:serviceContract";
-    private static readonly _serviceMetadataKey = "kephas:serviceMetadata";
+    public static get Instance() {
+        return AppServiceInfoRegistry._instance
+            ? AppServiceInfoRegistry._instance
+            : (AppServiceInfoRegistry._instance = new AppServiceInfoRegistry());
+    };
 
     private readonly _serviceContracts: AppServiceInfo[];
     private readonly _services: AppServiceMetadata<any>[];
@@ -113,7 +119,7 @@ export class AppServiceInfoRegistry {
         Requires.HasValue(type, 'type');
         let appServiceInfo = this._getContractOfService(type);
         if (!appServiceInfo) {
-            throw new ServiceError(`The service contract for '${type.name}' could not be identified. Check that the service or one of its bases is decorated as ${AppServiceContract.name} or ${SingletonAppServiceContract.name}.`);
+            throw new ServiceError(`The service contract for '${type.name}' could not be identified. Check that the service or one of its bases is decorated as AppServiceContract or SingletonAppServiceContract.`);
         }
 
         metadata = metadata || new AppServiceMetadata();

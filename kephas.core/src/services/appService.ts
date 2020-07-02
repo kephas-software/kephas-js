@@ -1,4 +1,4 @@
-import { AppServiceInfoRegistry } from "..";
+import { AppServiceInfoRegistry, CompositionContext } from "..";
 import { AppServiceMetadata, Priority } from "..";
 import { Type } from "..";
 
@@ -17,14 +17,25 @@ export function AppService(
         overridePriority = Priority.Normal,
         processingPriority = Priority.Normal,
         serviceName,
+        provider,
         registry
     }: {
         overridePriority?: number | Priority;
         processingPriority?: number | Priority;
         serviceName?: string;
+        provider?: ((c: CompositionContext) => any) | {};
         registry?: AppServiceInfoRegistry;
     } = {}) {
     return (type: Type<any>) => {
-        (registry || AppServiceInfoRegistry.Instance).registerService(type, new AppServiceMetadata({ overridePriority, processingPriority, serviceName, serviceType: type }));
+        (registry || AppServiceInfoRegistry.Instance).registerService(
+            type,
+            new AppServiceMetadata<any>({
+                overridePriority,
+                processingPriority,
+                serviceName,
+                serviceType: type,
+                serviceInstance: typeof provider === 'object' ? provider : undefined,
+                serviceFactory: <(c: CompositionContext) => any>(typeof provider === 'function' ? provider : undefined),
+            }));
     };
 }

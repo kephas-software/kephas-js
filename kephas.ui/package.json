@@ -1,13 +1,16 @@
 {
   "name": "@kephas/ui",
-  "version": "0.2.1",
+  "version": "0.2.9",
   "description": "Provides a common infrastructure for UI components.",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "test": "webpack & mocha",
-    "build": "webpack"
+    "test": "cross-env TS_NODE_PROJECT=\"tsconfig.webpack.json\" webpack & mocha",
+    "build": "cross-env TS_NODE_PROJECT=\"tsconfig.webpack.json\" webpack",
+    "lint": "npm run tslint \"src/**/*.ts\"",
+    "tslint": "tslint \"src/**/*.ts\" --project tsconfig.json",
+    "typedoc": "typedoc"
   },
   "mocha": {
     "require": [
@@ -35,21 +38,26 @@
     "dist/"
   ],
   "dependencies": {
-    "@kephas/core": "^0.2.1"
+    "@kephas/core": "^0.2.9"
   },
   "devDependencies": {
     "@types/chai": "^4.2.11",
     "@types/mocha": "^7.0.2",
     "@types/webpack": "^4.41.13",
     "chai": "^4.2.0",
+    "codelyzer": "6.0.0",
+    "cross-env": "7.0.2",
     "mocha": "^7.1.2",
+    "path": "^0.12.7",
     "reify": "^0.20.12",
+    "rxjs-tslint": "0.1.8",
+    "ts-loader": "^7.0.4",
     "ts-node": "^8.10.1",
+    "tsconfig-paths": "3.9.0",
+    "tslint": "6.1.2",
     "typescript": "3.5.3",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11",
-    "webpack-dts-bundle": "^0.0.2",
-    "path": "^0.12.7",
-    "ts-loader": "^7.0.4"
+    "webpack-dts-bundle": "^0.0.2"
   }
 }

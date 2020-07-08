@@ -1,4 +1,4 @@
-import { SingletonAppServiceContract, AppService, Priority, Logger, LogLevel } from "@kephas/core";
+import { SingletonAppServiceContract, AppService, Priority, Logger, LogLevel } from '@kephas/core';
 
 /**
  * Notification service.
@@ -36,7 +36,9 @@ export class Notification {
     public notifyError(data: any) {
         // debugger;
         const severityString = data.severity || LogLevel[LogLevel.Error];
-        const severity = severityString === LogLevel[LogLevel.Warning] ? LogLevel.Warning : LogLevel.Error;
+        const severity = severityString === LogLevel[LogLevel.Warning]
+            ? LogLevel.Warning
+            : LogLevel.Error;
         this.show(this.formatData(data), severity);
     }
 
@@ -49,7 +51,9 @@ export class Notification {
     public notifyWarning(data: any) {
         // debugger;
         const severityString = data.severity || LogLevel[LogLevel.Warning];
-        const severity = severityString === LogLevel[LogLevel.Warning] ? LogLevel.Warning : LogLevel.Error;
+        const severity = severityString === LogLevel[LogLevel.Warning]
+            ? LogLevel.Warning
+            : LogLevel.Error;
         this.show(this.formatData(data), severity);
     }
 

@@ -1,4 +1,4 @@
-import { Context } from "..";
+import { Context } from '..';
 
 /**
  * Provides the Initialize method for service initialization.

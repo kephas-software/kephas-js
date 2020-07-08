@@ -1,9 +1,9 @@
-import { 
+import {
     SingletonAppServiceContract, Type, AppServiceInfoRegistry, AppService,
     Priority, AbstractType, AppServiceInfo, AppServiceLifetime,
-    AppServiceMetadata, CompositionError, ICompositionContext } from "..";
+    AppServiceMetadata, CompositionError, ICompositionContext } from '..';
 
-import "reflect-metadata";
+import 'reflect-metadata';
 
 /**
  * Provides a container for the dependency injection.
@@ -62,8 +62,8 @@ export class CompositionContext implements ICompositionContext {
      * @memberof CompositionContext
      */
     public get<T>(type: Type<T>): T {
-        var serviceInfo = this._getServiceContract(type);
-        if (serviceInfo.lifetime == AppServiceLifetime.Singleton) {
+        const serviceInfo = this._getServiceContract(type);
+        if (serviceInfo.lifetime === AppServiceLifetime.Singleton) {
             let service = this._singletons.get(type);
             if (!service) {
                 const serviceMetadata = this._getSingleServiceMetadata(serviceInfo);
@@ -86,10 +86,10 @@ export class CompositionContext implements ICompositionContext {
      * @memberof CompositionContext
      */
     public getMultiple<T>(type: Type<T>): T[] {
-        var serviceInfo = this._getServiceContract(type);
-        if (serviceInfo.lifetime == AppServiceLifetime.Singleton) {
+        const serviceInfo = this._getServiceContract(type);
+        if (serviceInfo.lifetime === AppServiceLifetime.Singleton) {
             let services = this._singletons.get(type);
-            if (services == undefined || services == null) {
+            if (services === undefined || services === null) {
                 services = [...serviceInfo.services].map(s => this._createInstance(s));
                 this._singletons.set(type, services);
             }
@@ -101,7 +101,7 @@ export class CompositionContext implements ICompositionContext {
     }
 
     private _getServiceContract(type: Type<any>): AppServiceInfo {
-        var serviceInfo = this._registry.getServiceContract(type);
+        const serviceInfo = this._registry.getServiceContract(type);
         if (!serviceInfo) {
             throw new CompositionError(`The type '${type.name}' is not registered as a service contract.`);
         }
@@ -111,7 +111,7 @@ export class CompositionContext implements ICompositionContext {
 
     private _getSingleServiceMetadata(serviceInfo: AppServiceInfo): AppServiceMetadata<any> {
         const services = [...serviceInfo.services];
-        if (services.length == 0) {
+        if (services.length === 0) {
             throw new CompositionError(`The service contract '${serviceInfo.contractType.name}' does not have any services registered.`);
         }
 
@@ -132,7 +132,7 @@ export class CompositionContext implements ICompositionContext {
         }
 
         const serviceType = serviceMetadata.serviceType!;
-        const paramTypes: Type<any>[] = Reflect.getOwnMetadata("design:paramtypes", serviceType);
+        const paramTypes: Type<any>[] = Reflect.getOwnMetadata('design:paramtypes', serviceType);
         if (paramTypes) {
             const ctorArgs = paramTypes.map(t => this.get(t));
             return new serviceType(...ctorArgs);

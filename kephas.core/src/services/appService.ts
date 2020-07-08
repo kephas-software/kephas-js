@@ -1,6 +1,6 @@
 import {
     AppServiceInfoRegistry, ICompositionContext, AppServiceMetadata, Priority, Type
-} from "..";
+} from '..';
 
 /**
  * Marks a class as being an application service. Its closest base registered as service contract is
@@ -34,8 +34,12 @@ export function AppService(
                 processingPriority,
                 serviceName,
                 serviceType: type,
-                serviceInstance: typeof provider === 'object' ? provider : undefined,
-                serviceFactory: <(c: ICompositionContext) => any>(typeof provider === 'function' ? provider : undefined),
+                serviceInstance: typeof provider === 'object'
+                                    ? provider
+                                    : undefined,
+                serviceFactory: typeof provider === 'function'
+                                    ? provider as ((c: ICompositionContext) => any)
+                                    : undefined,
             }));
     };
 }

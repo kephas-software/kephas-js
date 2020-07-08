@@ -1,6 +1,6 @@
 import {
     AppServiceInfo, AppServiceLifetime, AppServiceInfoRegistry, AbstractType
-} from "..";
+} from '..';
 
 /**
  * Marks a class as being contract for transient application services.
@@ -14,7 +14,7 @@ export function AppServiceContract(
     {
         allowMultiple = false,
         contractType,
-        contractToken = undefined,
+        contractToken,
         registry,
         ...args
     }: {
@@ -44,7 +44,7 @@ export function SingletonAppServiceContract(
     {
         allowMultiple = false,
         contractType,
-        contractToken = undefined,
+        contractToken,
         registry,
         ...args
     }: {

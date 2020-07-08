@@ -1,4 +1,4 @@
-import { Context, Deferrable } from "..";
+import { Context, Deferrable } from '..';
 
 /**
  * Helper class for working with services.
@@ -22,7 +22,7 @@ export class ServiceHelper {
             return service.initializeAsync(context);
         }
 
-        var deferrable = new Deferrable();
+        const deferrable = new Deferrable();
 
         if (service.initialize) {
             deferrable.resolve(true);
@@ -32,6 +32,6 @@ export class ServiceHelper {
             deferrable.resolve(false);
         }
 
-        return <Promise<void>>deferrable.promise;
+        return deferrable.promise as Promise<void>;
     }
 }

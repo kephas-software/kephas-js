@@ -1,4 +1,4 @@
-import { Sealed } from ".";
+import { Sealed } from '.';
 
 /**
  * A deferrable value.
@@ -34,7 +34,7 @@ export class Deferrable<T> {
      * @param {(T | PromiseLike<T>)} [value] The resolved value.
      * @memberof Deferrable
      */
-    resolve: (value?: T | PromiseLike<T>) => void = v => {}
+    resolve: (value?: T | PromiseLike<T>) => void = v => {};
 
     /**
      * Rejects the promise with the indicated reason.
@@ -42,5 +42,5 @@ export class Deferrable<T> {
      * @param {*} [reason] The reason for rejection.
      * @memberof Deferrable
      */
-    reject: (reason?: any) => void = r => {}
+    reject: (reason?: any) => void = r => {};
 }

@@ -28,6 +28,6 @@
 		"mocha.requires": [
 			"ts-node/register"
 		],
-		"typescript.tsdk": "kephas.angular\\node_modules\\typescript\\lib"
+		"typescript.tsdk": "kephas.core\\node_modules\\typescript\\lib"
 	}
 }

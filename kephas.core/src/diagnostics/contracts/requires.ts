@@ -1,4 +1,4 @@
-import { ArgumentError } from "../..";
+import { ArgumentError } from '../..';
 
 /**
  * Provides contract checks.

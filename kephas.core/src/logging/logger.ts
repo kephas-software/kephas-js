@@ -1,10 +1,10 @@
-import { SingletonAppServiceContract } from "..";
-import { AppService } from "..";
-import { Priority } from "..";
+import { SingletonAppServiceContract } from '..';
+import { AppService } from '..';
+import { Priority } from '..';
 
 /**
  * Enumerates the logging levels.
- * 
+ *
  * @enum {number}
  */
 export enum LogLevel {
@@ -41,7 +41,7 @@ export enum LogLevel {
 
 /**
  * Base service for logging.
- * 
+ *
  * @class Logger
  */
 @AppService({ overridePriority: Priority.Low })
@@ -51,7 +51,7 @@ export class Logger {
 
     /**
      * Logs the information at the provided level.
-     * 
+     *
      * @param {LogLevel | string} level The logging level.
      * @param {Error} exception The error that occured (may not be specified).
      * @param {string} messageFormat The message format.
@@ -59,7 +59,7 @@ export class Logger {
      * @memberof Logger
      */
     log(level: LogLevel | string, exception: Error | null | undefined, messageFormat: string, ...args: any[]): void {
-        if (typeof level === "string") {
+        if (typeof level === 'string') {
             level = LogLevel[level] as LogLevel;
         }
 
@@ -74,7 +74,7 @@ export class Logger {
      * @return true if enabled, false if not.
      */
     isEnabled(level: LogLevel | string): boolean {
-        if (typeof level === "string") {
+        if (typeof level === 'string') {
             level = LogLevel[level] as LogLevel;
         }
 
@@ -83,7 +83,7 @@ export class Logger {
 
     /**
      * Sets the logging level to the indicated one.
-     * 
+     *
      * @param {(LogLevel | string)} level The new log level.
      * @memberof Logger
      */
@@ -97,7 +97,7 @@ export class Logger {
 
     /**
      * Logs the event at the fatal level.
-     * 
+     *
      * @param {Error | string} event The event to be logged.
      * @param {...any[]} args The arguments for the event.
      * @memberof Logger
@@ -108,7 +108,7 @@ export class Logger {
 
     /**
      * Logs the event at the error level.
-     * 
+     *
      * @param {Error | string} event The event to be logged.
      * @param {...any[]} args The arguments for the event.
      * @memberof Logger
@@ -119,7 +119,7 @@ export class Logger {
 
     /**
      * Logs the event at the warning level.
-     * 
+     *
      * @param {Error | string} event The event to be logged.
      * @param {...any[]} args The arguments for the event.
      * @memberof Logger
@@ -130,7 +130,7 @@ export class Logger {
 
     /**
      * Logs the event at the information level.
-     * 
+     *
      * @param {Error | string} event The event to be logged.
      * @param {...any[]} args The arguments for the event.
      * @memberof Logger
@@ -141,7 +141,7 @@ export class Logger {
 
     /**
      * Logs the event at the debug level.
-     * 
+     *
      * @param {Error | string} event The event to be logged.
      * @param {...any[]} args The arguments for the event.
      * @memberof Logger
@@ -152,7 +152,7 @@ export class Logger {
 
     /**
      * Logs the event at the trace level.
-     * 
+     *
      * @param {Error | string} event The event to be logged.
      * @param {...any[]} args The arguments for the event.
      * @memberof Logger
@@ -162,16 +162,16 @@ export class Logger {
     }
 
     /**
-    * Overridable method for writing to the log.
-    * 
-    * @param {LogLevel} level The logging level.
-    * @param {Error} exception The error that occured (may not be specified).
-    * @param {string} messageFormat The message format.
-    * @param {any[]} args The arguments for the message format.
-    * @memberof Logger
-    */
+     * Overridable method for writing to the log.
+     *
+     * @param {LogLevel} level The logging level.
+     * @param {Error} exception The error that occured (may not be specified).
+     * @param {string} messageFormat The message format.
+     * @param {any[]} args The arguments for the message format.
+     * @memberof Logger
+     */
     protected write(level: LogLevel, exception: Error | null | undefined, messageFormat: string, args: any[]): void {
-        let message = exception ? exception.message : messageFormat;
+        const message = exception ? exception.message : messageFormat;
         switch (level) {
             case LogLevel.Fatal:
                 console.error('FATAL ' + message, ...args);
@@ -204,7 +204,7 @@ export class Logger {
         if (typeof event === 'string') {
             this.write(level, null, event, args);
         } else {
-            let messageFormat = args && args.length && args[0];
+            const messageFormat = args && args.length && args[0];
             args = (args && args.length && args.splice(0, 1)) || [];
             this.write(level, event, messageFormat, args);
         }

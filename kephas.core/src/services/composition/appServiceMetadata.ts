@@ -1,4 +1,4 @@
-import { AppServiceInfo, ICompositionContext, Type } from "../..";
+import { AppServiceInfo, ICompositionContext, Type } from '../..';
 
 /**
  * Enumerates the priority values.
@@ -15,8 +15,8 @@ export enum Priority {
     Lowest = 2147483647,
 
     /**
-    * The low priority. Typically used by the default services.
-    */
+     * The low priority. Typically used by the default services.
+     */
     Low = 1000000,
 
     /**
@@ -95,7 +95,7 @@ export class AppServiceMetadata<T> {
     public get serviceContract(): AppServiceInfo | undefined {
         return this._serviceContract;
     }
-    
+
     /**
      * Gets the service instance.
      *
@@ -120,7 +120,7 @@ export class AppServiceMetadata<T> {
 
     /**
      * Creates an instance of AppServiceMetadata.
-     * 
+     *
      * @param {number|Priority} [overridePriority=Priority.Normal] Optional. The override priority.
      * @param {number|Priority} [processingPriority=Priority.Normal] Optional. The processing priority.
      * @param {string} [serviceName] Optional. The service name.

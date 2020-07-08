@@ -2,7 +2,7 @@ import {
     AppServiceInfo, AppServiceLifetime, ServiceError, Requires,
     AppServiceMetadata, Priority,
     AbstractType, Type
-} from "..";
+} from '..';
 import 'reflect-metadata';
 
 interface IAppServiceInfo {
@@ -30,8 +30,8 @@ interface IAppServiceInfo {
 export class AppServiceInfoRegistry {
     // metadata keys should be defined before the instance is created,
     // otherwise they will be null when registering the contracts.
-    private static readonly _serviceContractKey = "kephas:serviceContract";
-    private static readonly _serviceMetadataKey = "kephas:serviceMetadata";
+    private static readonly _serviceContractKey = 'kephas:serviceContract';
+    private static readonly _serviceMetadataKey = 'kephas:serviceMetadata';
 
     private static _instance: AppServiceInfoRegistry;
 
@@ -93,13 +93,13 @@ export class AppServiceInfoRegistry {
     }
 
     /**
-    * Registers the provided type as a service contract.
-    *
-    * @static
-    * @param {AbstractType} type The type to be registered.
-    * @param {AppServiceInfo} appServiceInfo The service information.
-    * @memberof AppServiceInfoRegistry
-    */
+     * Registers the provided type as a service contract.
+     *
+     * @static
+     * @param {AbstractType} type The type to be registered.
+     * @param {AppServiceInfo} appServiceInfo The service information.
+     * @memberof AppServiceInfoRegistry
+     */
     public registerServiceContract(type: AbstractType, appServiceInfo: AppServiceInfo): this {
         Requires.HasValue(type, 'type');
         Reflect.defineMetadata(AppServiceInfoRegistry._serviceContractKey, appServiceInfo, type);
@@ -108,32 +108,32 @@ export class AppServiceInfoRegistry {
     }
 
     /**
-    * Registers the provided type as a service type.
-    *
-    * @static
-    * @param {Type<T>} type The type to be registered.
-    * @param {AppServiceMetadata} [metadata] Optional. The service metadata.
-    * @memberof AppServiceInfoRegistry
-    */
+     * Registers the provided type as a service type.
+     *
+     * @static
+     * @param {Type<T>} type The type to be registered.
+     * @param {AppServiceMetadata} [metadata] Optional. The service metadata.
+     * @memberof AppServiceInfoRegistry
+     */
     public registerService<T>(type: Type<T>, metadata?: AppServiceMetadata<T>): this {
         Requires.HasValue(type, 'type');
-        let appServiceInfo = this._getContractOfService(type);
+        const appServiceInfo = this._getContractOfService(type);
         if (!appServiceInfo) {
             throw new ServiceError(`The service contract for '${type.name}' could not be identified. Check that the service or one of its bases is decorated as AppServiceContract or SingletonAppServiceContract.`);
         }
 
         metadata = metadata || new AppServiceMetadata();
-        metadata["_serviceType"] = type;
-        metadata["_serviceContract"] = appServiceInfo;
+        metadata['_serviceType'] = type;
+        metadata['_serviceContract'] = appServiceInfo;
 
-        let result = (<IAppServiceInfo><unknown>appServiceInfo).registerService(metadata);
+        let result = (appServiceInfo as unknown as IAppServiceInfo).registerService(metadata);
         if (result instanceof ServiceError) {
             throw result;
         }
 
         if (result instanceof AppServiceMetadata) {
-            let overriddenServiceType = result.serviceType;
-            let overriddenIndex = this._services.findIndex(m => m.serviceType == overriddenServiceType);
+            const overriddenServiceType = result.serviceType;
+            const overriddenIndex = this._services.findIndex(m => m.serviceType === overriddenServiceType);
             if (overriddenIndex >= 0) {
                 this._services[overriddenIndex] = metadata;
             }
@@ -201,7 +201,7 @@ export class AppServiceInfoRegistry {
 
     private _getContractOfService(type: AbstractType): AppServiceInfo | null {
         while (type) {
-            let contract = this.getServiceContract(type);
+            const contract = this.getServiceContract(type);
             if (contract) {
                 return contract;
             }

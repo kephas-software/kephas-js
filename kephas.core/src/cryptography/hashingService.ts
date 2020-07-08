@@ -1,7 +1,7 @@
 import { sha256 } from 'js-sha256';
 import { fromByteArray } from 'base64-js';
 
-import { SingletonAppServiceContract, AppService, Priority } from "..";
+import { SingletonAppServiceContract, AppService, Priority } from '..';
 
 /**
  * Provides the Hash method for hashing values.

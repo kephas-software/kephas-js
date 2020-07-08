@@ -1,4 +1,4 @@
-import { Type } from "..";
+import { Type } from '..';
 
 
 /**

@@ -1,6 +1,6 @@
 import {
     AppServiceMetadata, ServiceError, AbstractType
-} from "..";
+} from '..';
 
 /**
  * Enumerates the lifetime values for application services.
@@ -88,7 +88,7 @@ export class AppServiceInfo {
     constructor(
         {
             contractType,
-            contractToken = undefined,
+            contractToken,
             allowMultiple = false,
             lifetime = AppServiceLifetime.Singleton,
             ...args
@@ -126,12 +126,12 @@ export class AppServiceInfo {
 
         if (this._services.length > 0) {
             if (this._services[0].overridePriority > service.overridePriority) {
-                let overridden = this._services[0];
+                const overridden = this._services[0];
                 this._services[0] = service;
                 return overridden;
             }
 
-            if (this._services[0].overridePriority == service.overridePriority) {
+            if (this._services[0].overridePriority === service.overridePriority) {
                 const firstServiceType = this._services[0].serviceType;
                 return new ServiceError(`Multiple services registered with the same override priority '${service.overridePriority}' as singleton: '${firstServiceType && firstServiceType.name}' and '${service.serviceType && service.serviceType.name}'.`);
             }

@@ -1,17 +1,17 @@
-import { Requires } from "..";
-import { AbstractType } from "..";
-import "reflect-metadata";
+import { Requires } from '..';
+import { AbstractType } from '..';
+import 'reflect-metadata';
 
 /**
  * Base class for serializable objects.
- * 
+ *
  * @export
  * @abstract
  * @class Serializable
  */
 export abstract class Serializable {
-    private static _typeFullNameKey: string = "$type";
-    private static _typeNamespaceKey: string = "kephas:namespace";
+    private static _typeFullNameKey: string = '$type';
+    private static _typeNamespaceKey: string = 'kephas:namespace';
     /**
      * Gets or sets the name of the key holding the type's full name.
      *
@@ -30,12 +30,12 @@ export abstract class Serializable {
 
     /**
      * Sets the type name for serialization/deserialization purposes.
-     * 
+     *
      * @static
      * @template T
      * @param {AbstractType} type The type where the full name should be set.
      * @param {string} typeFullName The type's full name.
-     * 
+     *
      * @memberOf Serializable
      */
     static setTypeFullName(type: AbstractType, typeFullName: string): void {
@@ -45,12 +45,12 @@ export abstract class Serializable {
 
     /**
      * Sets the type namespace for serialization/deserialization purposes.
-     * 
+     *
      * @static
      * @template T
      * @param {AbstractType} type The type where the type name should be set.
      * @param {string} namespace The type namespace.
-     * 
+     *
      * @memberOf Serializable
      */
     static setTypeNamespace(type: AbstractType, namespace: string): void {
@@ -59,11 +59,11 @@ export abstract class Serializable {
 
     /**
      * Gets the type's full name for serialization/deserialization purposes.
-     * 
+     *
      * @static
      * @param {{} | AbstractType} typeOrInstance The type from where the type name should be retrieved.
      * @returns {(string | undefined)} The type's full name.
-     * 
+     *
      * @memberOf Serializable
      */
     static getTypeFullName(typeOrInstance: {} | AbstractType): string | undefined {
@@ -76,11 +76,11 @@ export abstract class Serializable {
 
     /**
      * Gets the type namespace for serialization/deserialization purposes.
-     * 
+     *
      * @static
      * @param {AbstractType} typeOrInstance The type from where the type name should be retrieved.
      * @returns {(string | undefined)} The type name.
-     * 
+     *
      * @memberOf Serializable
      */
     static getTypeNamespace(typeOrInstance: AbstractType): string | undefined {
@@ -96,9 +96,9 @@ export abstract class Serializable {
      * @memberof Serializable
      */
     public static getJSON(obj: object): {} {
-        let json: object = {};
+        const json: object = {};
 
-        let type = obj.constructor;
+        const type = obj.constructor;
         let typeName = Serializable.getTypeFullName(type) || Serializable.getTypeFullName(obj);
         if (!typeName) {
             typeName = type.name;
@@ -134,9 +134,9 @@ export abstract class Serializable {
 
     /**
      * Converts this object to a JSON representation.
-     * 
+     *
      * @returns {{}}
-     * 
+     *
      * @memberOf Serializable
      */
     public toJSON(): any {
@@ -145,9 +145,9 @@ export abstract class Serializable {
 
     /**
      * Converts this object to a string.
-     * 
+     *
      * @returns {string}
-     * 
+     *
      * @memberOf Serializable
      */
     public toString(): string {

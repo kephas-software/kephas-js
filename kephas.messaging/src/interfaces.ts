@@ -1,8 +1,8 @@
 /**
- * Interface for a message.
+ * Marker class for messages.
  *
  * @export
- * @interface IMessage
+ * @class Message
  */
-export interface IMessage {
+export class Message {
 }

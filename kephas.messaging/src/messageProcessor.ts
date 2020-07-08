@@ -1,5 +1,5 @@
 import { Priority, AppService, SingletonAppServiceContract, Requires } from '@kephas/core';
-import { IMessage, MessagingError } from '.';
+import { Message, MessagingError } from '.';
 
 /**
  * The messaging processor.
@@ -18,7 +18,7 @@ export class MessageProcessor {
      * @returns {Promise<TResponse>}
      * @memberof MessageProcessor
      */
-    processAsync<TResponse>(message: IMessage): Promise<TResponse> {
+    processAsync<TResponse>(message: Message): Promise<TResponse> {
         Requires.HasValue(message, 'message');
 
         throw new MessagingError('Not implemented');

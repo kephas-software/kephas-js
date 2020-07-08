@@ -1,7 +1,7 @@
 import {
     Input, ElementRef, ViewContainerRef
 } from '@angular/core';
-import { ControlValueAccessor } from "@angular/forms";
+import { ControlValueAccessor } from '@angular/forms';
 import { WidgetBase } from '..';
 
 /**
@@ -55,7 +55,7 @@ export abstract class ValueEditorBase<TValue>
 
     /**
      * Creates an instance of ValueEditorBase.
-     * 
+     *
      * @param {ElementRef} elementRef The element reference.
      * @param {ViewContainerRef} viewContainerRef The view container reference.
      * @memberof ValueEditorBase
@@ -98,11 +98,11 @@ export abstract class ValueEditorBase<TValue>
             return false;
         }
 
-        let prevValueChangeFromValue = this.valueChangeFromValue;
+        const prevValueChangeFromValue = this.valueChangeFromValue;
         this.valueChangeFromValue = true;
 
         try {
-            let oldValue = this._valueBeforeChange;
+            const oldValue = this._valueBeforeChange;
             this.onValueChanging(oldValue, value);
             this._valueBeforeChange = value;
 
@@ -123,18 +123,34 @@ export abstract class ValueEditorBase<TValue>
         return true;
     }
 
+    /**
+     * Overridable method invoked when the value is about to be changed.
+     *
+     * @protected
+     * @param {(TValue | undefined)} oldValue The old value.
+     * @param {(TValue | undefined)} newValue The new value.
+     * @memberof ValueEditorBase
+     */
     protected onValueChanging(oldValue: TValue | undefined, newValue: TValue | undefined): void {
     }
 
+    /**
+     * Overridable method invoked after the value was changed.
+     *
+     * @protected
+     * @param {(TValue | undefined)} oldValue The old value.
+     * @param {(TValue | undefined)} newValue The new value.
+     * @memberof ValueEditorBase
+     */
     protected onValueChanged(oldValue: TValue | undefined, newValue: TValue | undefined): void {
     }
 
     /**
      * Callback invoked from the change event of the underlying editor.
-     * 
+     *
      * @protected
-     * @param {*} e 
-     * @returns 
+     * @param {*} e
+     * @returns
      * @memberof PropertyEditorComponent
      */
     protected onEditorChange(e: any) {
@@ -142,10 +158,10 @@ export abstract class ValueEditorBase<TValue>
             return;
         }
 
-        let prevValueChangeFromEvent = this.valueChangeFromEvent;
+        const prevValueChangeFromEvent = this.valueChangeFromEvent;
         this.valueChangeFromEvent = true;
         try {
-            let newValue = this.getEditorValueOnChange(e);
+            const newValue = this.getEditorValueOnChange(e);
             this.value = newValue;
         } catch (error) {
             this.notification.notifyError(error);
@@ -156,7 +172,7 @@ export abstract class ValueEditorBase<TValue>
 
     /**
      * Sets the value of the underlying editor.
-     * 
+     *
      * @protected
      * @param {TValue} value The value to be set.
      * @memberof ValueEditorBase
@@ -165,7 +181,7 @@ export abstract class ValueEditorBase<TValue>
 
     /**
      * Gets the underlying editor's value.
-     * 
+     *
      * @protected
      * @returns {TValue} The widget value.
      * @memberof ValueEditorBase
@@ -174,7 +190,7 @@ export abstract class ValueEditorBase<TValue>
 
     /**
      * Gets the underlying editor's value upon change.
-     * 
+     *
      * @protected
      * @param {*} e The change event arguments.
      * @returns {TValue} The widget value.
@@ -187,9 +203,9 @@ export abstract class ValueEditorBase<TValue>
 
     /**
      * Write a new value to the element.
-     * 
+     *
      * @param {*} obj The new value.
-     * 
+     *
      * @memberOf PropertyEditorComponent
      */
     writeValue(obj: any): void {
@@ -198,9 +214,9 @@ export abstract class ValueEditorBase<TValue>
 
     /**
      * Set the function to be called when the control receives a change event.
-     * 
+     *
      * @param {*} fn The callback function.
-     * 
+     *
      * @memberOf PropertyEditorComponent
      */
     registerOnChange(fn: any): void {
@@ -209,9 +225,9 @@ export abstract class ValueEditorBase<TValue>
 
     /**
      * Set the function to be called when the control receives a touch event.
-     * 
+     *
      * @param {*} fn The callback function.
-     * 
+     *
      * @memberOf PropertyEditorComponent
      */
     registerOnTouched(fn: any): void {
@@ -221,9 +237,9 @@ export abstract class ValueEditorBase<TValue>
     /**
      * This function is called when the control status changes to or from "DISABLED".
      * Depending on the value, it will enable or disable the appropriate DOM element.
-     * 
+     *
      * @param {boolean} isDisabled True if the state is disabled.
-     * 
+     *
      * @memberOf PropertyEditorComponent
      */
     setDisabledState(isDisabled: boolean): void {

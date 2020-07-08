@@ -1,5 +1,10 @@
-import { ValueEditorBase, provideWidget, provideValueAccessor } from "@kephas/angular";
-import { ViewContainerRef, ElementRef, Component, Input } from '@angular/core'
+import {
+    ValueEditorBase, provideWidget, provideValueAccessor
+} from '@kephas/angular';
+import {
+    ViewContainerRef, ElementRef, Component, Input, OnInit,
+    AfterViewInit, OnDestroy
+} from '@angular/core'
 
 import { Editor, edit } from 'brace';
 
@@ -26,7 +31,7 @@ import 'brace/mode/json';
     providers: [provideWidget(AceEditor), provideValueAccessor(AceEditor)]
 })
 export class AceEditor extends ValueEditorBase<string | {} | null>
-{
+    implements OnInit, AfterViewInit, OnDestroy {
     /**
      * Gets or sets the Ace editor.
      *
@@ -42,7 +47,7 @@ export class AceEditor extends ValueEditorBase<string | {} | null>
 
     /**
      * Creates an instance of AceEditor.
-     * 
+     *
      * @param {ElementRef} elementRef The element reference.
      * @param {ViewContainerRef} viewContainerRef The view container reference.
      * @memberof AceEditor
@@ -161,6 +166,13 @@ export class AceEditor extends ValueEditorBase<string | {} | null>
         });
     }
 
+    /**
+     * A callback method that is invoked immediately after
+     * Angular has completed initialization of a component's view.
+     * It is invoked only once when the view is instantiated.
+     *
+     * @memberof AceEditor
+     */
     public ngAfterViewInit() {
         super.ngAfterViewInit();
         if (!this.observeVisibilityOf) {
@@ -170,6 +182,12 @@ export class AceEditor extends ValueEditorBase<string | {} | null>
         this.observeVisibility(this.observeVisibilityOf);
     }
 
+    /**
+     * A callback method that performs custom clean-up, invoked immediately
+     * after a directive, pipe, or service instance is destroyed.
+     *
+     * @memberof AceEditor
+     */
     public ngOnDestroy() {
         super.ngOnDestroy();
 
@@ -264,7 +282,7 @@ export class AceEditor extends ValueEditorBase<string | {} | null>
         if (typeof value === 'object') {
             this._valueIsObject = true;
             stringValue = this._getFormattedJson(value!);
-        } else if (typeof value == 'string') {
+        } else if (typeof value === 'string') {
             if (value) {
                 this._valueIsObject = false;
             }
@@ -278,12 +296,12 @@ export class AceEditor extends ValueEditorBase<string | {} | null>
     }
 
     /**
-        * Gets the underlying editor's value.
-        *
-        * @protected
-        * @returns {string | {} | null} The widget value.
-        * @memberof ValueEditorBase
-        */
+     * Gets the underlying editor's value.
+     *
+     * @protected
+     * @returns {string | {} | null} The widget value.
+     * @memberof ValueEditorBase
+     */
     protected getEditorValue(): string | {} | null {
         if (!this.editor) {
             return null;
@@ -308,11 +326,11 @@ export class AceEditor extends ValueEditorBase<string | {} | null>
 
     /**
      * When overridden in a derived class, this method is called when the read only state changes.
-     * 
+     *
      * @protected
      * @param {boolean} oldValue The old value.
      * @param {boolean} newValue The new value.
-     * 
+     *
      * @memberof EditorBase
      */
     protected onReadOnlyChanged(oldValue: boolean, newValue: boolean): void {
@@ -392,7 +410,7 @@ export class AceEditor extends ValueEditorBase<string | {} | null>
     }
 
     private _isVisible(element: Element): boolean {
-        var style = window.getComputedStyle(element);
+        const style = window.getComputedStyle(element);
         return !(style.display === 'none')
     }
 }

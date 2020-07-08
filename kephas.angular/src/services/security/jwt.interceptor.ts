@@ -1,7 +1,7 @@
 import { HttpRequest, HttpHandler, HttpEvent, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { from as observableFrom, Observable } from 'rxjs';
 
-import { Notification } from "@kephas/ui";
+import { Notification } from '@kephas/ui';
 import { HttpInterceptor } from '../..';
 
 /**
@@ -34,7 +34,6 @@ export abstract class JwtInterceptorBase extends HttpInterceptor {
     }
 
     private async _interceptAsync(request: HttpRequest<any>, next: HttpHandler): Promise<HttpEvent<any>> {
-
         try {
             const result = await next.handle(request).toPromise();
             if (result instanceof HttpResponse) {

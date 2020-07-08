@@ -3,44 +3,10 @@ import {
     Input, SimpleChanges,
     OnInit, OnChanges, AfterViewInit,
     Type, Provider, forwardRef, QueryList, ViewChildren, OnDestroy
-} from "@angular/core";
+} from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Logger } from "@kephas/core";
-import { Notification } from "@kephas/ui";
-
-/**
- * This function provides the component as a WidgetBase,
- * to be able to import it over this base class instead of over its own class.
- *
- * For example, use it as @ViewChild(WidgetBase) or @ViewChildren(WidgetBase).
- *
- * @export
- * @param {Type<any>} componentType The component type.
- * @returns {Provider} The provider.
- */
-export function provideWidget(componentType: Type<any>): Provider {
-    return {
-        provide: WidgetBase,
-        useExisting: forwardRef(() => componentType)
-    };
-}
-
-/**
- * This function provides the component as a NG_VALUE_ACCESSOR.
- * Thus, it is possible to bind it like this:
- * <my-component [(ngModel)]="boundProperty"></my-component>
- *
- * @export
- * @param {Type<any>} componentType The component type.
- * @returns {Provider} The provider.
- */
-export function provideValueAccessor(componentType: Type<any>): Provider {
-    return {
-        provide: NG_VALUE_ACCESSOR,
-        useExisting: forwardRef(() => componentType),
-        multi: true
-    };
-}
+import { Logger } from '@kephas/core';
+import { Notification } from '@kephas/ui';
 
 /**
  * Provides base functionality for a widget.
@@ -98,7 +64,7 @@ export abstract class WidgetBase implements OnInit, AfterViewInit, OnChanges, On
 
     /**
      * Gets or sets the child editors query.
-     * 
+     *
      * @readonly
      * @type {QueryList<EditorBase<any>>}
      * @memberof EditorBase
@@ -138,7 +104,7 @@ export abstract class WidgetBase implements OnInit, AfterViewInit, OnChanges, On
 
     /**
      * Gets or sets a value indicating whether the editor allows edits or not.
-     * 
+     *
      * @readonly
      * @type {boolean}
      * @memberof EditorBase
@@ -184,7 +150,7 @@ export abstract class WidgetBase implements OnInit, AfterViewInit, OnChanges, On
      * default change detector has checked data-bound properties
      * if at least one has changed, and before the view and content
      * children are checked.
-     * 
+     *
      * @param changes The changed properties.
      * @memberof WidgetBase
      */
@@ -200,11 +166,11 @@ export abstract class WidgetBase implements OnInit, AfterViewInit, OnChanges, On
 
     /**
      * When overridden in a derived class, this method is called when the read only state changes.
-     * 
+     *
      * @protected
      * @param {boolean} oldValue The old value.
      * @param {boolean} newValue The new value.
-     * 
+     *
      * @memberof WidgetBase
      */
     protected onReadOnlyChanged(oldValue: boolean, newValue: boolean): void {
@@ -212,13 +178,47 @@ export abstract class WidgetBase implements OnInit, AfterViewInit, OnChanges, On
 
     /**
      * When overridden in a derived class, this method is called when the child widgets query changed.
-     * 
+     *
      * @protected
      * @param {QueryList<EditorBase<any>>} oldValue The old query.
      * @param {QueryList<EditorBase<any>>} newValue The new query.
-     * 
+     *
      * @memberof EditorBase
      */
     protected onChildWidgetsChanged(oldValue?: QueryList<WidgetBase>, newValue?: QueryList<WidgetBase>): void {
     }
+}
+
+/**
+ * This function provides the component as a WidgetBase,
+ * to be able to import it over this base class instead of over its own class.
+ *
+ * For example, use it as @ViewChild(WidgetBase) or @ViewChildren(WidgetBase).
+ *
+ * @export
+ * @param {Type<any>} componentType The component type.
+ * @returns {Provider} The provider.
+ */
+export function provideWidget(componentType: Type<any>): Provider {
+    return {
+        provide: WidgetBase,
+        useExisting: forwardRef(() => componentType)
+    };
+}
+
+/**
+ * This function provides the component as a NG_VALUE_ACCESSOR.
+ * Thus, it is possible to bind it like this:
+ * <my-component [(ngModel)]="boundProperty"></my-component>
+ *
+ * @export
+ * @param {Type<any>} componentType The component type.
+ * @returns {Provider} The provider.
+ */
+export function provideValueAccessor(componentType: Type<any>): Provider {
+    return {
+        provide: NG_VALUE_ACCESSOR,
+        useExisting: forwardRef(() => componentType),
+        multi: true
+    };
 }

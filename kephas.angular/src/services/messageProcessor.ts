@@ -1,9 +1,9 @@
-import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
-import { LogLevel, AppService, SingletonAppServiceContract, Priority, Logger } from "@kephas/core";
-import { Notification } from "@kephas/ui";
-import { AppSettings } from "..";
-import { Observable, ObservableInput } from "rxjs";
-import { retry, map, catchError } from "rxjs/operators";
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { LogLevel, AppService, SingletonAppServiceContract, Priority, Logger } from '@kephas/core';
+import { Notification } from '@kephas/ui';
+import { AppSettings, ErrorInfo, MessageError } from '..';
+import { Observable, ObservableInput } from 'rxjs';
+import { retry, map, catchError } from 'rxjs/operators';
 
 /**
  * The base message response.
@@ -29,51 +29,6 @@ export interface ResponseMessage {
     message?: string;
 
     [key: string]: any;
-}
-
-/**
- * The error information.
- *
- * @export
- * @interface ErrorInfo
- */
-export interface ErrorInfo {
-    /**
-     * The error severity.
-     *
-     * @type {LogLevel}
-     * @memberof ErrorInfo
-     */
-    severity: LogLevel;
-
-    /**
-     * The error message.
-     *
-     * @type {string}
-     * @memberof ErrorInfo
-     */
-    message?: string;
-
-    [key: string]: any;
-}
-
-/**
- * Signals that a message error occurred.
- *
- * @export
- * @class MessageError
- * @extends {Error}
- */
-export class MessageError extends Error {
-    /**
-     * Creates an instance of MessageError.
-     * @param {string} message The error message.
-     * @param {ErrorInfo} [response] Optional. The extended error information.
-     * @memberof MessageError
-     */
-    constructor(message: string, public readonly response?: ErrorInfo) {
-        super(message);
-    }
 }
 
 /**
@@ -143,14 +98,14 @@ export class MessageProcessor {
      * @type {string}
      * @memberof MessageProcessor
      */
-    protected baseRoute: string = "api/msg/";
+    protected baseRoute: string = 'api/msg/';
 
     /**
-   * Initializes a new instance of the MessageProcessor class.
-   * @param {Notification} notification The notification service.
-   * @param {HttpClient} http The HTTP client.
-   * @param {AppSettings} appSettings The application settings.
-   */
+     * Initializes a new instance of the MessageProcessor class.
+     * @param {Notification} notification The notification service.
+     * @param {HttpClient} http The HTTP client.
+     * @param {AppSettings} appSettings The application settings.
+     */
     constructor(
         protected appSettings: AppSettings,
         protected http: HttpClient,
@@ -166,9 +121,9 @@ export class MessageProcessor {
      * @returns {Promise{T}} A promise of the result.
      */
     public process<T extends ResponseMessage>(message: {}, options?: MessageOptions): Observable<T> {
-        let url = this.getHttpPostUrl(message, options);
-        let obs = this.http.post<RawResponseMessage<T>>(url, message, this.getHttpPostOptions(message, options));
-        let responseObj = (options && options.retries) 
+        const url = this.getHttpPostUrl(message, options);
+        const obs = this.http.post<RawResponseMessage<T>>(url, message, this.getHttpPostOptions(message, options));
+        const responseObj = (options && options.retries)
             ? obs.pipe(
                 retry(options.retries),
                 map(response => this._processResponse<T>(response, options)),
@@ -195,7 +150,7 @@ export class MessageProcessor {
             baseUrl = baseUrl + '/';
         }
 
-        let url = `${baseUrl}${this.baseRoute}`;
+        const url = `${baseUrl}${this.baseRoute}`;
         return url;
     }
 
@@ -238,7 +193,7 @@ export class MessageProcessor {
     private _processResponse<T extends ResponseMessage>(rawResponse: RawResponseMessage<T>, options?: MessageOptions): T {
         if (rawResponse.exception) {
             const errorInfo = rawResponse.exception;
-            if (typeof errorInfo.severity === "string") {
+            if (typeof errorInfo.severity === 'string') {
                 errorInfo.severity = LogLevel[errorInfo.severity as string];
             }
 
@@ -246,7 +201,7 @@ export class MessageProcessor {
         }
 
         const response = rawResponse.message;
-        if (typeof response.severity === "string") {
+        if (typeof response.severity === 'string') {
             response.severity = LogLevel[response.severity as string];
         }
 
@@ -254,9 +209,9 @@ export class MessageProcessor {
             throw new MessageError(response.message!, response);
         }
 
-        if (response.severity == LogLevel.Warning) {
+        if (response.severity === LogLevel.Warning) {
             this.logger.log(response.severity, null, response.message!);
-            if (!(options && (options.notifyWarnings == undefined || options.notifyWarnings))) {
+            if (!(options && (options.notifyWarnings === undefined || options.notifyWarnings))) {
                 this.notification.notifyWarning(response);
             }
         }
@@ -269,7 +224,7 @@ export class MessageProcessor {
 
     private _processError<T extends ResponseMessage>(error: any, options?: MessageOptions): ObservableInput<T> {
         this.logger.error(error);
-        if (!(options && (options.notifyErrors == undefined || options.notifyErrors))) {
+        if (!(options && (options.notifyErrors === undefined || options.notifyErrors))) {
             this.notification.notifyError(error);
         }
 

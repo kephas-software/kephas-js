@@ -2,8 +2,10 @@ export { WidgetBase, provideValueAccessor, provideWidget } from './components/wi
 export { ValueEditorBase } from './components/valueEditorBase';
 export { AngularAppServiceInfoRegistry } from './services/angularAppServiceInfoRegistry';
 export { AppSettings } from './services/appSettings';
-export { CommandProcessor, CommandResponse, CommandError, CommandOptions } from './services/commandProcessor';
-export { MessageProcessor, ResponseMessage as MessageResponse, MessageError, MessageOptions } from './services/messageProcessor';
+export { CommandResponse, CommandError } from './services/commandError';
+export { CommandProcessor, CommandOptions } from './services/commandProcessor';
+export { MessageProcessor, ResponseMessage as MessageResponse, MessageOptions } from './services/messageProcessor';
+export { MessageError, ErrorInfo } from './services/messageError';
 
 export { HttpInterceptor } from './services/http/httpInterceptor';
 

@@ -1,6 +1,9 @@
 import { Type } from '@angular/core';
 import { HttpClient, HttpResponse as HttpResponse } from '@angular/common/http';
-import { SingletonAppServiceContract, AppService, Priority, AsyncInitializable } from '@kephas/core';
+import {
+    SingletonAppServiceContract, AppService, Priority,
+    AsyncInitializable
+} from '@kephas/core';
 
 @AppService({ overridePriority: Priority.Low })
 @SingletonAppServiceContract()

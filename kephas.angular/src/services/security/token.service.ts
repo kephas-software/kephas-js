@@ -70,7 +70,7 @@ export class TokenService {
      * @memberof TokenService
      */
     public get token(): string | undefined {
-        let tokenInfo = this.tokenInfo;
+        const tokenInfo = this.tokenInfo;
         return tokenInfo && tokenInfo.token;
     }
     public set token(token: string | undefined) {
@@ -78,7 +78,7 @@ export class TokenService {
             return;
         };
 
-        let jwtToken = this.decode(token!);
+        const jwtToken = this.decode(token!);
         this._tokenInfo = jwtToken;
     }
 
@@ -89,7 +89,7 @@ export class TokenService {
      * @memberof TokenService
      */
     public get refreshToken(): string | undefined {
-        let tokenInfo = this.refreshTokenInfo;
+        const tokenInfo = this.refreshTokenInfo;
         return tokenInfo && tokenInfo.token;
     }
     public set refreshToken(token: string | undefined) {
@@ -97,7 +97,7 @@ export class TokenService {
             return;
         };
 
-        let jwtToken = this.decode(token!);
+        const jwtToken = this.decode(token!);
         this._refreshTokenInfo = jwtToken;
     }
 
@@ -148,7 +148,7 @@ export class TokenService {
 
         const decoded = jwtDecode<RawTokenInfo>(token);
         return {
-            token: token,
+            token,
             subject: decoded.sub,
             issuedAt: this._toDate(decoded.iat),
             expiresAt: this._toDate(decoded.exp),
@@ -156,16 +156,16 @@ export class TokenService {
     }
 
     private _loadTokenData() {
-        let tokenDataString = localStorage.getItem(TokenService.AuthTokenKey);
+        const tokenDataString = localStorage.getItem(TokenService.AuthTokenKey);
         if (tokenDataString) {
-            let tokenData: TokenData = JSON.parse(tokenDataString);
+            const tokenData: TokenData = JSON.parse(tokenDataString);
             this.token = tokenData && tokenData.token;
             this.refreshToken = tokenData && tokenData.refreshToken;
         }
     }
 
     private _isExpired(jwtToken: TokenInfo): boolean {
-        let expirationDate = jwtToken && jwtToken.expiresAt;
+        const expirationDate = jwtToken && jwtToken.expiresAt;
         if (!expirationDate) {
             return false;
         }

@@ -1,54 +1,12 @@
-import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
-import { LogLevel, AppService, SingletonAppServiceContract, Priority, Logger } from "@kephas/core";
-import { Notification } from "@kephas/ui";
-import { AppSettings } from "..";
-import { Observable, ObservableInput } from "rxjs";
-import { retry, map, catchError } from "rxjs/operators";
-
-/**
- * The base command response.
- *
- * @export
- * @interface CommandResponse
- */
-export interface CommandResponse {
-    /**
-     * The severity.
-     *
-     * @type {LogLevel}
-     * @memberof CommandResponse
-     */
-    severity: LogLevel;
-
-    /**
-     * The message.
-     *
-     * @type {string}
-     * @memberof CommandResponse
-     */
-    message?: string;
-
-    [key: string]: any;
-}
-
-/**
- * Signals that a command error occurred.
- *
- * @export
- * @class CommandError
- * @extends {Error}
- */
-export class CommandError extends Error {
-    /**
-     * Creates an instance of CommandError.
-     * @param {string} message The error message.
-     * @param {CommandResponse} [response] Optional. The command response.
-     * @memberof CommandError
-     */
-    constructor(message: string, public readonly response?: CommandResponse) {
-        super(message);
-    }
-}
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import {
+    LogLevel, AppService, SingletonAppServiceContract,
+    Priority, Logger
+} from '@kephas/core';
+import { Notification } from '@kephas/ui';
+import { AppSettings, CommandResponse, CommandError } from '..';
+import { Observable, ObservableInput } from 'rxjs';
+import { retry, map, catchError } from 'rxjs/operators';
 
 /**
  * Options for controlling the command execution.
@@ -99,14 +57,14 @@ export class CommandProcessor {
      * @type {string}
      * @memberof CommandProcessor
      */
-    protected baseRoute: string = "api/cmd/";
+    protected baseRoute: string = 'api/cmd/';
 
     /**
-   * Initializes a new instance of the CommandProcessor class.
-   * @param {Notification} notification The notification service.
-   * @param {HttpClient} http The HTTP client.
-   * @param {AppSettings} appSettings The application settings.
-   */
+     * Initializes a new instance of the CommandProcessor class.
+     * @param {Notification} notification The notification service.
+     * @param {HttpClient} http The HTTP client.
+     * @param {AppSettings} appSettings The application settings.
+     */
     constructor(
         protected appSettings: AppSettings,
         protected http: HttpClient,
@@ -123,7 +81,7 @@ export class CommandProcessor {
      * @returns {Promise{T}} A promise of the result.
      */
     public process<T extends CommandResponse>(command: string, args?: {}, options?: CommandOptions): Observable<T> {
-        let url = this.getHttpGetUrl(command, args, options);
+        const url = this.getHttpGetUrl(command, args, options);
         let obs = this.http.get<T>(url, this.getHttpGetOptions(command, args, options));
         if (options && options.retries) {
             obs = obs.pipe(
@@ -160,7 +118,7 @@ export class CommandProcessor {
         if (args) {
             url = url + '?' + Object.keys(args)
                 .map(key => `${key}=${args[key]}`)
-                .join("&");
+                .join('&');
         }
 
         return url;
@@ -203,7 +161,7 @@ export class CommandProcessor {
     }
 
     private _processResponse<T extends CommandResponse>(response: T, options?: CommandOptions): T {
-        if (typeof response.severity === "string") {
+        if (typeof response.severity === 'string') {
             response.severity = LogLevel[response.severity as string];
         }
 
@@ -211,9 +169,9 @@ export class CommandProcessor {
             throw new CommandError(response.message!, response);
         }
 
-        if (response.severity == LogLevel.Warning) {
+        if (response.severity === LogLevel.Warning) {
             this.logger.log(response.severity, null, response.message!);
-            if (!(options && (options.notifyWarnings == undefined || options.notifyWarnings))) {
+            if (!(options && (options.notifyWarnings === undefined || options.notifyWarnings))) {
                 this.notification.notifyWarning(response);
             }
         }
@@ -226,7 +184,7 @@ export class CommandProcessor {
 
     private _processError<T extends CommandResponse>(error: any, options?: CommandOptions): ObservableInput<T> {
         this.logger.error(error);
-        if (!(options && (options.notifyErrors == undefined || options.notifyErrors))) {
+        if (!(options && (options.notifyErrors === undefined || options.notifyErrors))) {
             this.notification.notifyError(error);
         }
 

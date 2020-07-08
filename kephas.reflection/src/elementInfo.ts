@@ -1,15 +1,15 @@
-import { DisplayInfo, ITypeInfoRegistry, ReflectionError, IElementInfo } from ".";
+import { DisplayInfo, ITypeInfoRegistry, ReflectionError, IElementInfo } from '.';
 
 /**
  * Provides basic implementation of reflection elements.
- * 
+ *
  * @export
  * @class ElementInfo
  */
 export abstract class ElementInfo implements IElementInfo {
     /**
      * Gets the element name.
-     * 
+     *
      * @type {string}
      * @memberof IElementInfo
      */
@@ -17,7 +17,7 @@ export abstract class ElementInfo implements IElementInfo {
 
     /**
      * Gets the element full name.
-     * 
+     *
      * @type {string}
      * @memberof ElementInfo
      */
@@ -32,7 +32,7 @@ export abstract class ElementInfo implements IElementInfo {
 
     /**
      * Creates an instance of ElementInfo.
-     * 
+     *
      * @param {string} name The element name.
      * @param {string} [fullName] Optional. The full name of the element.
      * @param {DisplayInfo} [displayInfo] Optional. The display information.
@@ -54,7 +54,7 @@ export abstract class ElementInfo implements IElementInfo {
             [key: string]: any;
         }) {
         if (!name) {
-            throw new ReflectionError("The name must be provided.");
+            throw new ReflectionError('The name must be provided.');
         }
 
         this.name = name;

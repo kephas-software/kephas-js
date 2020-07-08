@@ -1,5 +1,5 @@
-import { DisplayInfo } from ".";
-import { Type } from "@kephas/core";
+import { DisplayInfo } from '.';
+import { Type } from '@kephas/core';
 
 /**
  * Registry for types.
@@ -9,26 +9,26 @@ import { Type } from "@kephas/core";
  */
 export interface ITypeInfoRegistry {
     /**
-    * Gets the type in the registry by its name.
-    *
-    * @param {string} fullName The full name of the type.
-    * @param {boolean} [throwOnNotFound=true] True to throw if the type cannot be found.
-    * @returns {TypeInfo}
-    * @memberof TypeInfoRegistry
-    */
+     * Gets the type in the registry by its name.
+     *
+     * @param {string} fullName The full name of the type.
+     * @param {boolean} [throwOnNotFound=true] True to throw if the type cannot be found.
+     * @returns {TypeInfo}
+     * @memberof TypeInfoRegistry
+     */
     getType(fullName: string, throwOnNotFound?: boolean): ITypeInfo;
 }
 
 /**
  * Provides basic information about reflected information.
- * 
+ *
  * @export
  * @interface IElementInfo
  */
 export interface IElementInfo {
     /**
      * Gets the element name.
-     * 
+     *
      * @type {string}
      * @memberof IElementInfo
      */
@@ -36,7 +36,7 @@ export interface IElementInfo {
 
     /**
      * Gets the element's full name.
-     * 
+     *
      * @type {string}
      * @memberof IElementInfo
      */
@@ -134,7 +134,7 @@ export interface IPropertyInfo extends IValueElementInfo {
 export interface ITypeInfo extends IElementInfo {
     /**
      * Gets the type's namespace.
-     * 
+     *
      * @type {string}
      * @memberof TypeInfo
      */

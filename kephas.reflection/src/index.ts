@@ -10,7 +10,7 @@ export { TypeInfoRegistry } from './typeInfoRegistry';
 import { TypeInfoRegistry } from './typeInfoRegistry';
 import { TypeInfo } from './typeInfo';
 
-(<any>TypeInfoRegistry.prototype).initialize = (registry: TypeInfoRegistry) => {
+(TypeInfoRegistry.prototype as any).initialize = (registry: TypeInfoRegistry) => {
     registry.register(
         new TypeInfo({ name: TypeInfo.AnyTypeName, registry }),
         new TypeInfo({ name: TypeInfo.BooleanTypeName, registry }),

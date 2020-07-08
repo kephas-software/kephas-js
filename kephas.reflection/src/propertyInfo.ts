@@ -1,7 +1,7 @@
 import {
     ValueElementInfo, ITypeInfoRegistry, ITypeInfo, IPropertyInfo,
     ReflectionError, DisplayInfo
-} from ".";
+} from '.';
 
 /**
  * Provides reflection information about a property.
@@ -63,7 +63,7 @@ export class PropertyInfo extends ValueElementInfo implements IPropertyInfo {
 
     /**
      * Creates an instance of PropertyInfo.
-     * 
+     *
      * @param {ITypeInfo} declaringType The declaring type.
      * @param {string} name The element name.
      * @param {string} [fullName] Optional. The full name of the element.
@@ -107,12 +107,12 @@ export class PropertyInfo extends ValueElementInfo implements IPropertyInfo {
         super({ name, fullName, displayInfo, valueType, registry, ...args });
 
         if (!declaringType) {
-            throw new ReflectionError("The declaring type is not set.");
+            throw new ReflectionError('The declaring type is not set.');
         }
 
         this.declaringType = declaringType;
-        this.canRead = canRead == undefined ? true : canRead;
-        this.canWrite = canWrite == undefined ? true : canWrite;
+        this.canRead = canRead === undefined ? true : canRead;
+        this.canWrite = canWrite === undefined ? true : canWrite;
         this.isRequired = !!isRequired;
         this.isStatic = !!isStatic;
         this.defaultValue = defaultValue;

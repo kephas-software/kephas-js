@@ -1,5 +1,5 @@
-import { ReflectionError, ITypeInfoRegistry, ITypeInfo } from ".";
-import { Requires, SingletonAppServiceContract, AppService, Priority } from "@kephas/core";
+import { ReflectionError, ITypeInfoRegistry, ITypeInfo } from '.';
+import { Requires, SingletonAppServiceContract, AppService, Priority } from '@kephas/core';
 
 /**
  * Provides centralized access to the application's type system.
@@ -51,7 +51,7 @@ export class TypeInfoRegistry implements ITypeInfoRegistry {
      */
     public getType(fullName: string, throwOnNotFound?: boolean): ITypeInfo {
         Requires.HasValue(fullName, 'fullName');
-        if (throwOnNotFound == undefined) {
+        if (throwOnNotFound === undefined) {
             throwOnNotFound = true;
         }
 
@@ -75,7 +75,7 @@ export class TypeInfoRegistry implements ITypeInfoRegistry {
             return this;
         }
 
-        for (let type of types) {
+        for (const type of types) {
             const typeKey = type.fullName || type.name;
             if (this._typesByFullName[typeKey]) {
                 throw new ReflectionError(`The type ${typeKey} is already registered.`);

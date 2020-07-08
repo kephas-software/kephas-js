@@ -1,7 +1,7 @@
 import {
     ElementInfo, ITypeInfoRegistry, IValueElementInfo, ITypeInfo,
     TypeInfoRegistry, DisplayInfo
-} from ".";
+} from '.';
 
 /**
  * Reflective element information holding a value.
@@ -26,7 +26,7 @@ export abstract class ValueElementInfo extends ElementInfo implements IValueElem
 
     /**
      * Creates an instance of ValueElementInfo.
-     * 
+     *
      * @param {string} name The element name.
      * @param {string} [fullName] Optional. The full name of the element.
      * @param {DisplayInfo} [displayInfo] Optional. The display information.
@@ -54,8 +54,8 @@ export abstract class ValueElementInfo extends ElementInfo implements IValueElem
         if (!valueType) {
             this._valueTypeGetter = () => (this._valueType || (this._valueType = this.getValueType('any', registry)));
         }
-        else if (typeof valueType == 'string') {
-            this._valueTypeGetter = () => (this._valueType || (this._valueType = this.getValueType(<string><unknown>valueType, registry)));
+        else if (typeof valueType === 'string') {
+            this._valueTypeGetter = () => (this._valueType || (this._valueType = this.getValueType(valueType as unknown as string, registry)));
         }
         else {
             this._valueType = valueType;

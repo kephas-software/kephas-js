@@ -18,7 +18,7 @@ export class TypeInfo extends ElementInfo implements ITypeInfo {
      * @static
      * @memberof TypeInfo
      */
-    static readonly AnyTypeName = "any";
+    static readonly AnyTypeName = 'any';
 
     /**
      * The name of the 'object' type.
@@ -26,7 +26,7 @@ export class TypeInfo extends ElementInfo implements ITypeInfo {
      * @static
      * @memberof TypeInfo
      */
-    static readonly ObjectTypeName = "object";
+    static readonly ObjectTypeName = 'object';
 
     /**
      * The name of the 'boolean' type.
@@ -34,7 +34,7 @@ export class TypeInfo extends ElementInfo implements ITypeInfo {
      * @static
      * @memberof TypeInfo
      */
-    static readonly BooleanTypeName = "boolean";
+    static readonly BooleanTypeName = 'boolean';
 
     /**
      * The name of the 'number' type.
@@ -42,7 +42,7 @@ export class TypeInfo extends ElementInfo implements ITypeInfo {
      * @static
      * @memberof TypeInfo
      */
-    static readonly NumberTypeName = "number";
+    static readonly NumberTypeName = 'number';
 
     /**
      * The name of the 'string' type.
@@ -50,7 +50,7 @@ export class TypeInfo extends ElementInfo implements ITypeInfo {
      * @static
      * @memberof TypeInfo
      */
-    static readonly StringTypeName = "string";
+    static readonly StringTypeName = 'string';
 
     /**
      * The name of the 'array' type.
@@ -58,7 +58,7 @@ export class TypeInfo extends ElementInfo implements ITypeInfo {
      * @static
      * @memberof TypeInfo
      */
-    static readonly ArrayTypeName = "array";
+    static readonly ArrayTypeName = 'array';
 
     /**
      * The name of the 'symbol' type.
@@ -66,7 +66,7 @@ export class TypeInfo extends ElementInfo implements ITypeInfo {
      * @static
      * @memberof TypeInfo
      */
-    static readonly SymbolTypeName = "symbol";
+    static readonly SymbolTypeName = 'symbol';
 
     /**
      * The name of the 'Date' type.
@@ -74,11 +74,11 @@ export class TypeInfo extends ElementInfo implements ITypeInfo {
      * @static
      * @memberof TypeInfo
      */
-    static readonly DateTypeName = "Date";
+    static readonly DateTypeName = 'Date';
 
     /**
      * Gets the type's namespace.
-     * 
+     *
      * @type {string}
      * @memberof TypeInfo
      */
@@ -122,7 +122,7 @@ export class TypeInfo extends ElementInfo implements ITypeInfo {
      * @memberof ITypeInfo
      */
     get isBoolean(): boolean {
-        return this.fullName == TypeInfo.BooleanTypeName;
+        return this.fullName === TypeInfo.BooleanTypeName;
     }
 
     /**
@@ -132,7 +132,7 @@ export class TypeInfo extends ElementInfo implements ITypeInfo {
      * @memberof ITypeInfo
      */
     get isNumber(): boolean {
-        return this.fullName == TypeInfo.NumberTypeName;
+        return this.fullName === TypeInfo.NumberTypeName;
     }
 
     /**
@@ -142,7 +142,7 @@ export class TypeInfo extends ElementInfo implements ITypeInfo {
      * @memberof ITypeInfo
      */
     get isString(): boolean {
-        return this.fullName == TypeInfo.StringTypeName;
+        return this.fullName === TypeInfo.StringTypeName;
     }
 
     /**
@@ -152,7 +152,7 @@ export class TypeInfo extends ElementInfo implements ITypeInfo {
      * @memberof ITypeInfo
      */
     get isSymbol(): boolean {
-        return this.fullName == TypeInfo.SymbolTypeName;
+        return this.fullName === TypeInfo.SymbolTypeName;
     }
 
     /**
@@ -162,23 +162,23 @@ export class TypeInfo extends ElementInfo implements ITypeInfo {
      * @memberof ITypeInfo
      */
     get isAny(): boolean {
-        return this.fullName == TypeInfo.AnyTypeName;
+        return this.fullName === TypeInfo.AnyTypeName;
     }
 
     /**
      * Creates an instance of TypeInfo.
-    * 
-    * @param {string} name The type name.
-    * @param {string} [namespace] The type namespace.
-    * @param {string} [fullName] Optional. The full name of the type.
-    * @param {DisplayInfo} [displayInfo] Optional. The display information.
-    * @param {IPropertyInfo[]} [properties] Optional. The properties.
-    * @param {Type<*>} [type] Optional. The instantiable type.
-    * @param {boolean} [isEnum] Optional. Indicates whether the type is an enumeration.
-    * @param {boolean} [isArray] Optional. Indicates whether the type is an array.
-    * @param {ITypeInfoRegistry} [registry] The root type info registry.
+     *
+     * @param {string} name The type name.
+     * @param {string} [namespace] The type namespace.
+     * @param {string} [fullName] Optional. The full name of the type.
+     * @param {DisplayInfo} [displayInfo] Optional. The display information.
+     * @param {IPropertyInfo[]} [properties] Optional. The properties.
+     * @param {Type<*>} [type] Optional. The instantiable type.
+     * @param {boolean} [isEnum] Optional. Indicates whether the type is an enumeration.
+     * @param {boolean} [isArray] Optional. Indicates whether the type is an array.
+     * @param {ITypeInfoRegistry} [registry] The root type info registry.
      * @memberof TypeInfo
-    */
+     */
     constructor(
         {
             name,

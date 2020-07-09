@@ -1,54 +1,24 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import {
-    LogLevel, AppService, SingletonAppServiceContract,
+    LogLevel, AppService,
     Priority, Logger
 } from '@kephas/core';
+import {
+    CommandProcessorClient, CommandClientContext, CommandResponse, CommandError
+} from '@kephas/commands';
 import { Notification } from '@kephas/ui';
-import { AppSettings, CommandResponse, CommandError } from '..';
+import { AppSettings } from '..';
 import { Observable, ObservableInput } from 'rxjs';
 import { retry, map, catchError } from 'rxjs/operators';
 
 /**
- * Options for controlling the command execution.
+ * Provides proxied command execution over HTTP.
  *
  * @export
- * @interface CommandOptions
- */
-export interface CommandOptions {
-    /**
-     * Indicates whether warnings should be notified. Default is true.
-     *
-     * @type {boolean}
-     * @memberof CommandOptions
-     */
-    notifyWarnings?: boolean;
-
-    /**
-     * Indicates whether errors should be notified. Default is true.
-     *
-     * @type {boolean}
-     * @memberof CommandOptions
-     */
-    notifyErrors?: boolean;
-
-    /**
-     * Indicates the number of retries if the operation fails. Default is none.
-     *
-     * @type {number}
-     * @memberof CommandOptions
-     */
-    retries?: number;
-}
-
-/**
- * Provides command execution.
- *
- * @export
- * @class CommandProcessor
+ * @class HttpCommandProcessorClient
  */
 @AppService({ overridePriority: Priority.Low })
-@SingletonAppServiceContract()
-export class CommandProcessor {
+export class HttpCommandProcessorClient extends CommandProcessorClient {
 
     /**
      * Gets or sets the base route for the command execution.
@@ -70,17 +40,18 @@ export class CommandProcessor {
         protected http: HttpClient,
         protected notification: Notification,
         protected logger: Logger) {
+        super();
     }
 
     /**
      * Processes the command asynchronously.
-     * @tparam T The message response type.
+     * @tparam T The command response type.
      * @param {string} command The command.
      * @param {{}} [args] Optional. The arguments.
-     * @param {CommandOptions} [options] Optional. Options controlling the command processing.
-     * @returns {Promise{T}} A promise of the result.
+     * @param {CommandClientContext} [options] Optional. Options controlling the command processing.
+     * @returns {Observable{T}} An observable over the result.
      */
-    public process<T extends CommandResponse>(command: string, args?: {}, options?: CommandOptions): Observable<T> {
+    public process<T extends CommandResponse>(command: string, args?: {}, options?: CommandClientContext): Observable<T> {
         const url = this.getHttpGetUrl(command, args, options);
         let obs = this.http.get<T>(url, this.getHttpGetOptions(command, args, options));
         if (options && options.retries) {
@@ -104,11 +75,11 @@ export class CommandProcessor {
      * @protected
      * @param {string} command The command.
      * @param {{}} [args] Optional. The arguments.
-     * @param {CommandOptions} [options] Optional. Options controlling the command processing.
+     * @param {CommandClientContext} [options] Optional. Options controlling the command processing.
      * @returns {string} The HTTP GET URL.
      * @memberof CommandProcessor
      */
-    protected getHttpGetUrl(command: string, args?: {}, options?: CommandOptions): string {
+    protected getHttpGetUrl(command: string, args?: {}, options?: CommandClientContext): string {
         let baseUrl = this.appSettings.baseUrl;
         if (!baseUrl.endsWith('/')) {
             baseUrl = baseUrl + '/';
@@ -130,7 +101,7 @@ export class CommandProcessor {
      * @protected
      * @param {string} command The command.
      * @param {{}} [args] Optional. The arguments.
-     * @param {CommandOptions} [options] Optional. Options controlling the command processing.
+     * @param {CommandClientContext} [options] Optional. Options controlling the command processing.
      * @returns {({
      *             headers?: HttpHeaders | {
      *                 [header: string]: string | string[];
@@ -145,7 +116,7 @@ export class CommandProcessor {
      *         } | undefined)} The options or undefined.
      * @memberof CommandProcessor
      */
-    protected getHttpGetOptions(command: string, args?: {}, options?: CommandOptions): {
+    protected getHttpGetOptions(command: string, args?: {}, options?: CommandClientContext): {
         headers?: HttpHeaders | {
             [header: string]: string | string[];
         };
@@ -160,7 +131,7 @@ export class CommandProcessor {
         return undefined;
     }
 
-    private _processResponse<T extends CommandResponse>(response: T, options?: CommandOptions): T {
+    private _processResponse<T extends CommandResponse>(response: T, options?: CommandClientContext): T {
         if (typeof response.severity === 'string') {
             response.severity = LogLevel[response.severity as string];
         }
@@ -182,7 +153,7 @@ export class CommandProcessor {
         return response;
     }
 
-    private _processError<T extends CommandResponse>(error: any, options?: CommandOptions): ObservableInput<T> {
+    private _processError<T extends CommandResponse>(error: any, options?: CommandClientContext): ObservableInput<T> {
         this.logger.error(error);
         if (!(options && (options.notifyErrors === undefined || options.notifyErrors))) {
             this.notification.notifyError(error);

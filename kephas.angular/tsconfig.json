@@ -6,7 +6,7 @@
     },
     "include": [
         "src/**/*",
-        "*.ts"
+        "*.ts", "../kephas.messaging/src/messageError.ts"
     ],
     "exclude": [
         "node_modules",

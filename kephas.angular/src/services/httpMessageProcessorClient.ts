@@ -1,67 +1,14 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { LogLevel, AppService, SingletonAppServiceContract, Priority, Logger } from '@kephas/core';
+import { LogLevel, AppService, Priority, Logger } from '@kephas/core';
 import { Notification } from '@kephas/ui';
-import { AppSettings, ErrorInfo, MessageError } from '..';
+import {
+    ResponseMessage, ErrorInfo, MessageProcessorClient,
+    MessagingClientContext, MessagingError
+} from '@kephas/messaging';
+import { AppSettings } from '..';
 import { Observable, ObservableInput } from 'rxjs';
 import { retry, map, catchError } from 'rxjs/operators';
 
-/**
- * The base message response.
- *
- * @export
- * @interface ResponseMessage
- */
-export interface ResponseMessage {
-    /**
-     * The severity.
-     *
-     * @type {LogLevel}
-     * @memberof ResponseMessage
-     */
-    severity: LogLevel;
-
-    /**
-     * The message.
-     *
-     * @type {string}
-     * @memberof ResponseMessage
-     */
-    message?: string;
-
-    [key: string]: any;
-}
-
-/**
- * Options for controlling the message processing.
- *
- * @export
- * @interface MessageOptions
- */
-export interface MessageOptions {
-    /**
-     * Indicates whether warnings should be notified. Default is true.
-     *
-     * @type {boolean}
-     * @memberof MessageOptions
-     */
-    notifyWarnings?: boolean;
-
-    /**
-     * Indicates whether errors should be notified. Default is true.
-     *
-     * @type {boolean}
-     * @memberof MessageOptions
-     */
-    notifyErrors?: boolean;
-
-    /**
-     * Indicates the number of retries if the operation fails. Default is none.
-     *
-     * @type {number}
-     * @memberof MessageOptions
-     */
-    retries?: number;
-}
 
 interface RawResponseMessage<T extends ResponseMessage> {
     /**
@@ -82,14 +29,13 @@ interface RawResponseMessage<T extends ResponseMessage> {
 }
 
 /**
- * Provides message processing.
+ * Provides proxied message processing over HTTP.
  *
  * @export
  * @class MessageProcessor
  */
 @AppService({ overridePriority: Priority.Low })
-@SingletonAppServiceContract()
-export class MessageProcessor {
+export class HttpMessageProcessorClient extends MessageProcessorClient {
 
     /**
      * Gets or sets the base route for the command execution.
@@ -101,7 +47,7 @@ export class MessageProcessor {
     protected baseRoute: string = 'api/msg/';
 
     /**
-     * Initializes a new instance of the MessageProcessor class.
+     * Initializes a new instance of the HttpMessageProcessor class.
      * @param {Notification} notification The notification service.
      * @param {HttpClient} http The HTTP client.
      * @param {AppSettings} appSettings The application settings.
@@ -111,16 +57,17 @@ export class MessageProcessor {
         protected http: HttpClient,
         protected notification: Notification,
         protected logger: Logger) {
+        super();
     }
 
     /**
      * Processes the message asynchronously.
      * @tparam T The message response type.
      * @param {{}} message The message.
-     * @param {MessageOptions} [options] Optional. Options controlling the command processing.
-     * @returns {Promise{T}} A promise of the result.
+     * @param {MessagingClientContext} [options] Optional. Options controlling the message processing.
+     * @returns {Observable{T}} An observable over the result.
      */
-    public process<T extends ResponseMessage>(message: {}, options?: MessageOptions): Observable<T> {
+    public process<T extends ResponseMessage>(message: {}, options?: MessagingClientContext): Observable<T> {
         const url = this.getHttpPostUrl(message, options);
         const obs = this.http.post<RawResponseMessage<T>>(url, message, this.getHttpPostOptions(message, options));
         const responseObj = (options && options.retries)
@@ -140,11 +87,11 @@ export class MessageProcessor {
      *
      * @protected
      * @param {{}} message The message.
-     * @param {MessageOptions} [options] Optional. Options controlling the command processing.
+     * @param {MessagingClientContext} [options] Optional. Options controlling the command processing.
      * @returns {string} The HTTP GET URL.
      * @memberof MessageProcessor
      */
-    protected getHttpPostUrl(message: {}, options?: MessageOptions): string {
+    protected getHttpPostUrl(message: {}, options?: MessagingClientContext): string {
         let baseUrl = this.appSettings.baseUrl;
         if (!baseUrl.endsWith('/')) {
             baseUrl = baseUrl + '/';
@@ -160,7 +107,7 @@ export class MessageProcessor {
      * @protected
      * @param {string} command The command.
      * @param {{}} [args] Optional. The arguments.
-     * @param {MessageOptions} [options] Optional. Options controlling the command processing.
+     * @param {MessagingClientContext} [options] Optional. Options controlling the command processing.
      * @returns {({
      *             headers?: HttpHeaders | {
      *                 [header: string]: string | string[];
@@ -175,7 +122,7 @@ export class MessageProcessor {
      *         } | undefined)} The options or undefined.
      * @memberof MessageProcessor
      */
-    protected getHttpPostOptions(message: {}, options?: MessageOptions): {
+    protected getHttpPostOptions(message: {}, options?: MessagingClientContext): {
         headers?: HttpHeaders | {
             [header: string]: string | string[];
         };
@@ -190,14 +137,14 @@ export class MessageProcessor {
         return undefined;
     }
 
-    private _processResponse<T extends ResponseMessage>(rawResponse: RawResponseMessage<T>, options?: MessageOptions): T {
+    private _processResponse<T extends ResponseMessage>(rawResponse: RawResponseMessage<T>, options?: MessagingClientContext): T {
         if (rawResponse.exception) {
             const errorInfo = rawResponse.exception;
             if (typeof errorInfo.severity === 'string') {
                 errorInfo.severity = LogLevel[errorInfo.severity as string];
             }
 
-            throw new MessageError(errorInfo.message!, errorInfo)
+            throw new MessagingError(errorInfo.message!, errorInfo)
         }
 
         const response = rawResponse.message;
@@ -206,7 +153,7 @@ export class MessageProcessor {
         }
 
         if (response.severity <= LogLevel.Error) {
-            throw new MessageError(response.message!, response);
+            throw new MessagingError(response.message!, response);
         }
 
         if (response.severity === LogLevel.Warning) {
@@ -217,12 +164,12 @@ export class MessageProcessor {
         }
 
         if (response.severity <= LogLevel.Error) {
-            throw new MessageError(response.message!, response);
+            throw new MessagingError(response.message!, response);
         }
         return response;
     }
 
-    private _processError<T extends ResponseMessage>(error: any, options?: MessageOptions): ObservableInput<T> {
+    private _processError<T extends ResponseMessage>(error: any, options?: MessagingClientContext): ObservableInput<T> {
         this.logger.error(error);
         if (!(options && (options.notifyErrors === undefined || options.notifyErrors))) {
             this.notification.notifyError(error);

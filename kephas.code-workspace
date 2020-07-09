@@ -17,6 +17,9 @@
 		},
 		{
 			"path": "kephas.angular.ace"
+		},
+		{
+			"path": "kephas.commands"
 		}
 	],
 	"settings": {

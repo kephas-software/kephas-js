@@ -1,4 +1,4 @@
-import { Serializable, LogLevel } from '@kephas/core';
+import { Serializable, LogLevel, Expando } from '@kephas/core';
 
 /**
  * Marker class for messages.
@@ -15,7 +15,7 @@ export abstract class Message extends Serializable {
  * @export
  * @interface ResponseMessage
  */
-export interface ResponseMessage {
+export interface ResponseMessage extends Expando {
     /**
      * The severity.
      *
@@ -31,6 +31,4 @@ export interface ResponseMessage {
      * @memberof ResponseMessage
      */
     message?: string;
-
-    [key: string]: any;
 }

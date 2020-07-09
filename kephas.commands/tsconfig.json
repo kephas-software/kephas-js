@@ -1,0 +1,16 @@
+{
+    "extends": "../tsconfig.json",
+    "compilerOptions": {
+        "downlevelIteration": true,
+        "baseUrl": "."
+    },
+    "include": [
+        "src/**/*",
+        "*.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist",
+        "**/*.spec.ts"
+    ]
+}

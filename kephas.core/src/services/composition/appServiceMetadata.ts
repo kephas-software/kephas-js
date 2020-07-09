@@ -1,4 +1,4 @@
-import { AppServiceInfo, ICompositionContext, Type } from '../..';
+import { AppServiceInfo, CompositionContext, Type } from '../..';
 
 /**
  * Enumerates the priority values.
@@ -109,10 +109,10 @@ export class AppServiceMetadata<T> {
     /**
      * Gets or sets the service factory.
      *
-     * @type {(c: ICompositionContext) => T}
+     * @type {(c: CompositionContext) => T}
      * @memberof AppServiceMetadata
      */
-    public readonly serviceFactory?: (c: ICompositionContext) => T;
+    public readonly serviceFactory?: (c: CompositionContext) => T;
 
     private _serviceContract?: AppServiceInfo;
     private _serviceType?: Type<T>;
@@ -138,16 +138,14 @@ export class AppServiceMetadata<T> {
             serviceType,
             serviceFactory,
             serviceInstance,
-            serviceContract,
             ...args
         }: {
             overridePriority?: number | Priority;
             processingPriority?: number | Priority;
             serviceName?: string;
             serviceType?: Type<T>;
-            serviceFactory?: (c: ICompositionContext) => T;
+            serviceFactory?: (c: CompositionContext) => T;
             serviceInstance?: T;
-            serviceContract?: AppServiceInfo;
             [key: string]: any;
         } = {}) {
         this.overridePriority = overridePriority;
@@ -156,7 +154,6 @@ export class AppServiceMetadata<T> {
         this.serviceFactory = serviceFactory;
         this._serviceInstance = serviceInstance;
         this._serviceType = serviceType;
-        this._serviceContract = serviceContract;
         Object.assign(this, args);
     }
 }

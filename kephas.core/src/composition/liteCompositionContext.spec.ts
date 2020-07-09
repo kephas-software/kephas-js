@@ -2,40 +2,40 @@ import { expect } from 'chai';
 import 'mocha';
 
 import {
-    CompositionContext, AppServiceInfoRegistry, AppService,
+    CompositionContext, LiteCompositionContext, AppServiceInfoRegistry, AppService,
     AppServiceContract, SingletonAppServiceContract
 } from '..';
-import "reflect-metadata";
+import 'reflect-metadata';
 
-describe('CompositionContext.get', () => {
+describe('LiteCompositionContext.get', () => {
     /*
         This test should be the first in the row, otherwise will fail.
     */
     it('should get its registry as the AppServiceInfoRegistry (default)', () => {
-        let registry = AppServiceInfoRegistry.Instance;
-        let injector = CompositionContext.Instance;
+        const registry = AppServiceInfoRegistry.Instance;
+        const injector = LiteCompositionContext.Instance;
 
-        let actualRegistry = injector.get(AppServiceInfoRegistry);
-        let sameRegistry = AppServiceInfoRegistry.Instance;
+        const actualRegistry = injector.get(AppServiceInfoRegistry);
+        const sameRegistry = AppServiceInfoRegistry.Instance;
         expect(actualRegistry === registry).to.be.true;
     });
 
     it('should get itself as the CompositionContext', () => {
-        let registry = new AppServiceInfoRegistry();
-        let injector = new CompositionContext(registry);
+        const registry = new AppServiceInfoRegistry();
+        const injector = new LiteCompositionContext(registry);
 
         expect(injector.get(CompositionContext)).is.equal(injector);
     });
 
     it('should get its registry as the AppServiceInfoRegistry (custom)', () => {
-        let registry = new AppServiceInfoRegistry();
-        let injector = new CompositionContext(registry);
+        const registry = new AppServiceInfoRegistry();
+        const injector = new LiteCompositionContext(registry);
 
         expect(injector.get(AppServiceInfoRegistry) === registry).to.be.true;
     });
 
     it('should resolve dependencies', () => {
-        let testRegistry = new AppServiceInfoRegistry();
+        const testRegistry = new AppServiceInfoRegistry();
         @AppService({ registry: testRegistry })
         @AppServiceContract({ registry: testRegistry })
         class Test {
@@ -43,17 +43,17 @@ describe('CompositionContext.get', () => {
             }
         }
 
-        Reflect.defineMetadata("design:paramtypes", [CompositionContext], Test);
+        Reflect.defineMetadata('design:paramtypes', [CompositionContext], Test);
 
-        let injector = new CompositionContext(testRegistry);
-        let test = injector.get(Test);
+        const injector = new LiteCompositionContext(testRegistry);
+        const test = injector.get(Test);
 
         expect(test).is.not.null;
         expect(test.injector).is.equal(injector);
     });
 
     it('should respect transitive services', () => {
-        let testRegistry = new AppServiceInfoRegistry();
+        const testRegistry = new AppServiceInfoRegistry();
         @AppService({ registry: testRegistry })
         @AppServiceContract({ registry: testRegistry })
         class Test {
@@ -61,17 +61,17 @@ describe('CompositionContext.get', () => {
             }
         }
 
-        Reflect.defineMetadata("design:paramtypes", [CompositionContext], Test);
+        Reflect.defineMetadata('design:paramtypes', [CompositionContext], Test);
 
-        let injector = new CompositionContext(testRegistry);
-        let test = injector.get(Test);
-        let test2 = injector.get(Test);
+        const injector = new LiteCompositionContext(testRegistry);
+        const test = injector.get(Test);
+        const test2 = injector.get(Test);
 
         expect(test).is.not.equal(test2);
     });
 
     it('should respect singleton services', () => {
-        let testRegistry = new AppServiceInfoRegistry();
+        const testRegistry = new AppServiceInfoRegistry();
         @AppService({ registry: testRegistry })
         @SingletonAppServiceContract({ registry: testRegistry })
         class Test {
@@ -79,24 +79,24 @@ describe('CompositionContext.get', () => {
             }
         }
 
-        Reflect.defineMetadata("design:paramtypes", [CompositionContext], Test);
+        Reflect.defineMetadata('design:paramtypes', [CompositionContext], Test);
 
-        let injector = new CompositionContext(testRegistry);
-        let test = injector.get(Test);
-        let test2 = injector.get(Test);
+        const injector = new LiteCompositionContext(testRegistry);
+        const test = injector.get(Test);
+        const test2 = injector.get(Test);
 
         expect(test).is.equal(test2);
     });
 });
 
-describe('CompositionContext.constructor', () => {
+describe('LiteCompositionContext.constructor', () => {
     it('should add itself to the custom registry', () => {
 
-        let registry = new AppServiceInfoRegistry();
-        let injector = new CompositionContext(registry);
+        const registry = new AppServiceInfoRegistry();
+        const injector = new LiteCompositionContext(registry);
 
-        for (let service of [...registry.services].filter(s => s.serviceContract!.contractType != AppServiceInfoRegistry)) {
-            expect(service.serviceType).to.equal(CompositionContext);
+        for (const service of [...registry.services].filter(s => s.serviceContract!.contractType != AppServiceInfoRegistry)) {
+            expect(service.serviceType).to.equal(LiteCompositionContext);
             expect(service.serviceContract).to.not.null;
             expect(service.serviceContract!.contractType).to.equal(CompositionContext);
         }

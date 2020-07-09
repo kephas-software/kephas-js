@@ -1,5 +1,5 @@
 import {
-    AppServiceInfoRegistry, ICompositionContext, AppServiceMetadata, Priority, Type
+    AppServiceInfoRegistry, CompositionContext, AppServiceMetadata, Priority, Type
 } from '..';
 
 /**
@@ -23,7 +23,7 @@ export function AppService(
         overridePriority?: number | Priority;
         processingPriority?: number | Priority;
         serviceName?: string;
-        provider?: ((c: ICompositionContext) => any) | {};
+        provider?: ((c: CompositionContext) => any) | {};
         registry?: AppServiceInfoRegistry;
     } = {}) {
     return (type: Type<any>) => {
@@ -38,7 +38,7 @@ export function AppService(
                                     ? provider
                                     : undefined,
                 serviceFactory: typeof provider === 'function'
-                                    ? provider as ((c: ICompositionContext) => any)
+                                    ? provider as ((c: CompositionContext) => any)
                                     : undefined,
             }));
     };

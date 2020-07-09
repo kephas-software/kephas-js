@@ -117,7 +117,7 @@ export class AppServiceInfoRegistry {
      */
     public registerService<T>(type: Type<T>, metadata?: AppServiceMetadata<T>): this {
         Requires.HasValue(type, 'type');
-        const appServiceInfo = this._getContractOfService(type);
+        const appServiceInfo = (metadata && metadata.serviceContract) || this._getContractOfService(type);
         if (!appServiceInfo) {
             throw new ServiceError(`The service contract for '${type.name}' could not be identified. Check that the service or one of its bases is decorated as AppServiceContract or SingletonAppServiceContract.`);
         }

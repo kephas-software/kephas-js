@@ -1,7 +1,7 @@
 import { sha256 } from 'js-sha256';
 import { fromByteArray } from 'base64-js';
 
-import { SingletonAppServiceContract, AppService, Priority } from '..';
+import { SingletonAppServiceContract, AppService, Priority, Context } from '..';
 
 /**
  * Provides the Hash method for hashing values.
@@ -20,7 +20,7 @@ export class HashingService {
      * @returns {string} The hash value as a Base64 encoded string.
      * @memberof HashingService
      */
-    public hash(value: string): string {
+    public hash(value: string, context?: Context): string {
         const hashedValue = sha256.array(value);
         return fromByteArray(hashedValue as any);
     }

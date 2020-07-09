@@ -2,28 +2,31 @@
     Warning! Do not change the export order, otherwise the tests will not run.
 */
 
-export { Requires } from './diagnostics/contracts/requires';
-export { ArgumentError } from './argumentError';
-export { Sealed } from './sealed';
+export * from './diagnostics/contracts/requires';
+export * from './argumentError';
+export * from './notImplementedError';
+export * from './notSupportedError';
+export * from './sealed';
 
-export { ServiceError } from './services/serviceError';
-export { Priority, AppServiceMetadata } from './services/composition/appServiceMetadata';
-export { AppServiceLifetime, AppServiceInfo } from './services/appServiceInfo';
-export { AppServiceInfoRegistry } from './services/appServiceInfoRegistry';
-export { AppService } from './services/appService';
-export { AppServiceContract, SingletonAppServiceContract } from './services/appServiceContract';
-export { Context } from './services/context';
-export { Initializable, AsyncInitializable } from './services/initializable';
-export { ServiceHelper } from './services/serviceHelper';
+export * from './services/context';
+export * from './services/serviceError';
+export * from './services/composition/appServiceMetadata';
+export * from './services/appServiceInfo';
+export * from './services/appServiceInfoRegistry';
+export * from './services/appService';
+export * from './services/appServiceContract';
+export * from './services/initializable';
+export * from './services/serviceHelper';
 
-export { LogLevel, Logger } from './logging/logger';
+export * from './logging/logger';
 
-export { ICompositionContext } from './composition/compositionContext.interface';
-export { CompositionError } from './composition/compositionError';
-export { CompositionContext } from './composition/compositionContext';
-export { Serializable } from './serialization/serializable';
-export { Deferrable } from './deferrable';
-export { Namespace, FullName } from './namespace';
-export { AbstractType, Type } from './type';
+export * from './composition/compositionContext';
+export * from './composition/compositionError';
+export * from './composition/liteCompositionContext';
 
-export { HashingService } from './cryptography/hashingService';
+export * from './serialization/serializable';
+export * from './deferrable';
+export * from './namespace';
+export * from './type';
+
+export * from './cryptography/hashingService';

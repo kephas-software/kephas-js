@@ -2,7 +2,8 @@ import { expect } from 'chai';
 import 'mocha';
 
 import {
-    AppServiceInfoRegistry, AppService, SingletonAppServiceContract, Priority, CompositionContext
+    AppServiceInfoRegistry, AppService, SingletonAppServiceContract,
+    Priority, CompositionContext, LiteCompositionContext
 } from '..';
 
 describe('AppService', () => {
@@ -16,7 +17,7 @@ describe('AppService', () => {
         AppService({ registry: registry, overridePriority: Priority.High, provider: container => thisService })
             (MyService);
 
-        const container = new CompositionContext(registry);
+        const container = new LiteCompositionContext(registry);
 
         expect(container.get(MyService)).equal(thisService);
     });
@@ -31,7 +32,7 @@ describe('AppService', () => {
         AppService({ registry: registry, overridePriority: Priority.High, provider: thisService })
             (MyService);
 
-        const container = new CompositionContext(registry);
+        const container = new LiteCompositionContext(registry);
 
         expect(container.get(MyService)).equal(thisService);
     });
@@ -46,7 +47,7 @@ describe('AppService', () => {
         AppService({ registry: registry, overridePriority: Priority.High })
             (MyService);
 
-        const container = new CompositionContext(registry);
+        const container = new LiteCompositionContext(registry);
 
         expect(container.get(MyService)).is.instanceOf(MyService);
     });

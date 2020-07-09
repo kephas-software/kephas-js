@@ -8,6 +8,8 @@ export * from './notImplementedError';
 export * from './notSupportedError';
 export * from './sealed';
 
+export * from './expando';
+
 export * from './services/context';
 export * from './services/serviceError';
 export * from './services/composition/appServiceMetadata';

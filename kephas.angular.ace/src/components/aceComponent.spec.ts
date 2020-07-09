@@ -15,7 +15,7 @@ import { JSDOM } from 'jsdom';
 
 const window = (new JSDOM('<!doctype html><html><body></body></html>')).window;
 const document = window.document;
-let testGlobal: any = global;
+const testGlobal: any = global;
 testGlobal.window = window;
 testGlobal.document = document;
 testGlobal.Document = document;
@@ -30,13 +30,13 @@ testGlobal.KeyboardEvent = window.KeyboardEvent;
 testGlobal.localStorage = {
     store: {},
 
-    getItem: function (key: any) {
+    getItem(key: any) {
         return this.store[key] || null;
     },
-    setItem: function (key: any, value: any) {
+    setItem(key: any, value: any) {
         this.store[key] = value;
     },
-    clear: function () {
+    clear() {
         this.store = {};
     }
 };
@@ -44,19 +44,24 @@ testGlobal.localStorage = {
 testGlobal.sessionStorage = {
     store: {},
 
-    getItem: function (key: any) {
+    getItem(key: any) {
         return this.store[key] || null;
     },
-    setItem: function (key: any, value: any) {
+    setItem(key: any, value: any) {
         this.store[key] = value;
     },
-    clear: function () {
+    clear() {
         this.store = {};
     }
 };
 
 // https://github.com/angular/material2/issues/7101
-Object.defineProperty(document.body.style, 'transform', { value: () => ({ enumerable: true, configurable: true }) });
+Object.defineProperty(
+    document.body.style,
+    'transform',
+    {
+        value: () => ({ enumerable: true, configurable: true })
+    });
 
 //#endregion
 
@@ -75,33 +80,33 @@ Object.defineProperty(document.body.style, 'transform', { value: () => ({ enumer
 import { expect } from 'chai';
 import 'mocha';
 
-import { AceEditor } from '..';
-import { AppService, AppServiceContract, AppServiceInfoRegistry } from '@kephas/core';
+import { AceComponent } from '..';
+import { AppServiceInfoRegistry } from '@kephas/core';
 import { AngularAppServiceInfoRegistry } from '@kephas/angular';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-describe('AceEditor.constructor', () => {
-    let component: AceEditor;
-    let fixture: ComponentFixture<AceEditor>;
+describe('AceComponent.constructor', () => {
+    let component: AceComponent;
+    let fixture: ComponentFixture<AceComponent>;
 
     beforeEach(async(() => {
-        let angularRegistry = new AngularAppServiceInfoRegistry(AppServiceInfoRegistry.Instance);
+        const angularRegistry = new AngularAppServiceInfoRegistry(AppServiceInfoRegistry.Instance);
         return TestBed.configureTestingModule(
             {
-                declarations: [AceEditor],
+                declarations: [AceComponent],
                 providers: angularRegistry.getRootProviders(),
             })
             .compileComponents();
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(AceEditor);
+        fixture = TestBed.createComponent(AceComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });
 
     it('should initialize editor type', () => {
-        let widget = fixture.componentRef.instance;
+        const widget = fixture.componentRef.instance;
         expect(widget.editorType).is.equal('json');
     });
 });

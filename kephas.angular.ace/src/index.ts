@@ -1,1 +1,1 @@
-export { AceEditor } from './components/aceEditor';
+export { AceComponent } from './components/aceComponent';

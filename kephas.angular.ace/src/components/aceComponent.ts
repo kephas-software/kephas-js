@@ -28,9 +28,9 @@ import 'brace/mode/json';
 @Component({
     selector: 'ace',
     template: `<div class="form-control ace"></div>`,
-    providers: [provideWidget(AceEditor), provideValueAccessor(AceEditor)]
+    providers: [provideWidget(AceComponent), provideValueAccessor(AceComponent)]
 })
-export class AceEditor extends ValueEditorBase<string | {} | null>
+export class AceComponent extends ValueEditorBase<string | {} | null>
     implements OnInit, AfterViewInit, OnDestroy {
     /**
      * Gets or sets the Ace editor.

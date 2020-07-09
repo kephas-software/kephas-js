@@ -1,6 +1,6 @@
 {
   "name": "@kephas/reflection",
-  "version": "0.2.9",
+  "version": "0.3.0",
   "description": "Provides reflection capabilities, like TypeInfoRegistry, ITypeInfo, and IProperty.",
   "type": "module",
   "main": "dist/index.js",
@@ -38,7 +38,7 @@
     "dist/"
   ],
   "dependencies": {
-    "@kephas/core": "^0.2.9"
+    "@kephas/core": "^0.3.0"
   },
   "devDependencies": {
     "@types/chai": "^4.2.11",

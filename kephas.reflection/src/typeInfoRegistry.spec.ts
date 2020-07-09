@@ -1,21 +1,21 @@
 import { expect } from 'chai';
 import 'mocha';
 
-import { TypeInfoRegistry, TypeInfo } from '.';
-import { CompositionContext } from '@kephas/core';
+import { TypeInfoRegistry, TypeName } from '.';
+import { LiteCompositionContext } from '@kephas/core';
 
 describe('TypeInfoRegistry.constructor', () => {
     it('should register the primary types', () => {
-        let registry = new TypeInfoRegistry();
-        let type = registry.getType(TypeInfo.AnyTypeName)
-        expect(type.name).to.equal(TypeInfo.AnyTypeName);
-        expect(type.fullName).to.equal(TypeInfo.AnyTypeName);
+        const registry = new TypeInfoRegistry();
+        const type = registry.getType(TypeName.AnyTypeName);
+        expect(type!.name).to.equal(TypeName.AnyTypeName);
+        expect(type!.fullName).to.equal('System.Object');
     });
 });
 
 describe('TypeInfoRegistry.composition', () => {
     it('should register the static Instance as type info registry', () => {
-        const container = new CompositionContext();
+        const container = new LiteCompositionContext();
         expect(container.get(TypeInfoRegistry)).to.equal(TypeInfoRegistry.Instance);
     });
 });

@@ -2,6 +2,7 @@ import {
     ElementInfo, ITypeInfoRegistry, IValueElementInfo, ITypeInfo,
     TypeInfoRegistry, DisplayInfo
 } from '.';
+import { TypeName } from './typeName';
 
 /**
  * Reflective element information holding a value.
@@ -52,10 +53,12 @@ export abstract class ValueElementInfo extends ElementInfo implements IValueElem
         }) {
         super({ name, fullName, displayInfo, registry, ...args });
         if (!valueType) {
-            this._valueTypeGetter = () => (this._valueType || (this._valueType = this.getValueType('any', registry)));
+            this._valueTypeGetter =
+                () => (this._valueType || (this._valueType = this.getValueType(TypeName.AnyTypeName, registry)!));
         }
         else if (typeof valueType === 'string') {
-            this._valueTypeGetter = () => (this._valueType || (this._valueType = this.getValueType(valueType as unknown as string, registry)));
+            this._valueTypeGetter =
+                () => (this._valueType || (this._valueType = this.getValueType(valueType as unknown as string, registry)!));
         }
         else {
             this._valueType = valueType;

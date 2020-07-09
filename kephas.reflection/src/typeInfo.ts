@@ -1,6 +1,6 @@
 import {
     ElementInfo, PropertyInfo, ITypeInfo, ITypeInfoRegistry,
-    IPropertyInfo, DisplayInfo, ReflectionError
+    IPropertyInfo, DisplayInfo, ReflectionError, TypeName
 } from '.';
 import { Serializable, Type } from '@kephas/core';
 
@@ -12,70 +12,6 @@ import { Serializable, Type } from '@kephas/core';
  * @extends {ElementInfo}
  */
 export class TypeInfo extends ElementInfo implements ITypeInfo {
-    /**
-     * The name of the 'any' type.
-     *
-     * @static
-     * @memberof TypeInfo
-     */
-    static readonly AnyTypeName = 'any';
-
-    /**
-     * The name of the 'object' type.
-     *
-     * @static
-     * @memberof TypeInfo
-     */
-    static readonly ObjectTypeName = 'object';
-
-    /**
-     * The name of the 'boolean' type.
-     *
-     * @static
-     * @memberof TypeInfo
-     */
-    static readonly BooleanTypeName = 'boolean';
-
-    /**
-     * The name of the 'number' type.
-     *
-     * @static
-     * @memberof TypeInfo
-     */
-    static readonly NumberTypeName = 'number';
-
-    /**
-     * The name of the 'string' type.
-     *
-     * @static
-     * @memberof TypeInfo
-     */
-    static readonly StringTypeName = 'string';
-
-    /**
-     * The name of the 'array' type.
-     *
-     * @static
-     * @memberof TypeInfo
-     */
-    static readonly ArrayTypeName = 'array';
-
-    /**
-     * The name of the 'symbol' type.
-     *
-     * @static
-     * @memberof TypeInfo
-     */
-    static readonly SymbolTypeName = 'symbol';
-
-    /**
-     * The name of the 'Date' type.
-     *
-     * @static
-     * @memberof TypeInfo
-     */
-    static readonly DateTypeName = 'Date';
-
     /**
      * Gets the type's namespace.
      *
@@ -95,15 +31,23 @@ export class TypeInfo extends ElementInfo implements ITypeInfo {
     /**
      * Gets the instance constructor.
      *
-     * @memberof ITypeInfo
+     * @memberof TypeInfo
      */
     readonly type?: Type<any>;
+
+    /**
+     * Gets the default value of the property.
+     *
+     * @type {*}
+     * @memberof TypeInfo
+     */
+    readonly defaultValue?: any;
 
     /**
      * Gets a value indicating whether this type is an array.
      *
      * @type {boolean} True if the type is an array, false otherwise.
-     * @memberof ITypeInfo
+     * @memberof TypeInfo
      */
     readonly isArray: boolean;
 
@@ -111,7 +55,7 @@ export class TypeInfo extends ElementInfo implements ITypeInfo {
      * Gets a value indicating whether this type is an enumeration.
      *
      * @type {boolean} True if the type is an enumeration, false otherwise.
-     * @memberof ITypeInfo
+     * @memberof TypeInfo
      */
     readonly isEnum: boolean;
 
@@ -119,50 +63,50 @@ export class TypeInfo extends ElementInfo implements ITypeInfo {
      * Gets a value indicating whether this type is the boolean type.
      *
      * @type {boolean} True if the type is the boolean type, false otherwise.
-     * @memberof ITypeInfo
+     * @memberof TypeInfo
      */
     get isBoolean(): boolean {
-        return this.fullName === TypeInfo.BooleanTypeName;
+        return this.fullName === TypeName.BooleanTypeName;
     }
 
     /**
      * Gets a value indicating whether this type is the number type.
      *
      * @type {boolean} True if the type is the number type, false otherwise.
-     * @memberof ITypeInfo
+     * @memberof TypeInfo
      */
     get isNumber(): boolean {
-        return this.fullName === TypeInfo.NumberTypeName;
+        return this.fullName === TypeName.NumberTypeName;
     }
 
     /**
      * Gets a value indicating whether this type is the string type.
      *
      * @type {boolean} True if the type is the string type, false otherwise.
-     * @memberof ITypeInfo
+     * @memberof TypeInfo
      */
     get isString(): boolean {
-        return this.fullName === TypeInfo.StringTypeName;
+        return this.fullName === TypeName.StringTypeName;
     }
 
     /**
      * Gets a value indicating whether this type is the symbol type.
      *
      * @type {boolean} True if the type is the symbol type, false otherwise.
-     * @memberof ITypeInfo
+     * @memberof TypeInfo
      */
     get isSymbol(): boolean {
-        return this.fullName === TypeInfo.SymbolTypeName;
+        return this.fullName === TypeName.SymbolTypeName;
     }
 
     /**
      * Gets a value indicating whether this type is the any type.
      *
      * @type {boolean} True if the type is the any type, false otherwise.
-     * @memberof ITypeInfo
+     * @memberof TypeInfo
      */
     get isAny(): boolean {
-        return this.fullName === TypeInfo.AnyTypeName;
+        return this.fullName === TypeName.AnyTypeName;
     }
 
     /**
@@ -174,8 +118,9 @@ export class TypeInfo extends ElementInfo implements ITypeInfo {
      * @param {DisplayInfo} [displayInfo] Optional. The display information.
      * @param {IPropertyInfo[]} [properties] Optional. The properties.
      * @param {Type<*>} [type] Optional. The instantiable type.
-     * @param {boolean} [isEnum] Optional. Indicates whether the type is an enumeration.
      * @param {boolean} [isArray] Optional. Indicates whether the type is an array.
+     * @param {boolean} [isEnum] Optional. Indicates whether the type is an enumeration.
+     * @param {*} [defaultValue] Optional. The type's default value.
      * @param {ITypeInfoRegistry} [registry] The root type info registry.
      * @memberof TypeInfo
      */
@@ -189,6 +134,7 @@ export class TypeInfo extends ElementInfo implements ITypeInfo {
             type,
             isArray,
             isEnum,
+            defaultValue,
             registry,
             ...args
         }: {
@@ -211,6 +157,7 @@ export class TypeInfo extends ElementInfo implements ITypeInfo {
             type?: Type<any>;
             isArray?: boolean;
             isEnum?: boolean;
+            defaultValue?: any;
             registry?: ITypeInfoRegistry;
             [key: string]: any;
         }) {
@@ -230,6 +177,7 @@ export class TypeInfo extends ElementInfo implements ITypeInfo {
         }
         this.isEnum = !!isEnum;
         this.isArray = !!isArray;
+        this.defaultValue = defaultValue;
     }
 
     private static _getName(name?: string, type?: Type<any>): string {

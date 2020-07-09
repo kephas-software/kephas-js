@@ -1,5 +1,5 @@
-import { ReflectionError, ITypeInfoRegistry, ITypeInfo } from '.';
-import { Requires, SingletonAppServiceContract, AppService, Priority } from '@kephas/core';
+import { ReflectionError, ITypeInfoRegistry, ITypeInfo, TypeName } from '.';
+import { Requires, SingletonAppServiceContract, AppService, Priority, Serializable } from '@kephas/core';
 
 /**
  * Provides centralized access to the application's type system.
@@ -31,6 +31,7 @@ export class TypeInfoRegistry implements ITypeInfoRegistry {
 
     private static _instance: ITypeInfoRegistry;
     private _typesByFullName: { [key: string]: ITypeInfo } = {}
+    private _typesByName: { [key: string]: ITypeInfo } = {}
 
     /**
      * Creates an instance of TypeInfoRegistry.
@@ -44,20 +45,31 @@ export class TypeInfoRegistry implements ITypeInfoRegistry {
     /**
      * Gets the type in the registry by its name.
      *
-     * @param {string} fullName The full name of the type.
+     * @param {string | Function} typeRef The full name of the type or the runtime type.
      * @param {boolean} [throwOnNotFound=true] True to throw if the type cannot be found.
      * @returns {TypeInfo}
      * @memberof TypeInfoRegistry
      */
-    public getType(fullName: string, throwOnNotFound?: boolean): ITypeInfo {
-        Requires.HasValue(fullName, 'fullName');
+    public getType(typeRef: string | Function, throwOnNotFound?: boolean): ITypeInfo | undefined {
+        Requires.HasValue(typeRef, 'typeRef');
         if (throwOnNotFound === undefined) {
             throwOnNotFound = true;
         }
 
-        const type = this._typesByFullName[fullName];
+        let fullName = typeof typeRef === 'function'
+            ? Serializable.getTypeFullName(typeRef)
+            : typeRef;
+        if (fullName && fullName.endsWith('[]')) {
+            fullName = TypeName.ArrayOfAnyTypeName;
+        }
+
+        let type = fullName ? this._typesByFullName[fullName] : undefined;
+        if (!type && fullName) {
+            type = this._typesByName[fullName];
+        }
+
         if (!type && throwOnNotFound) {
-            throw new ReflectionError(`The type with name '${fullName}' was not found.`);
+            throw new ReflectionError(`The type with name '${typeRef}' was not found.`);
         }
 
         return type;
@@ -82,8 +94,10 @@ export class TypeInfoRegistry implements ITypeInfoRegistry {
             }
 
             this._typesByFullName[typeKey] = type;
-            this.types.push(type);
+            this._typesByName[type.name] = type;
         }
+
+        this.types.push.apply(this.types, types);
 
         return this;
     }

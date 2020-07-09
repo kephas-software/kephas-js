@@ -11,12 +11,12 @@ export interface ITypeInfoRegistry {
     /**
      * Gets the type in the registry by its name.
      *
-     * @param {string} fullName The full name of the type.
+     * @param {string | Function} typeRef The full name of the type or the runtime type.
      * @param {boolean} [throwOnNotFound=true] True to throw if the type cannot be found.
      * @returns {TypeInfo}
      * @memberof TypeInfoRegistry
      */
-    getType(fullName: string, throwOnNotFound?: boolean): ITypeInfo;
+    getType(typeRef: string | Function, throwOnNotFound?: boolean): ITypeInfo | undefined;
 }
 
 /**
@@ -154,6 +154,14 @@ export interface ITypeInfo extends IElementInfo {
      * @memberof ITypeInfo
      */
     readonly type?: Type<any>;
+
+    /**
+     * Gets the default value of the property.
+     *
+     * @type {*}
+     * @memberof ITypeInfo
+     */
+    readonly defaultValue?: any;
 
     /**
      * Gets a value indicating whether this type is an array.

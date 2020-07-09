@@ -1,3 +1,5 @@
-export * from './interfaces';
+export * from './message';
 export * from './messagingError';
-export * from './messageProcessor';
+export * from './messagingClientContext';
+export * from './messagingContext';
+export * from './messageProcessorClient';

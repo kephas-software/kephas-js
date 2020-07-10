@@ -1,6 +1,6 @@
 {
   "name": "@kephas/angular",
-  "version": "0.3.1",
+  "version": "0.3.3",
   "description": "Provides integration capabilities with Angular.",
   "type": "module",
   "main": "dist/index.js",
@@ -45,8 +45,8 @@
     "@angular/platform-browser": "^8.2.7",
     "@kephas/commands": "^0.3.1",
     "@kephas/core": "^0.3.1",
-    "@kephas/messaging": "^0.3.2",
-    "@kephas/reflection": "^0.3.0",
+    "@kephas/messaging": "^0.3.3",
+    "@kephas/reflection": "^0.3.1",
     "@kephas/ui": "^0.3.1",
     "jwt-decode": "2.2.0",
     "reflect-metadata": "^0.1.13",

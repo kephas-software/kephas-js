@@ -7,6 +7,7 @@ export * from './argumentError';
 export * from './notImplementedError';
 export * from './notSupportedError';
 export * from './sealed';
+export * from './disposable';
 
 export * from './expando';
 
@@ -32,3 +33,5 @@ export * from './namespace';
 export * from './type';
 
 export * from './cryptography/hashingService';
+
+export * from './interaction/eventHub';

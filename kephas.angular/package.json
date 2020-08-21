@@ -1,6 +1,6 @@
 {
   "name": "@kephas/angular",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "Provides integration capabilities with Angular.",
   "type": "module",
   "main": "dist/index.js",
@@ -10,7 +10,8 @@
     "build": "cross-env TS_NODE_PROJECT=\"tsconfig.webpack.json\" webpack",
     "lint": "npm run tslint \"src/**/*.ts\"",
     "tslint": "tslint \"src/**/*.ts\" --project tsconfig.json",
-    "typedoc": "typedoc"
+    "typedoc": "typedoc",
+    "postinstall": "npm dedupe"
   },
   "mocha": {
     "require": [

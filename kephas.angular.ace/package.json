@@ -1,6 +1,6 @@
 {
   "name": "@kephas/angular-ace",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "Provides the integration of the Ace editor with Kephas and Angular.",
   "type": "module",
   "main": "dist/index.js",
@@ -10,7 +10,8 @@
     "build": "cross-env TS_NODE_PROJECT=\"tsconfig.webpack.json\" webpack",
     "lint": "npm run tslint \"src/**/*.ts\"",
     "tslint": "tslint \"src/**/*.ts\" --project tsconfig.json",
-    "typedoc": "typedoc"
+    "typedoc": "typedoc",
+    "postinstall": "npm dedupe"
   },
   "mocha": {
     "require": [
@@ -43,8 +44,8 @@
     "@angular/core": "^8.2.7",
     "@angular/forms": "^8.2.7",
     "@angular/platform-browser": "^8.2.7",
-    "@kephas/angular": "^0.3.3",
-    "@kephas/core": "^0.3.1",
+    "@kephas/angular": "^0.3.4",
+    "@kephas/core": "^0.3.3",
     "@kephas/ui": "^0.3.1",
     "rxjs": "^6.5.5",
     "zone.js": "^0.9.1",

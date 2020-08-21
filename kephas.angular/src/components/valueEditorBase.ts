@@ -108,7 +108,6 @@ export abstract class ValueEditorBase<TValue>
 
             if (!this.valueChangeFromEvent) {
                 this.setEditorValue(value);
-                this._onChange(value);
                 value = this.getEditorValue();
             }
 
@@ -143,6 +142,7 @@ export abstract class ValueEditorBase<TValue>
      * @memberof ValueEditorBase
      */
     protected onValueChanged(oldValue: TValue | undefined, newValue: TValue | undefined): void {
+        this._onChange(newValue);
     }
 
     /**

@@ -1,8 +1,9 @@
 import {
     AppServiceInfoRegistry, Requires, AppServiceInfo, AppServiceMetadata
 } from '@kephas/core';
-import { Injectable, Type, StaticClassProvider } from '@angular/core';
+import { Injectable, StaticClassProvider, Injector, ExistingProvider, FactoryProvider } from '@angular/core';
 import 'reflect-metadata';
+import { HttpClientAppServiceInfoRegistry } from './http/httpAppServiceInfoRegistry';
 
 /**
  * Helper class for registering the services with the Angular injector.
@@ -40,8 +41,8 @@ export class AngularAppServiceInfoRegistry {
      * @returns {StaticClassProvider[]}
      * @memberof AngularAppServiceInfoRegistry
      */
-    public getRootProviders(): StaticClassProvider[] {
-        const providers: StaticClassProvider[] = [];
+    public getRootProviders(): (StaticClassProvider )[] {
+        const providers: (StaticClassProvider )[] = [];
         for (const c of this.serviceRegistry.serviceContracts) {
             const serviceContract: AppServiceInfo = c;
             for (const m of serviceContract.services) {
@@ -54,6 +55,8 @@ export class AngularAppServiceInfoRegistry {
                 });
             }
         }
+
+        providers.push(...new HttpClientAppServiceInfoRegistry().getHttpClientProviders());
 
         return providers;
     }

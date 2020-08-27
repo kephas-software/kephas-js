@@ -3,7 +3,7 @@ import 'mocha';
 
 import { AppServiceInfoRegistry, SingletonAppServiceContract, AppService } from '@kephas/core';
 import { AngularAppServiceInfoRegistry } from '..';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHandler } from '@angular/common/http';
 
 const registry = new AppServiceInfoRegistry();
 
@@ -31,5 +31,7 @@ describe('AngularAppServiceInfoRegistry.getRootProviders', () => {
         expect(provider).not.null;
         expect(provider!.useClass).to.equal(HttpClient);
         expect(provider!.multi).to.be.false;
+        expect(provider!.deps.length).to.equal(1);
+        expect(provider!.deps[0]).to.equal(HttpHandler);
     });
 });

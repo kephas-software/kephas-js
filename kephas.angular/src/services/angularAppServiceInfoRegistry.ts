@@ -1,9 +1,9 @@
-import {
-    AppServiceInfoRegistry, Requires, AppServiceInfo, AppServiceMetadata
-} from '@kephas/core';
-import { Injectable, StaticClassProvider, Injector, ExistingProvider, FactoryProvider } from '@angular/core';
 import 'reflect-metadata';
-import { HttpClientAppServiceInfoRegistry } from './http/httpAppServiceInfoRegistry';
+import {
+    AppServiceInfoRegistry, Requires, AppServiceInfo, AppServiceMetadata, Type
+} from '@kephas/core';
+import { Injectable, StaticClassProvider } from '@angular/core';
+import { HttpClientAppServiceInfoRegistry } from '..';
 
 /**
  * Helper class for registering the services with the Angular injector.
@@ -51,7 +51,7 @@ export class AngularAppServiceInfoRegistry {
                     provide: serviceContract.contractToken || serviceContract.contractType,
                     useClass: serviceMetadata.serviceType!,
                     multi: serviceContract.allowMultiple,
-                    deps: Reflect.getMetadata('design:paramtypes', serviceMetadata.serviceType!) || [],
+                    deps: this.getDependencies(serviceMetadata.serviceType!),
                 });
             }
         }
@@ -59,5 +59,14 @@ export class AngularAppServiceInfoRegistry {
         providers.push(...new HttpClientAppServiceInfoRegistry().getHttpClientProviders());
 
         return providers;
+    }
+
+    private getDependencies(serviceType: Type<any>): any[] {
+        let deps = Reflect.getMetadata('design:paramtypes', serviceType);
+        if(!deps && serviceType.ctorParameters) {
+            deps = serviceType.ctorParameters();
+        }
+
+        return deps || [];
     }
 }

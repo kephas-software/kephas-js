@@ -112,7 +112,7 @@ export abstract class Serializable {
         }
 
         Object.keys(obj).forEach(propName => {
-            if (!propName.startsWith('_')) {
+            if (!propName.startsWith('_') && !propName.startsWith('#')) {
                 json[propName] = obj[propName];
             }
         });

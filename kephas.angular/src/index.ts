@@ -3,7 +3,6 @@ export * from './components/valueEditorBase';
 
 export * from './services/http/httpInterceptor';
 export * from './services/http/httpAppServiceInfoRegistry';
-export * from './services/http/browserXhrFactory';
 
 export * from './services/angularAppServiceInfoRegistry';
 export * from './services/appSettings';

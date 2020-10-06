@@ -6,12 +6,9 @@ import {
     XhrFactory, HttpRequest, HttpEvent, HTTP_INTERCEPTORS, HttpInterceptor
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Injector, StaticClassProvider, ExistingProvider } from '@angular/core';
+import { Injector, StaticClassProvider, Injectable } from '@angular/core';
 
 SingletonAppServiceContract()(XhrFactory);
-AppServiceContract()(HttpHandler);
-AppServiceContract()(HttpClient);
-AppService({ overridePriority: Priority.Low })(HttpClient);
 AppServiceContract()(HttpBackend);
 AppServiceContract()(Injector);
 AppServiceContract()(HttpXhrBackend);
@@ -19,15 +16,16 @@ AppService({ overridePriority: Priority.Low })(HttpXhrBackend);
 
 // tslint:disable: max-classes-per-file
 
-@AppService({ overridePriority: Priority.Low, })
-export class HttpBackendService extends HttpXhrBackend {
-    /**
-     * Creates an instance of HttpBackendService.
-     * @param {XhrFactory} xhrFactory
-     * @memberof HttpBackendService
-     */
-    constructor(xhrFactory: XhrFactory) {
-        super(xhrFactory);
+/**
+ * Browser implementation for an `XhrFactory`.
+ *
+ * @export
+ * @class BrowserXhrFactory
+ * @implements {XhrFactory}
+ */
+export class BrowserXhrFactory implements XhrFactory {
+    build(): XMLHttpRequest {
+        return new XMLHttpRequest();
     }
 }
 
@@ -54,8 +52,8 @@ export class HttpInterceptorHandler implements HttpHandler {
  * on `HttpInterceptingHandler` itself.
  * @see `HttpInterceptor`
  */
-@AppService({ overridePriority: Priority.Low })
-export class HttpInterceptingHandler extends HttpHandler {
+@Injectable({ providedIn: 'root' })
+export class HttpInterceptingHandler implements HttpHandler {
     private chain: HttpHandler | null = null;
 
     /**
@@ -65,8 +63,7 @@ export class HttpInterceptingHandler extends HttpHandler {
      * @memberof HttpInterceptingHandler
      */
     constructor(private backend: HttpBackend, private injector: Injector) {
-        super();
-     }
+    }
 
     handle(req: HttpRequest<any>): Observable<HttpEvent<any>> {
         if (this.chain === null) {
@@ -94,7 +91,10 @@ export class HttpClientAppServiceInfoRegistry {
      */
     public getHttpClientProviders(): (StaticClassProvider)[] {
         return [
+            { provide: HttpClient, useClass: HttpClient, deps: [HttpHandler] },
+            { provide: HttpHandler, useClass: HttpInterceptingHandler, deps: [HttpBackend, Injector] },
             { provide: HttpBackend, useClass: HttpXhrBackend, deps: [XhrFactory] },
+            { provide: XhrFactory, useClass: BrowserXhrFactory, deps: [] },
         ];
     }
 }

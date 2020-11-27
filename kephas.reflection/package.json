@@ -1,6 +1,6 @@
 {
   "name": "@kephas/reflection",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "description": "Provides reflection capabilities, like TypeInfoRegistry, ITypeInfo, and IProperty.",
   "type": "module",
   "main": "dist/index.js",
@@ -37,6 +37,9 @@
     "README.md",
     "dist/"
   ],
+  "dependencies": {
+    "tslib": "^2.0.0"
+  },
   "peerDependencies": {
     "@kephas/core": "^0.4.3",
     "reflect-metadata": "^0.1.13"

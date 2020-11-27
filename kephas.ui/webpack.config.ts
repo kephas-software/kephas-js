@@ -7,7 +7,9 @@ const config: webpack.Configuration = {
         'index': './src/index.ts'
     },
     externals: {
-        '@kephas/core': '@kephas/core'
+        '@kephas/core': '@kephas/core',
+        'reflect-metadata': 'reflect-metadata',
+        'tslib': 'tslib'
     },
     output: {
         path: path.resolve(__dirname, 'dist'),

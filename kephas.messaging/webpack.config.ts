@@ -8,6 +8,8 @@ const config: webpack.Configuration = {
     },
     externals: {
         '@kephas/core': '@kephas/core',
+        'reflect-metadata': 'reflect-metadata',
+        'tslib': 'tslib',
         'rxjs': 'rxjs',
         'rxjs/operators': 'rxjs/operators'
     },

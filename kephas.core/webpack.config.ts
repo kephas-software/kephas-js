@@ -7,7 +7,8 @@ const config: webpack.Configuration = {
         'index': './src/index.ts'
     },
     externals: {
-        'reflect-metadata': 'reflect-metadata'
+        'reflect-metadata': 'reflect-metadata',
+        'tslib': 'tslib'
     },
     output: {
         path: path.resolve(__dirname, 'dist'),

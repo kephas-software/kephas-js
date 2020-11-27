@@ -7,7 +7,8 @@ const config: webpack.Configuration = {
         'index': './src/index.ts'
     },
     externals: {
-        "@kephas/core": "@kephas/core"
+        'tslib': 'tslib',
+        '@kephas/core': '@kephas/core'
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -17,7 +18,7 @@ const config: webpack.Configuration = {
         umdNamedDefine: true,
         globalObject: 'this'
     },
-    mode: "production",
+    mode: 'production',
     devtool: 'source-map',
     resolve: {
         extensions: ['.ts', '.js']

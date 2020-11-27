@@ -29,7 +29,7 @@ describe('ServiceHelper.initializeAsync', () => {
                 called = true;
                 context = ctx;
                 let d = new Deferrable();
-                d.resolve();
+                d.resolve(null);
                 return <Promise<void>>d.promise;
             }
         }

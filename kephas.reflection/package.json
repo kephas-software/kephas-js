@@ -1,6 +1,6 @@
 {
   "name": "@kephas/reflection",
-  "version": "0.4.0",
+  "version": "0.4.4",
   "description": "Provides reflection capabilities, like TypeInfoRegistry, ITypeInfo, and IProperty.",
   "type": "module",
   "main": "dist/index.js",
@@ -37,10 +37,12 @@
     "README.md",
     "dist/"
   ],
-  "dependencies": {
-    "@kephas/core": "^0.4.0"
+  "peerDependencies": {
+    "@kephas/core": "^0.4.3",
+    "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
+    "@kephas/core": "^0.4.3",
     "@types/chai": "^4.2.14",
     "@types/mocha": "^8.0.4",
     "@types/webpack": "^4.41.25",
@@ -49,6 +51,7 @@
     "cross-env": "7.0.2",
     "mocha": "^8.2.1",
     "path": "^0.12.7",
+    "reflect-metadata": "^0.1.13",
     "reify": "^0.20.12",
     "rxjs-tslint": "0.1.8",
     "ts-loader": "^8.0.11",

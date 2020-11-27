@@ -34,7 +34,7 @@ export class Deferrable<T> {
      * @param {(T | PromiseLike<T>)} [value] The resolved value.
      * @memberof Deferrable
      */
-    resolve: (value?: T | PromiseLike<T>) => void = v => {};
+    resolve: (value: T | PromiseLike<T>) => void = v => {};
 
     /**
      * Rejects the promise with the indicated reason.

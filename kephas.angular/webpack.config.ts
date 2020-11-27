@@ -20,7 +20,8 @@ const config: webpack.Configuration = {
         'reflect-metadata': 'reflect-metadata',
         'rxjs': 'rxjs',
         'rxjs/operators': 'rxjs/operators',
-        'zone.js': 'zone.js'
+        'zone.js': 'zone.js',
+        'tslib': 'tslib'
     },
     output: {
         path: path.resolve(__dirname, 'dist'),

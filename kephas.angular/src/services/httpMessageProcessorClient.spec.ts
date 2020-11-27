@@ -18,7 +18,7 @@ describe('MessageProcessor.process', () => {
 
         const logger = createStubInstance(Logger);
         const processor = new HttpMessageProcessorClient(
-            { baseUrl: 'https://my.server.com/' },
+            { baseUrl: 'https://my.server.com/', baseApiUrl: 'https://my.server.com/api/' },
             httpClient as any as HttpClient,
             notification as any as Notification,
             logger as any as Logger);
@@ -38,7 +38,7 @@ describe('MessageProcessor.process', () => {
 
         const logger = createStubInstance(Logger);
         const processor = new HttpMessageProcessorClient(
-            { baseUrl: 'https://my.server.com' },
+            { baseUrl: 'https://my.server.com', baseApiUrl: 'https://my.server.com/api' },
             httpClient as any as HttpClient,
             notification as any as Notification,
             logger as any as Logger);
@@ -58,7 +58,7 @@ describe('MessageProcessor.process', () => {
 
         const logger = createStubInstance(Logger);
         const processor = new HttpMessageProcessorClient(
-            { baseUrl: '/' },
+            { baseUrl: '/', baseApiUrl: '/api/' },
             httpClient as any as HttpClient,
             notification as any as Notification,
             logger as any as Logger);
@@ -85,7 +85,7 @@ describe('MessageProcessor.process', () => {
 
         const logger = createStubInstance(Logger);
         const processor = new HttpMessageProcessorClient(
-            { baseUrl: '/' },
+            { baseUrl: '/', baseApiUrl: '/api/' },
             httpClient as any as HttpClient,
             notification as any as Notification,
             logger as any as Logger);
@@ -112,7 +112,7 @@ describe('MessageProcessor.process', () => {
 
         const logger = createStubInstance(Logger);
         const processor = new HttpMessageProcessorClient(
-            { baseUrl: '/' },
+            { baseUrl: '/', baseApiUrl: '/api/' },
             httpClient as any as HttpClient,
             notification as any as Notification,
             logger as any as Logger);
@@ -133,7 +133,7 @@ describe('MessageProcessor.process', () => {
 
         const logger = createStubInstance(Logger);
         const processor = new HttpMessageProcessorClient(
-            { baseUrl: '/' },
+            { baseUrl: '/', baseApiUrl: '/api/' },
             httpClient as any as HttpClient,
             notification as any as Notification,
             logger as any as Logger);

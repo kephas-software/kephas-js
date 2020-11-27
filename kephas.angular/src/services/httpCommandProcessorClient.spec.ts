@@ -18,7 +18,7 @@ describe('CommandProcessor.process', () => {
 
         const logger = createStubInstance(Logger);
         const command = new HttpCommandProcessorClient(
-            { baseUrl: 'https://my.server.com/' },
+            { baseUrl: 'https://my.server.com/', baseApiUrl: 'https://my.server.com/api/' },
             httpClient as any as HttpClient,
             notification as any as Notification,
             logger as any as Logger);
@@ -37,7 +37,7 @@ describe('CommandProcessor.process', () => {
 
         const logger = createStubInstance(Logger);
         const command = new HttpCommandProcessorClient(
-            { baseUrl: 'https://my.server.com' },
+            { baseUrl: 'https://my.server.com', baseApiUrl: 'https://my.server.com/api/' },
             httpClient as any as HttpClient,
             notification as any as Notification,
             logger as any as Logger);
@@ -56,7 +56,7 @@ describe('CommandProcessor.process', () => {
 
         const logger = createStubInstance(Logger);
         const command = new HttpCommandProcessorClient(
-            { baseUrl: '/' },
+            { baseUrl: '/', baseApiUrl: '/api/' },
             httpClient as any as HttpClient,
             notification as any as Notification,
             logger as any as Logger);
@@ -83,7 +83,7 @@ describe('CommandProcessor.process', () => {
 
         const logger = createStubInstance(Logger);
         const command = new HttpCommandProcessorClient(
-            { baseUrl: '/' },
+            { baseUrl: '/', baseApiUrl: '/api/' },
             httpClient as any as HttpClient,
             notification as any as Notification,
             logger as any as Logger);
@@ -110,7 +110,7 @@ describe('CommandProcessor.process', () => {
 
         const logger = createStubInstance(Logger);
         const command = new HttpCommandProcessorClient(
-            { baseUrl: '/' },
+            { baseUrl: '/', baseApiUrl: '/api/' },
             httpClient as any as HttpClient,
             notification as any as Notification,
             logger as any as Logger);
@@ -131,7 +131,7 @@ describe('CommandProcessor.process', () => {
 
         const logger = createStubInstance(Logger);
         const command = new HttpCommandProcessorClient(
-            { baseUrl: '/' },
+            { baseUrl: '/', baseApiUrl: '/api/' },
             httpClient as any as HttpClient,
             notification as any as Notification,
             logger as any as Logger);

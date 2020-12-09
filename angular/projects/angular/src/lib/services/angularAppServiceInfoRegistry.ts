@@ -9,7 +9,6 @@ import { HttpClientAppServiceInfoRegistry } from '../../public-api';
  * Helper class for registering the services with the Angular injector.
  *
  * @export
- * @class AngularAppServiceInfoRegistry
  */
 export class AngularAppServiceInfoRegistry {
 
@@ -17,7 +16,6 @@ export class AngularAppServiceInfoRegistry {
      * Creates an instance of AngularAppServiceInfoRegistry.
      *
      * @param {AppServiceInfoRegistry} serviceRegistry The service registry.
-     * @memberof AngularAppServiceInfoRegistry
      */
     constructor(private serviceRegistry: AppServiceInfoRegistry) {
         Requires.HasValue(serviceRegistry, 'serviceRegistry');
@@ -27,7 +25,6 @@ export class AngularAppServiceInfoRegistry {
      * Registers the application services to the Angular DI container.
      *
      * @param {...string[]} modules The modules to import to collect the service metadata.
-     * @memberof AngularAppServiceInfoRegistry
      */
     public registerServices() {
         for (const serviceMetadata of this.serviceRegistry.services) {
@@ -39,7 +36,6 @@ export class AngularAppServiceInfoRegistry {
      * Gets the providers for the root.
      *
      * @returns {StaticClassProvider[]}
-     * @memberof AngularAppServiceInfoRegistry
      */
     public getRootProviders(): (StaticClassProvider )[] {
         const providers: (StaticClassProvider )[] = [];

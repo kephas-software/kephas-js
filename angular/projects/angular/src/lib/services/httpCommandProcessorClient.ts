@@ -27,7 +27,7 @@ export class HttpCommandProcessorClient extends CommandProcessorClient {
      * @type {string}
      * @memberof CommandProcessor
      */
-    protected baseRoute: string = 'api/cmd/';
+    protected baseRoute = 'api/cmd/';
 
     /**
      * Initializes a new instance of the CommandProcessor class.

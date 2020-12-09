@@ -33,6 +33,6 @@ export class AppSettings implements Expando {
      * @memberof AppSettings
      */
     get baseApiUrl(): string {
-        return `${this.baseUrl}api/`
+        return `${this.baseUrl}api/`;
     }
 }

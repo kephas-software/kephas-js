@@ -65,8 +65,8 @@ import 'mocha';
 
 import { Injectable, ElementRef, ViewContainerRef } from '@angular/core';
 import { AppServiceInfoRegistry } from '@kephas/core';
-import { WidgetBase, AngularAppServiceInfoRegistry } from '..';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { WidgetBase, AngularAppServiceInfoRegistry } from '../../public-api';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 @Injectable({ providedIn: 'root' })
 export class MyWidget extends WidgetBase {
@@ -85,7 +85,7 @@ describe('WidgetBase.constructor', () => {
     let component: MyWidget;
     let fixture: ComponentFixture<MyWidget>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         let angularRegistry = new AngularAppServiceInfoRegistry(AppServiceInfoRegistry.Instance);
         return TestBed.configureTestingModule(
             {

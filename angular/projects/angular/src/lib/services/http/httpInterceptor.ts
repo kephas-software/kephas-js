@@ -7,8 +7,6 @@ import { Observable } from 'rxjs';
  * Base class for HTTP interceptors.
  *
  * @export
- * @abstract
- * @class HttpInterceptor
  * @extends {AngularHttpInterceptor}
  */
 @SingletonAppServiceContract({ allowMultiple: true, contractToken: HTTP_INTERCEPTORS })

@@ -144,7 +144,7 @@ export class HttpMessageProcessorClient extends MessageProcessorClient {
                 errorInfo.severity = (LogLevel as Expando)[errorInfo.severity as string];
             }
 
-            throw new MessagingError(errorInfo.message!, errorInfo)
+            throw new MessagingError(errorInfo.message!, errorInfo);
         }
 
         const response = rawResponse.message;

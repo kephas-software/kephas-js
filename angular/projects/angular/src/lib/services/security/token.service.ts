@@ -76,7 +76,7 @@ export class TokenService {
     public set token(token: string | undefined) {
         if (this._tokenInfo && this._tokenInfo.token === token) {
             return;
-        };
+        }
 
         const jwtToken = this.decode(token!);
         this._tokenInfo = jwtToken;
@@ -95,7 +95,7 @@ export class TokenService {
     public set refreshToken(token: string | undefined) {
         if (this._refreshTokenInfo && this._refreshTokenInfo.token === token) {
             return;
-        };
+        }
 
         const jwtToken = this.decode(token!);
         this._refreshTokenInfo = jwtToken;
@@ -143,7 +143,7 @@ export class TokenService {
         if (!token) {
             return {
                 expiresAt: new Date(2000, 1),
-            }
+            };
         }
 
         const decoded = jwtDecode<RawTokenInfo>(token);
@@ -152,10 +152,10 @@ export class TokenService {
             subject: decoded.sub,
             issuedAt: this._toDate(decoded.iat),
             expiresAt: this._toDate(decoded.exp),
-        }
+        };
     }
 
-    private _loadTokenData() {
+    private _loadTokenData(): void {
         const tokenDataString = localStorage.getItem(TokenService.AuthTokenKey);
         if (tokenDataString) {
             const tokenData: TokenData = JSON.parse(tokenDataString);

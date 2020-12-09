@@ -4,7 +4,7 @@ import { JSDOM } from 'jsdom';
 
 const window = (new JSDOM(
     '<!doctype html><html><body></body></html>',
-    { url: "https://my.server.com/"})).window;
+    { url: 'https://my.server.com/'})).window;
 const document = window.document;
 let testGlobal: any = global;
 testGlobal.window = window;
@@ -16,7 +16,7 @@ testGlobal.Document = document;
 import { expect, use } from 'chai';
 import 'mocha';
 
-import { AppSettings } from '..';
+import { AppSettings } from '../../public-api';
 
 describe('AppSettings.baseUrl', () => {
     it('should fail and notify when server returns error severity', async () => {

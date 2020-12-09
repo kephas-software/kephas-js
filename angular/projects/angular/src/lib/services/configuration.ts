@@ -6,6 +6,8 @@ import {
     Expando
 } from '@kephas/core';
 
+// https://stackoverflow.com/questions/50222998/error-encountered-in-metadata-generated-for-exported-symbol-when-constructing-an
+
 // @dynamic
 /**
  * The configuration service.

@@ -2,6 +2,14 @@
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../../dist/angular-ace",
   "lib": {
-    "entryFile": "src/public-api.ts"
+    "entryFile": "src/public-api.ts",
+    "umdModuleIds": {
+      "@kephas/angular": "@kephas/angular",
+      "@kephas/core": "@kephas/core",
+      "@kephas/commands": "@kephas/commands",
+      "@kephas/messaging": "@kephas/messaging",
+      "@kephas/ui": "@kephas/ui",
+      "jwt-decode": "jwt-decode"
+    }
   }
 }

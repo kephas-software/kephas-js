@@ -6,6 +6,14 @@ import {
     Expando
 } from '@kephas/core';
 
+// @dynamic
+/**
+ * The configuration service.
+ *
+ * @export
+ * @class Configuration
+ * @implements {AsyncInitializable}
+ */
 @AppService({ overridePriority: Priority.Low })
 @SingletonAppServiceContract()
 export class Configuration implements AsyncInitializable {

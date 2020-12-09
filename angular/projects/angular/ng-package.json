@@ -1,0 +1,14 @@
+{
+  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../dist/angular",
+  "lib": {
+    "entryFile": "src/public-api.ts",
+    "umdModuleIds": {
+      "@kephas/core": "@kephas/core",
+      "@kephas/commands": "@kephas/commands",
+      "@kephas/messaging": "@kephas/messaging",
+      "@kephas/ui": "@kephas/ui",
+      "jwt-decode": "jwt-decode"
+    }
+  }
+}

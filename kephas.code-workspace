@@ -20,6 +20,9 @@
 		},
 		{
 			"path": "kephas.commands"
+		},
+		{
+			"path": "angular"
 		}
 	],
 	"settings": {

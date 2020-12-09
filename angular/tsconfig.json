@@ -1,0 +1,46 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "es2020",
+    "lib": [
+      "es2018",
+      "dom"
+    ],
+    "paths": {
+      "@kephas/angular/*": [
+        "projects/angular/*",
+        "projects/angular"
+      ],
+      "@kephas/angular": [
+        "dist/angular/*",
+        "dist/angular"
+      ],
+      "@kephas/angular-ace/*": [
+        "projects/angular-ace/angular-ace",
+        "projects/angular-ace"
+      ],
+      "@kephas/angular-ace": [
+        "dist/angular-ace/angular-ace",
+        "dist/angular-ace"
+      ]
+    }
+  },
+  "angularCompilerOptions": {
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  }
+}

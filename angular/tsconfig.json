@@ -20,22 +20,6 @@
       "dom"
     ],
     "paths": {
-      "@kephas/angular/*": [
-        "projects/angular/*",
-        "projects/angular"
-      ],
-      "@kephas/angular": [
-        "dist/angular/*",
-        "dist/angular"
-      ],
-      "@kephas/angular-ace/*": [
-        "projects/angular-ace/angular-ace",
-        "projects/angular-ace"
-      ],
-      "@kephas/angular-ace": [
-        "dist/angular-ace/angular-ace",
-        "dist/angular-ace"
-      ]
     }
   },
   "angularCompilerOptions": {

@@ -1,6 +1,6 @@
 {
   "name": "@kephas/angular",
-  "version": "0.1103.2",
+  "version": "0.1103.5",
   "description": "Provides integration capabilities with Angular.",
   "repository": {
     "type": "git",
@@ -18,8 +18,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
-    "build:ssr": "ng run Tnsa:server:dev",
+    "build": "ng build angular",
+    "build:prod": "ng build angular --prod",
     "test": "ng test",
     "e2e": "ng e2e",
     "lint": "eslint -c .eslintrc.js --ext .ts ./src"

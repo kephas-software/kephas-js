@@ -4,11 +4,13 @@
   "lib": {
     "entryFile": "src/public-api.ts",
     "umdModuleIds": {
+      "@kephas/angular-ace": "@kephas/angular-ace",
       "@kephas/angular": "@kephas/angular",
       "@kephas/core": "@kephas/core",
       "@kephas/commands": "@kephas/commands",
       "@kephas/messaging": "@kephas/messaging",
       "@kephas/ui": "@kephas/ui",
+      "brace": "brace",
       "jwt-decode": "jwt-decode"
     }
   }

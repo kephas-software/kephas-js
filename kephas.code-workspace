@@ -7,16 +7,10 @@
 			"path": "kephas.reflection"
 		},
 		{
-			"path": "kephas.angular"
-		},
-		{
 			"path": "kephas.ui"
 		},
 		{
 			"path": "kephas.messaging"
-		},
-		{
-			"path": "kephas.angular.ace"
 		},
 		{
 			"path": "kephas.commands"

@@ -47,7 +47,7 @@ export abstract class WidgetBase implements OnInit, AfterViewInit, OnChanges, On
 
     private _isVisible = true;
     private _readonly = false;
-    private _childEditors?: QueryList<WidgetBase>;
+    private _childWidgets?: QueryList<WidgetBase>;
 
     /**
      * Creates an instance of WidgetBase.
@@ -74,15 +74,15 @@ export abstract class WidgetBase implements OnInit, AfterViewInit, OnChanges, On
      */
     @ViewChildren(WidgetBase)
     get childWidgets(): QueryList<WidgetBase> {
-        return this._childEditors!;
+        return this._childWidgets!;
     }
     set childWidgets(value: QueryList<WidgetBase>) {
-        if (this._childEditors === value) {
+        if (this._childWidgets === value) {
             return;
         }
 
-        const oldValue = this._childEditors;
-        this._childEditors = value;
+        const oldValue = this._childWidgets;
+        this._childWidgets = value;
         this.onChildWidgetsChanged(oldValue, value);
     }
 

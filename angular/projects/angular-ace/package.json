@@ -1,6 +1,6 @@
 {
   "name": "@kephas/angular-ace",
-  "version": "0.1103.5",
+  "version": "0.1103.6",
   "description": "Provides the integration of the Ace editor with Kephas and Angular.",
   "repository": {
     "type": "git",
@@ -28,7 +28,7 @@
   "peerDependencies": {
     "@angular/common": "^11.0.3",
     "@angular/core": "^11.0.3",
-    "@kephas/angular": "^0.1103.5",
+    "@kephas/angular": "^0.1103.6",
     "@kephas/commands": "^0.4.3",
     "@kephas/core": "^0.4.3",
     "@kephas/messaging": "^0.4.3",
@@ -47,7 +47,7 @@
     "@angular/core": "^11.0.3",
     "@angular-eslint/eslint-plugin": "^0.8.0-beta.5",
     "@angular-eslint/eslint-plugin-template": "^0.8.0-beta.5",
-    "@kephas/angular": "^0.1103.5",
+    "@kephas/angular": "^0.1103.6",
     "@kephas/commands": "^0.4.3",
     "@kephas/core": "^0.4.3",
     "@kephas/messaging": "^0.4.3",

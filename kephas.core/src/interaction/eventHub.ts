@@ -36,7 +36,7 @@ export class EventHub {
      * @param {Logger} logger The logger.
      * @memberof EventHub
      */
-    constructor(logger?: Logger | undefined) {
+    constructor(logger?: Logger) {
         this._logger = logger || new Logger();
     }
 
@@ -56,11 +56,11 @@ export class EventHub {
      * Publishes the event asynchronously to its subscribers.
      *
      * @param {*} event The event.
-     * @param {(Context | undefined)} context Optional. The context.
+     * @param {Context} [context] Optional. The context.
      * @returns {Promise<any>} The promise.
      * @memberof EventHub
      */
-    async publishAsync(event: any, context?: Context | undefined): Promise<any> {
+    async publishAsync(event: any, context?: Context): Promise<any> {
         const subscriptions = this._subscriptions.filter(s => s.match(event));
         for (const subscription of subscriptions) {
             try {
@@ -80,11 +80,11 @@ export class EventHub {
      *
      * @template T The event type.
      * @param {(AbstractType | Type<T>)} match Specifies the match type.
-     * @param {((event: T, context: Context | undefined) => Promise<any> | void)} callback The callback.
+     * @param {((event: T, context?: Context) => Promise<any> | void)} callback The callback.
      * @returns {Disposable} A disposable event subscription.
      * @memberof EventHub
      */
-    subscribe<T>(match: AbstractType | Type<T>, callback: (event: T, context: Context | undefined) => Promise<any> | void): Disposable {
+    subscribe<T>(match: AbstractType | Type<T>, callback: (event: T, context?: Context) => Promise<any> | void): Disposable {
         const subscription = new EventSubscription(
             this._getMatch(match),
             callback,

@@ -5,3 +5,4 @@
 export * from './lib/authorization.settings';
 export * from './lib/authorize.service';
 export * from './lib/authorize.interceptor';
+export * from './lib/authorize.guard';

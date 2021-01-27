@@ -48,10 +48,22 @@ export class AuthorizeService {
   private userManager?: UserManager;
   private userSubject: BehaviorSubject<IUser | null> = new BehaviorSubject(null as IUser | null);
 
+  /**
+   * Gets an observable indicating whether the user is authenticated.
+   *
+   * @return {*}  {Observable<boolean>}
+   * @memberof AuthorizeService
+   */
   public isAuthenticated(): Observable<boolean> {
     return this.getUser().pipe(map(u => !!u));
   }
 
+  /**
+   * Gets an observable retrieving the user.
+   *
+   * @return {*}  {(Observable<IUser | null | undefined>)}
+   * @memberof AuthorizeService
+   */
   public getUser(): Observable<IUser | null | undefined> {
     return concat(
       this.userSubject.pipe(take(1), filter(u => !!u)),
@@ -59,20 +71,33 @@ export class AuthorizeService {
       this.userSubject.asObservable());
   }
 
+  /**
+   * Gets an observable containing the access token of the signed-in user.
+   *
+   * @return {*}  {(Observable<string | undefined>)}
+   * @memberof AuthorizeService
+   */
   public getAccessToken(): Observable<string | undefined> {
     return from(this.ensureUserManagerInitialized())
       .pipe(mergeMap(() => from(this.userManager!.getUser())),
         map(user => user?.access_token));
   }
 
-  // We try to authenticate the user in three different ways:
-  // 1) We try to see if we can authenticate the user silently. This happens
-  //    when the user is already logged in on the IdP and is done using a hidden iframe
-  //    on the client.
-  // 2) We try to authenticate the user using a PopUp Window. This might fail if there is a
-  //    Pop-Up blocker or the user has disabled PopUps.
-  // 3) If the two methods above fail, we redirect the browser to the IdP to perform a traditional
-  //    redirect flow.
+  /**
+   * Sign in the user.
+   * We try to authenticate the user in three different ways:
+   * 1) We try to see if we can authenticate the user silently. This happens
+   *    when the user is already logged in on the IdP and is done using a hidden iframe
+   *    on the client.
+   * 2) We try to authenticate the user using a PopUp Window. This might fail if there is a
+   *    Pop-Up blocker or the user has disabled PopUps.
+   * 3) If the two methods above fail, we redirect the browser to the IdP to perform a traditional
+   *    redirect flow.
+   *
+   * @param {*} state
+   * @return {*}  {Promise<IAuthenticationResult>}
+   * @memberof AuthorizeService
+   */
   public async signIn(state: any): Promise<IAuthenticationResult> {
     await this.ensureUserManagerInitialized();
     let user: User | null = null;
@@ -86,9 +111,8 @@ export class AuthorizeService {
 
       const popUpDisabled = this.settingsProvider.settings.popUpDisabled;
       try {
-        if (popUpDisabled) {
-          throw new Error('Popup disabled. Change \'authorize.service.ts:AuthorizeService.popupDisabled\' to false to enable it.');
-        }
+        this.ensurePopupEnabled();
+
         user = await this.userManager!.signinPopup(this.createArguments());
         this.userSubject.next(user.profile);
         return this.success(state);
@@ -126,9 +150,7 @@ export class AuthorizeService {
 
   public async signOut(state: any): Promise<IAuthenticationResult> {
     try {
-      if (this.settingsProvider.settings.popUpDisabled) {
-        throw new Error('Popup disabled. Instruct the AuthorizationSettingsProvider service to return false in \'settings.popupDisabled\' to enable it.');
-      }
+      this.ensurePopupEnabled();
 
       await this.ensureUserManagerInitialized();
       await this.userManager!.signoutPopup(this.createArguments());
@@ -155,6 +177,13 @@ export class AuthorizeService {
     } catch (error) {
       console.log(`There was an error trying to log out '${error}'.`);
       return this.error(error);
+    }
+  }
+
+  private ensurePopupEnabled()
+  {
+    if (this.settingsProvider.settings.popUpDisabled) {
+      throw new Error('Popup disabled. Instruct the AuthorizationSettingsProvider service to return false in \'settings.popupDisabled\' to enable it.');
     }
   }
 

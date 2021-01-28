@@ -44,10 +44,22 @@ export interface ApplicationPathsType {
   readonly IdentityManagePath: string;
 }
 
+export interface ActivitySettingsType {
+  /**
+   * The maximum idle time (seconds) until an automatic disconnect happens.
+   * Do not set if the automatic disconnect should not be triggered.
+   *
+   * @type {number}
+   * @memberof ActivitySettingsType
+   */
+  readonly MaxIdleSeconds?: number;
+}
+
 export interface AuthorizationSettings {
   readonly applicationName: string;
   readonly returnUrl: string;
   readonly applicationPaths: ApplicationPathsType;
+  readonly activity: ActivitySettingsType;
   popUpDisabled: boolean;
 }
 
@@ -99,10 +111,14 @@ export class AuthorizationSettingsProvider {
       LogOutCallbackPathComponents: applicationPaths.LogOutCallback.split('/')
     };
 
+    let activity: ActivitySettingsType = {
+    };
+
     return {
       applicationName: appName,
       returnUrl: ReturnUrlType,
       applicationPaths: applicationPaths,
+      activity: activity,
       // By default pop ups are disabled because they don't work properly on Edge.
       // If you want to enable pop up authentication simply set this flag to false.
       popUpDisabled: true,

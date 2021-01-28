@@ -36,6 +36,7 @@ export interface IUser extends Profile {
 @AppService()
 @SingletonAppServiceContract()
 export class AuthorizeService {
+  private _lastActivityTime?: Date;
 
   /**
    * Creates an instance of AuthorizeService.
@@ -45,8 +46,19 @@ export class AuthorizeService {
   constructor(protected readonly settingsProvider: AuthorizationSettingsProvider) {
   }
 
-  private userManager?: UserManager;
-  private userSubject: BehaviorSubject<IUser | null> = new BehaviorSubject(null as IUser | null);
+  protected userManager?: UserManager;
+  protected readonly userSubject: BehaviorSubject<IUser | null> = new BehaviorSubject(null as IUser | null);
+
+  /**
+   * Gets the time of user's last activity.
+   *
+   * @readonly
+   * @type {(Date | undefined)}
+   * @memberof AuthorizeService
+   */
+  public get lastActivityTime(): Date | undefined {
+    return this._lastActivityTime;
+  }
 
   /**
    * Gets an observable indicating whether the user is authenticated.
@@ -81,6 +93,15 @@ export class AuthorizeService {
     return from(this.ensureUserManagerInitialized())
       .pipe(mergeMap(() => from(this.userManager!.getUser())),
         map(user => user?.access_token));
+  }
+
+  /**
+   * Notifies the authorization service that the user is active.
+   *
+   * @memberof AuthorizeService
+   */
+  public touch() {
+    this._lastActivityTime = new Date();
   }
 
   /**

@@ -2,7 +2,7 @@ import { AppService, SingletonAppServiceContract } from '@kephas/core';
 import { Profile, User, UserManager, } from 'oidc-client';
 import { BehaviorSubject, concat, from, Observable } from 'rxjs';
 import { filter, map, mergeMap, take, tap } from 'rxjs/operators';
-import { AuthorizationSettingsProvider } from '../public-api';
+import { AuthenticationSettingsProvider } from './authentication.settings';
 
 export type IAuthenticationResult =
   SuccessAuthenticationResult |
@@ -35,15 +35,15 @@ export interface IUser extends Profile {
 
 @AppService()
 @SingletonAppServiceContract()
-export class AuthorizeService {
+export class AuthenticationService {
   private _lastActivityTime?: Date;
 
   /**
    * Creates an instance of AuthorizeService.
-   * @param {AuthorizationSettingsProvider} settingsProvider The settings provider.
+   * @param {AuthenticationSettingsProvider} settingsProvider The settings provider.
    * @memberof AuthorizeService
    */
-  constructor(protected readonly settingsProvider: AuthorizationSettingsProvider) {
+  constructor(protected readonly settingsProvider: AuthenticationSettingsProvider) {
   }
 
   protected userManager?: UserManager;

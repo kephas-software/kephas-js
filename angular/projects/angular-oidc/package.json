@@ -1,6 +1,6 @@
 {
   "name": "@kephas/angular-oidc",
-  "version": "0.1103.12",
+  "version": "0.1103.20",
   "description": "Provides the integration of the OIDC API with Kephas and Angular.",
   "repository": {
     "type": "git",

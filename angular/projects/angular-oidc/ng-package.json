@@ -10,7 +10,7 @@
       "@kephas/commands": "@kephas/commands",
       "@kephas/messaging": "@kephas/messaging",
       "@kephas/ui": "@kephas/ui",
-      "jwt-decode": "jwt-decode"
+      "oidc-client": "oidc-client"
     }
   }
 }

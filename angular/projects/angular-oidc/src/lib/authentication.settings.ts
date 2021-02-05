@@ -55,7 +55,7 @@ export interface ActivitySettingsType {
   readonly MaxIdleSeconds?: number;
 }
 
-export interface AuthorizationSettings {
+export interface AuthenticationSettings {
   readonly applicationName: string;
   readonly returnUrl: string;
   readonly applicationPaths: ApplicationPathsType;
@@ -65,9 +65,9 @@ export interface AuthorizationSettings {
 
 @AppService({ overridePriority: Priority.Lowest })
 @SingletonAppServiceContract()
-export class AuthorizationSettingsProvider {
+export class AuthenticationSettingsProvider {
 
-  readonly settings: AuthorizationSettings;
+  readonly settings: AuthenticationSettings;
 
   /**
    * Initializes a new instance of the AuthorizationSettingsProvider class.
@@ -76,7 +76,7 @@ export class AuthorizationSettingsProvider {
     this.settings = this.getSettings(appName ?? '[TODO-APP-NAME]')
   }
 
-  protected getSettings(appName: string): AuthorizationSettings {
+  protected getSettings(appName: string): AuthenticationSettings {
     let applicationPaths: ApplicationPathsType = {
       DefaultLoginRedirectPath: '/',
       ApiAuthorizationClientConfigurationUrl: `/_configuration/${appName}`,

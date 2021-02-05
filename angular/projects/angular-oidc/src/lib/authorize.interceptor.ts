@@ -1,13 +1,13 @@
 import { HttpHandler, HttpEvent, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { AuthorizeService } from '../public-api';
+import { AuthenticationService } from './authentication.service';
 import { mergeMap } from 'rxjs/operators';
 import { AppService } from '@kephas/core';
 import { HttpInterceptor } from '@kephas/angular';
 
 @AppService()
 export class AuthorizeInterceptor extends HttpInterceptor {
-  constructor(private authorize: AuthorizeService) {
+  constructor(private authorize: AuthenticationService) {
     super();
   }
 

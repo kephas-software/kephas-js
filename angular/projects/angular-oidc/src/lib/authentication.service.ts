@@ -232,7 +232,7 @@ export class AuthenticationService {
     const authSettings = this.settingsProvider.settings;
     const response = await fetch(authSettings.applicationPaths.ApiAuthorizationClientConfigurationUrl);
     if (!response.ok) {
-      throw new Error(`Could not load settings for '${authSettings.applicationName}'`);
+      throw new Error(`Could not load settings for '${authSettings.identityAppId}'`);
     }
 
     const settings: any = await response.json();

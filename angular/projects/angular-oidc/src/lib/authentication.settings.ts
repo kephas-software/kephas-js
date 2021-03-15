@@ -56,7 +56,7 @@ export interface ActivitySettingsType {
 }
 
 export interface AuthenticationSettings {
-  readonly applicationName: string;
+  readonly identityAppId: string;
   readonly returnUrl: string;
   readonly applicationPaths: ApplicationPathsType;
   readonly activity: ActivitySettingsType;
@@ -72,14 +72,19 @@ export class AuthenticationSettingsProvider {
   /**
    * Initializes a new instance of the AuthorizationSettingsProvider class.
    */
-  constructor(appName?: string) {
-    this.settings = this.getSettings(appName ?? '[TODO-APP-NAME]')
+  /**
+   * Creates an instance of AuthenticationSettingsProvider.
+   * @param {string} [identityAppId] The identity application's ID.
+   * @memberof AuthenticationSettingsProvider
+   */
+  constructor(identityAppId?: string) {
+    this.settings = this.getSettings(identityAppId ?? '[TODO-APP-ID]')
   }
 
-  protected getSettings(appName: string): AuthenticationSettings {
+  protected getSettings(identityAppId: string): AuthenticationSettings {
     let applicationPaths: ApplicationPathsType = {
       DefaultLoginRedirectPath: '/',
-      ApiAuthorizationClientConfigurationUrl: `/_configuration/${appName}`,
+      ApiAuthorizationClientConfigurationUrl: `/_configuration/${identityAppId}`,
       Login: `authentication/${LoginActions.Login}`,
       LoginFailed: `authentication/${LoginActions.LoginFailed}`,
       LoginCallback: `authentication/${LoginActions.LoginCallback}`,
@@ -115,7 +120,7 @@ export class AuthenticationSettingsProvider {
     };
 
     return {
-      applicationName: appName,
+      identityAppId: identityAppId,
       returnUrl: ReturnUrlType,
       applicationPaths: applicationPaths,
       activity: activity,

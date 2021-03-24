@@ -1,6 +1,6 @@
 {
   "name": "@kephas/angular-oidc",
-  "version": "0.1103.21",
+  "version": "0.1103.22",
   "description": "Provides the integration of the OIDC API with Kephas and Angular.",
   "repository": {
     "type": "git",
@@ -41,6 +41,7 @@
   },
   "devDependencies": {
     "@angular/common": "^11.0.3",
+    "@angular/compiler": "^11.0.3",
     "@angular/core": "^11.0.3",
     "@angular-eslint/eslint-plugin": "^2.0.1",
     "@angular-eslint/eslint-plugin-template": "^2.0.1",

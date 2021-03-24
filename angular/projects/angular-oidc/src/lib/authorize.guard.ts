@@ -10,14 +10,14 @@ import { AuthenticationSettingsProvider, QueryParameterNames } from './authentic
 })
 export class AuthorizeGuard implements CanActivate {
   constructor(
-    private authorize: AuthenticationService,
+    private authService: AuthenticationService,
     private router: Router,
     private settingsProvider: AuthenticationSettingsProvider) {
   }
   canActivate(
     _next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-      return this.authorize.isAuthenticated()
+      return this.authService.isAuthenticated()
         .pipe(tap(isAuthenticated => this.handleAuthorization(isAuthenticated, state)));
   }
 

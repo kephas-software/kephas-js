@@ -201,6 +201,28 @@ export class AuthenticationService {
     }
   }
 
+  protected async ensureUserManagerInitialized(): Promise<void> {
+    if (this.userManager !== undefined) {
+      return;
+    }
+
+    const authSettings = this.settingsProvider.settings;
+    const response = await fetch(authSettings.applicationPaths.ApiAuthorizationClientConfigurationUrl);
+    if (!response.ok) {
+      throw new Error(`Could not load settings for '${authSettings.identityAppId}'`);
+    }
+
+    const settings: any = await response.json();
+    settings.automaticSilentRenew = true;
+    settings.includeIdTokenInSilentRenew = true;
+    this.userManager = new UserManager(settings);
+
+    this.userManager.events.addUserSignedOut(async () => {
+      await this.userManager!.removeUser();
+      this.userSubject.next(null);
+    });
+  }
+
   private ensurePopupEnabled()
   {
     if (this.settingsProvider.settings.popUpDisabled) {
@@ -222,28 +244,6 @@ export class AuthenticationService {
 
   private redirect(): IAuthenticationResult {
     return { status: AuthenticationResultStatus.Redirect };
-  }
-
-  private async ensureUserManagerInitialized(): Promise<void> {
-    if (this.userManager !== undefined) {
-      return;
-    }
-
-    const authSettings = this.settingsProvider.settings;
-    const response = await fetch(authSettings.applicationPaths.ApiAuthorizationClientConfigurationUrl);
-    if (!response.ok) {
-      throw new Error(`Could not load settings for '${authSettings.identityAppId}'`);
-    }
-
-    const settings: any = await response.json();
-    settings.automaticSilentRenew = true;
-    settings.includeIdTokenInSilentRenew = true;
-    this.userManager = new UserManager(settings);
-
-    this.userManager.events.addUserSignedOut(async () => {
-      await this.userManager!.removeUser();
-      this.userSubject.next(null);
-    });
   }
 
   private getUserFromStorage(): Observable<IUser | undefined> {

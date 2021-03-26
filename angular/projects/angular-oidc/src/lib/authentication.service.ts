@@ -252,7 +252,7 @@ export class AuthenticationService {
         mergeMap(() => this.userManager!.getUser()));
   }
 
-  private setUser(user?: User | null) {
+  private setUser(user: User | null) {
     const currentUser = this.rawUserSubject.value;
 
     // make sure not to issue a change if the user is not really changed.
@@ -260,6 +260,7 @@ export class AuthenticationService {
       return;
     }
 
-    this.userSubject.next(user?.profile as (IUser | null));
+    this.rawUserSubject.next(user);
+    this.userSubject.next(user?.profile || null);
   }
 }

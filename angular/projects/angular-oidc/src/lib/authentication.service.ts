@@ -48,6 +48,7 @@ export class AuthenticationService {
 
   protected userManager?: UserManager;
   protected readonly userSubject: BehaviorSubject<IUser | null> = new BehaviorSubject(null as IUser | null);
+  protected readonly rawUserSubject: BehaviorSubject<User | null> = new BehaviorSubject(null as User | null);
 
   /**
    * Gets the time of user's last activity.
@@ -79,7 +80,7 @@ export class AuthenticationService {
   public getUser(): Observable<IUser | null | undefined> {
     return concat(
       this.userSubject.pipe(take(1), filter(u => !!u)),
-      this.getUserFromStorage().pipe(filter(u => !!u), tap(u => this.userSubject.next(u!))),
+      this.getUserFromStorage().pipe(filter(u => !!u), tap(u => this.setUser(u!)), map(u => u?.profile)),
       this.userSubject.asObservable());
   }
 
@@ -124,7 +125,7 @@ export class AuthenticationService {
     let user: User | null = null;
     try {
       user = await this.userManager!.signinSilent(this.createArguments());
-      this.userSubject.next(user.profile);
+      this.setUser(user);
       return this.success(state);
     } catch (silentError) {
       // User might not be authenticated, fallback to popup authentication
@@ -135,7 +136,7 @@ export class AuthenticationService {
         this.ensurePopupEnabled();
 
         user = await this.userManager!.signinPopup(this.createArguments());
-        this.userSubject.next(user.profile);
+        this.setUser(user);
         return this.success(state);
       } catch (popupError) {
         if (popupError.message === 'Popup window closed') {
@@ -161,8 +162,8 @@ export class AuthenticationService {
     try {
       await this.ensureUserManagerInitialized();
       const user = await this.userManager!.signinCallback(url);
-      this.userSubject.next(user && user.profile);
-      return this.success(user && user.state);
+      this.setUser(user);
+      return this.success(user?.state);
     } catch (error) {
       console.log('There was an error signing in: ', error);
       return this.error('There was an error signing in.');
@@ -175,7 +176,7 @@ export class AuthenticationService {
 
       await this.ensureUserManagerInitialized();
       await this.userManager!.signoutPopup(this.createArguments());
-      this.userSubject.next(null);
+      this.setUser(null);
       return this.success(state);
     } catch (popupSignOutError) {
       console.log('Popup signout error: ', popupSignOutError);
@@ -193,7 +194,7 @@ export class AuthenticationService {
     await this.ensureUserManagerInitialized();
     try {
       const response = await this.userManager!.signoutCallback(url);
-      this.userSubject.next(null);
+      this.setUser(null);
       return this.success(response && response.state);
     } catch (error) {
       console.log(`There was an error trying to log out '${error}'.`);
@@ -219,12 +220,11 @@ export class AuthenticationService {
 
     this.userManager.events.addUserSignedOut(async () => {
       await this.userManager!.removeUser();
-      this.userSubject.next(null);
+      this.setUser(null);
     });
   }
 
-  private ensurePopupEnabled()
-  {
+  private ensurePopupEnabled() {
     if (this.settingsProvider.settings.popUpDisabled) {
       throw new Error('Popup disabled. Instruct the AuthorizationSettingsProvider service to return false in \'settings.popupDisabled\' to enable it.');
     }
@@ -246,10 +246,20 @@ export class AuthenticationService {
     return { status: AuthenticationResultStatus.Redirect };
   }
 
-  private getUserFromStorage(): Observable<IUser | undefined> {
+  private getUserFromStorage(): Observable<User | null> {
     return from(this.ensureUserManagerInitialized())
       .pipe(
-        mergeMap(() => this.userManager!.getUser()),
-        map(u => u?.profile));
+        mergeMap(() => this.userManager!.getUser()));
+  }
+
+  private setUser(user?: User | null) {
+    const currentUser = this.rawUserSubject.value;
+
+    // make sure not to issue a change if the user is not really changed.
+    if (currentUser == user || currentUser?.id_token == user?.id_token) {
+      return;
+    }
+
+    this.userSubject.next(user?.profile as (IUser | null));
   }
 }

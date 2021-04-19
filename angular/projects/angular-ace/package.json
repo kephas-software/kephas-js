@@ -1,6 +1,6 @@
 {
   "name": "@kephas/angular-ace",
-  "version": "0.1103.12",
+  "version": "0.1103.13",
   "description": "Provides the integration of the Ace editor with Kephas and Angular.",
   "repository": {
     "type": "git",

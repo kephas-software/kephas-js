@@ -7,6 +7,9 @@ import { AceComponent } from './components/ace.component';
   declarations: [
     AceComponent,
   ],
+  exports: [
+    AceComponent,
+  ],
   imports: [
     BrowserModule,
   ],

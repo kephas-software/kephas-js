@@ -10,6 +10,7 @@ export * from './sealed';
 export * from './disposable';
 
 export * from './expando';
+export * from './commands/args';
 
 export * from './services/context';
 export * from './services/serviceError';

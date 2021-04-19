@@ -22,8 +22,8 @@ import 'brace/mode/json';
  * Value editor based on Ace.
  *
  * @export
- * @class AceEditor
- * @extends {(ValueEditor<string | {}>)}
+ * @class AceComponent
+ * @extends {(ValueEditorBase<string | {} | null>)}
  */
 @Component({
     selector: 'ace',
@@ -36,7 +36,7 @@ export class AceComponent extends ValueEditorBase<string | {} | null>
      * Gets or sets the Ace editor.
      *
      * @type {ace.Editor}
-     * @memberof AceEditor
+     * @memberof AceComponent
      */
     public editor?: Editor;
 
@@ -46,11 +46,11 @@ export class AceComponent extends ValueEditorBase<string | {} | null>
     private _observer?: MutationObserver;
 
     /**
-     * Creates an instance of AceEditor.
+     * Creates an instance of AceComponent.
      *
      * @param {ElementRef} elementRef The element reference.
      * @param {ViewContainerRef} viewContainerRef The view container reference.
-     * @memberof AceEditor
+     * @memberof AceComponent
      */
     constructor(
         elementRef: ElementRef,
@@ -63,7 +63,7 @@ export class AceComponent extends ValueEditorBase<string | {} | null>
      * Gets or sets a value indicating
      *
      * @type {(string | string[])}
-     * @memberof AceEditor
+     * @memberof AceComponent
      */
     @Input()
     public observeVisibilityOf?: string | string[];
@@ -72,7 +72,7 @@ export class AceComponent extends ValueEditorBase<string | {} | null>
      * Gets or sets the editor type.
      *
      * @type {string}
-     * @memberof AceEditor
+     * @memberof AceComponent
      */
     @Input()
     get editorType(): string {
@@ -90,7 +90,7 @@ export class AceComponent extends ValueEditorBase<string | {} | null>
     /**
      * Gets or sets the editor options.
      *
-     * @memberof AceEditor
+     * @memberof AceComponent
      */
     @Input() set options(value: any) {
         if (this.editor) {
@@ -105,7 +105,7 @@ export class AceComponent extends ValueEditorBase<string | {} | null>
      * Gets or sets the editor theme.
      *
      * @type {string}
-     * @memberof AceEditor
+     * @memberof AceComponent
      */
     @Input()
     get theme(): string {
@@ -125,7 +125,7 @@ export class AceComponent extends ValueEditorBase<string | {} | null>
      *
      * @readonly
      * @type {boolean}
-     * @memberof AceEditor
+     * @memberof AceComponent
      */
     @Input()
     get valueIsObject(): boolean {
@@ -142,7 +142,7 @@ export class AceComponent extends ValueEditorBase<string | {} | null>
      * and before any of the view or content children have been checked.
      * It is invoked only once when the directive is instantiated.
      *
-     * @memberof AceEditor
+     * @memberof AceComponent
      */
     public ngOnInit(): void {
         super.ngOnInit();
@@ -171,7 +171,7 @@ export class AceComponent extends ValueEditorBase<string | {} | null>
      * Angular has completed initialization of a component's view.
      * It is invoked only once when the view is instantiated.
      *
-     * @memberof AceEditor
+     * @memberof AceComponent
      */
     public ngAfterViewInit() {
         super.ngAfterViewInit();
@@ -186,7 +186,7 @@ export class AceComponent extends ValueEditorBase<string | {} | null>
      * A callback method that performs custom clean-up, invoked immediately
      * after a directive, pipe, or service instance is destroyed.
      *
-     * @memberof AceEditor
+     * @memberof AceComponent
      */
     public ngOnDestroy() {
         super.ngOnDestroy();
@@ -246,7 +246,7 @@ export class AceComponent extends ValueEditorBase<string | {} | null>
      *
      * @protected
      * @returns
-     * @memberof AceEditor
+     * @memberof AceComponent
      */
     protected formatDocument() {
         if (!this.editor) {
@@ -344,7 +344,7 @@ export class AceComponent extends ValueEditorBase<string | {} | null>
      *
      * @protected
      * @param {boolean} value
-     * @memberof AceEditor
+     * @memberof AceComponent
      */
     protected setEditorReadOnly(value: boolean) {
         if (this.editor) {
@@ -357,7 +357,7 @@ export class AceComponent extends ValueEditorBase<string | {} | null>
      *
      * @protected
      * @param {string} theme
-     * @memberof AceEditor
+     * @memberof AceComponent
      */
     protected setEditorTheme(theme: string): void {
         if (this.editor && theme) {
@@ -370,7 +370,7 @@ export class AceComponent extends ValueEditorBase<string | {} | null>
      *
      * @protected
      * @param {string} editorType
-     * @memberof AceEditor
+     * @memberof AceComponent
      */
     protected setEditorType(editorType: string): void {
         if (this.editor && editorType) {
@@ -386,7 +386,7 @@ export class AceComponent extends ValueEditorBase<string | {} | null>
      * @protected
      * @param {string} editorType The editor type.
      * @returns {string}
-     * @memberof AceEditor
+     * @memberof AceComponent
      */
     protected getEditorMode(editorType: string): string {
         return editorType;
@@ -398,7 +398,7 @@ export class AceComponent extends ValueEditorBase<string | {} | null>
      * @protected
      * @param {TValue} value The value to be set in the underlying component.
      * @returns {boolean}
-     * @memberof AceEditor
+     * @memberof AceComponent
      */
     protected updateEditor(value: string): boolean {
         value = value || '';

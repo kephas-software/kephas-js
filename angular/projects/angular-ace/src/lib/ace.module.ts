@@ -11,4 +11,4 @@ import { AceComponent } from './components/ace.component';
     BrowserModule,
   ],
 })
-export class AppModule { }
+export class AceModule { }

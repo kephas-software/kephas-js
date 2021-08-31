@@ -11,7 +11,8 @@
     "pack-reflection": "ng build --project=@kephas/reflection",
     "pack-messaging": "ng build --project=@kephas/messaging",
     "pack-commands": "ng build --project=@kephas/commands",
-    "pack-all": "ng build --project=@kephas/core && ng build --project=@kephas/reflection && ng build --project=@kephas/messaging && ng build --project=@kephas/commands"
+    "pack-ui": "ng build --project=@kephas/ui",
+    "pack-all": "ng build --project=@kephas/core && ng build --project=@kephas/reflection && ng build --project=@kephas/messaging && ng build --project=@kephas/commands && ng build --project=@kephas/ui"
   },
   "private": true,
   "dependencies": {

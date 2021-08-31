@@ -36,6 +36,10 @@
       "@kephas/reflection": [
         "dist/kephas/reflection/kephas-reflection",
         "dist/kephas/reflection"
+      ],
+      "@kephas/ui": [
+        "dist/kephas/ui/kephas-ui",
+        "dist/kephas/ui"
       ]
     }
   },

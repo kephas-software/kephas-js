@@ -33,6 +33,10 @@
         "dist/kephas/messaging/kephas-messaging",
         "dist/kephas/messaging"
       ],
+      "@kephas/ngx-core": [
+        "dist/kephas/ngx-core/kephas-ngx-core",
+        "dist/kephas/ngx-core"
+      ],
       "@kephas/reflection": [
         "dist/kephas/reflection/kephas-reflection",
         "dist/kephas/reflection"

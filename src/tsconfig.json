@@ -21,6 +21,10 @@
       "dom"
     ],
     "paths": {
+      "@kephas/core": [
+        "dist/kephas/core/kephas-core",
+        "dist/kephas/core"
+      ]
     }
   },
   "angularCompilerOptions": {

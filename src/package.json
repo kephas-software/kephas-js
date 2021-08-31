@@ -7,7 +7,7 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "package": "ng build --project=@kephas/core"
+    "package": "ng build --project=@kephas/core && ng build --project=@kephas/reflection"
   },
   "private": true,
   "dependencies": {

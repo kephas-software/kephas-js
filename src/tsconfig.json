@@ -24,6 +24,10 @@
       "@kephas/core": [
         "dist/kephas/core/kephas-core",
         "dist/kephas/core"
+      ],
+      "@kephas/reflection": [
+        "dist/kephas/reflection/kephas-reflection",
+        "dist/kephas/reflection"
       ]
     }
   },

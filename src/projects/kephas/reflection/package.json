@@ -1,0 +1,26 @@
+{
+  "name": "@kephas/reflection",
+  "version": "1.0.0-preview.1",
+  "description": "Provides reflection capabilities, like TypeInfoRegistry, ITypeInfo, and IProperty.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kephas-software/kephas-js/tree/master/src/projects/kephas/reflection"
+  },
+  "keywords": [
+    "kephas",
+    "reflection"
+  ],
+  "author": {
+    "name": "Kephas Software SRL"
+  },
+  "license": "MIT",
+  "peerDependencies": {
+    "@kephas/core": "^1.0.0-preview.1"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "typescript": "4.2.4"
+  }
+}

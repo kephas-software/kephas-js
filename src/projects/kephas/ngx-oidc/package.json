@@ -1,0 +1,46 @@
+{
+  "name": "@kephas/ngx-oidc",
+  "version": "1.0.0-preview.1",
+  "description": "Provides the integration of the OIDC API with Kephas and Angular 12+.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kephas-software/kephas-js/tree/master/src/projects/kephas/ngx-oidc"
+  },
+  "keywords": [
+    "kephas",
+    "angular",
+    "ng",
+    "oidc"
+  ],
+  "author": {
+    "name": "Kephas Software SRL"
+  },
+  "license": "MIT",
+  "peerDependencies": {
+    "@angular/common": "^12.2.0",
+    "@angular/core": "^12.2.0",
+    "@angular/router": "^12.2.0",
+    "@kephas/ngx-core": "^1.0.0-preview.1",
+    "@kephas/core": "^1.0.0-preview.1",
+    "@kephas/reflection": "^1.0.0-preview.1",
+    "@kephas/ui": "^1.0.0-preview.1",
+    "rxjs": "^6.5.3 || ^7.0.0",
+    "zone.js": "~0.11.4",
+    "oidc-client": "^1.11.5"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@angular/common": "^12.2.0",
+    "@angular/core": "^12.2.0",
+    "@angular/router": "^12.2.0",
+    "@kephas/ngx-core": "^1.0.0-preview.1",
+    "@kephas/core": "^1.0.0-preview.1",
+    "@kephas/reflection": "^1.0.0-preview.1",
+    "@kephas/ui": "^1.0.0-preview.1",
+    "rxjs": "^6.5.3 || ^7.0.0",
+    "zone.js": "~0.11.4",
+    "oidc-client": "^1.11.5"
+  }
+}

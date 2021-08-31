@@ -219,6 +219,37 @@
           }
         }
       }
+    },
+    "@kephas/ngx-oidc": {
+      "projectType": "library",
+      "root": "projects/kephas/ngx-oidc",
+      "sourceRoot": "projects/kephas/ngx-oidc/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/kephas/ngx-oidc/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/kephas/ngx-oidc/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/kephas/ngx-oidc/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/kephas/ngx-oidc/src/test.ts",
+            "tsConfig": "projects/kephas/ngx-oidc/tsconfig.spec.json",
+            "karmaConfig": "projects/kephas/ngx-oidc/karma.conf.js"
+          }
+        }
+      }
     }
   },
   "defaultProject": "@kephas/core"

@@ -41,6 +41,10 @@
         "dist/kephas/ngx-core/kephas-ngx-core",
         "dist/kephas/ngx-core"
       ],
+      "@kephas/ngx-oidc": [
+        "dist/kephas/ngx-oidc/kephas-ngx-oidc",
+        "dist/kephas/ngx-oidc"
+      ],
       "@kephas/reflection": [
         "dist/kephas/reflection/kephas-reflection",
         "dist/kephas/reflection"

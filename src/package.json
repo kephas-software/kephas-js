@@ -14,8 +14,9 @@
     "pack-ui": "ng build --project=@kephas/ui",
     "pack-ngx-core": "ng build --project=@kephas/ngx-core",
     "pack-ngx-ace": "ng build --project=@kephas/ngx-ace",
+    "pack-ngx-oidc": "ng build --project=@kephas/ngx-oidc",
     "pack-all-fwk": "ng build --project=@kephas/core && ng build --project=@kephas/reflection && ng build --project=@kephas/messaging && ng build --project=@kephas/commands && ng build --project=@kephas/ui",
-    "pack-all-ngx": "ng build --project=@kephas/ngx-core && ng build --project=@kephas/ngx-ace"
+    "pack-all-ngx": "ng build --project=@kephas/ngx-core && ng build --project=@kephas/ngx-ace && ng build --project=@kephas/ngx-oidc"
   },
   "private": true,
   "dependencies": {
@@ -46,6 +47,7 @@
     "karma-jasmine": "~4.0.1",
     "karma-jasmine-html-reporter": "^1.7.0",
     "ng-packagr": "^12.2.1",
+    "oidc-client": "^1.11.5",
     "rxjs": "~6.6.0",
     "ts-node": "~10.2.1",
     "tslint": "~6.1.3",

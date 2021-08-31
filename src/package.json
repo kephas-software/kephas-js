@@ -13,8 +13,9 @@
     "pack-commands": "ng build --project=@kephas/commands",
     "pack-ui": "ng build --project=@kephas/ui",
     "pack-ngx-core": "ng build --project=@kephas/ngx-core",
+    "pack-ngx-ace": "ng build --project=@kephas/ngx-ace",
     "pack-all-fwk": "ng build --project=@kephas/core && ng build --project=@kephas/reflection && ng build --project=@kephas/messaging && ng build --project=@kephas/commands && ng build --project=@kephas/ui",
-    "pack-all-ngx": "ng build --project=@kephas/ngx-core"
+    "pack-all-ngx": "ng build --project=@kephas/ngx-core && ng build --project=@kephas/ngx-ace"
   },
   "private": true,
   "dependencies": {

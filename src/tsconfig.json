@@ -25,6 +25,10 @@
         "dist/kephas/core/kephas-core",
         "dist/kephas/core"
       ],
+      "@kephas/messaging": [
+        "dist/kephas/messaging/kephas-messaging",
+        "dist/kephas/messaging"
+      ],
       "@kephas/reflection": [
         "dist/kephas/reflection/kephas-reflection",
         "dist/kephas/reflection"

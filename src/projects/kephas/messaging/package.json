@@ -1,0 +1,27 @@
+{
+  "name": "@kephas/messaging",
+  "version": "1.0.0-preview.1",
+  "description": "Provides the messaging infrastructure.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kephas-software/kephas-js/tree/master/src/projects/kephas/messaging"
+  },
+  "keywords": [
+    "kephas",
+    "messaging"
+  ],
+  "author": {
+    "name": "Kephas Software SRL"
+  },
+  "license": "MIT",
+  "peerDependencies": {
+    "@kephas/core": "^1.0.0-preview.1",
+    "rxjs": "^6.5.3"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "typescript": "4.2.4"
+  }
+}

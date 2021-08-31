@@ -64,6 +64,37 @@
           }
         }
       }
+    },
+    "@kephas/messaging": {
+      "projectType": "library",
+      "root": "projects/kephas/messaging",
+      "sourceRoot": "projects/kephas/messaging/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/kephas/messaging/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/kephas/messaging/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/kephas/messaging/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/kephas/messaging/src/test.ts",
+            "tsConfig": "projects/kephas/messaging/tsconfig.spec.json",
+            "karmaConfig": "projects/kephas/messaging/karma.conf.js"
+          }
+        }
+      }
     }
   },
   "defaultProject": "@kephas/core"

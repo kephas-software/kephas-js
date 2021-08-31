@@ -19,6 +19,7 @@
   "peerDependencies": {
     "@angular/common": "^12.2.0",
     "@angular/core": "^12.2.0",
+    "@angular/platform-browser": "^12.2.0",
     "@kephas/commands": "^1.0.0-preview.1",
     "@kephas/core": "^1.0.0-preview.1",
     "@kephas/messaging": "^1.0.0-preview.1",

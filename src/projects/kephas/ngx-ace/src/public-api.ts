@@ -1,7 +1,6 @@
 /*
- * Public API Surface of ngx-ace
+ * Public API Surface of angular-ace
  */
 
-export * from './lib/ngx-ace.service';
-export * from './lib/ngx-ace.component';
-export * from './lib/ngx-ace.module';
+ export * from './lib/components/ace.component';
+ export * from './lib/ace.module';

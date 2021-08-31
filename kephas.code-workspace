@@ -1,24 +1,9 @@
 {
 	"folders": [
-		{
-			"path": "kephas.core"
-		},
-		{
-			"path": "kephas.reflection"
-		},
-		{
-			"path": "kephas.ui"
-		},
-		{
-			"path": "kephas.messaging"
-		},
-		{
-			"path": "kephas.commands"
-		},
-		{
-			"path": "angular"
-		}
-	],
+        {
+            "path": "src"
+        }
+    ],
 	"settings": {
 		"mocha.options": {
 			"compilers": {

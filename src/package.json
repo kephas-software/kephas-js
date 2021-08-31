@@ -7,7 +7,11 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "package": "ng build --project=@kephas/core && ng build --project=@kephas/reflection && ng build --project=@kephas/messaging"
+    "pack-core": "ng build --project=@kephas/core",
+    "pack-reflection": "ng build --project=@kephas/reflection",
+    "pack-messaging": "ng build --project=@kephas/messaging",
+    "pack-commands": "ng build --project=@kephas/commands",
+    "pack-all": "ng build --project=@kephas/core && ng build --project=@kephas/reflection && ng build --project=@kephas/messaging && ng build --project=@kephas/commands"
   },
   "private": true,
   "dependencies": {

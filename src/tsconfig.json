@@ -21,6 +21,10 @@
       "dom"
     ],
     "paths": {
+      "@kephas/commands": [
+        "dist/kephas/commands/kephas-commands",
+        "dist/kephas/commands"
+      ],
       "@kephas/core": [
         "dist/kephas/core/kephas-core",
         "dist/kephas/core"

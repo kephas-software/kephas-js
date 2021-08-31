@@ -95,6 +95,37 @@
           }
         }
       }
+    },
+    "@kephas/commands": {
+      "projectType": "library",
+      "root": "projects/kephas/commands",
+      "sourceRoot": "projects/kephas/commands/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/kephas/commands/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/kephas/commands/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/kephas/commands/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/kephas/commands/src/test.ts",
+            "tsConfig": "projects/kephas/commands/tsconfig.spec.json",
+            "karmaConfig": "projects/kephas/commands/karma.conf.js"
+          }
+        }
+      }
     }
   },
   "defaultProject": "@kephas/core"

@@ -1,6 +1,6 @@
 {
   "name": "@kephas/ui",
-  "version": "1.0.0-preview.1",
+  "version": "1.0.0-preview.2",
   "description": "Provides a common infrastructure for UI components.",
   "repository": {
     "type": "git",
@@ -15,7 +15,7 @@
   },
   "license": "MIT",
   "peerDependencies": {
-    "@kephas/core": "^1.0.0-preview.1"
+    "@kephas/core": "^1.0.0-preview.2"
   },
   "dependencies": {
     "tslib": "^2.3.0"

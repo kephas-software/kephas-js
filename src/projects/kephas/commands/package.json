@@ -1,6 +1,6 @@
 {
   "name": "@kephas/commands",
-  "version": "1.0.0-preview.1",
+  "version": "1.0.0-preview.2",
   "description": "Provides the commands infrastructure.",
   "repository": {
     "type": "git",
@@ -15,7 +15,7 @@
   },
   "license": "MIT",
   "peerDependencies": {
-    "@kephas/core": "^1.0.0-preview.1",
+    "@kephas/core": "^1.0.0-preview.2",
     "rxjs": "^6.5.3 || ^7.0.0"
   },
   "dependencies": {

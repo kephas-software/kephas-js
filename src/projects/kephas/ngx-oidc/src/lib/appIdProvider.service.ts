@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { AppService, Priority, SingletonAppServiceContract } from "@kephas/core";
 
 /**
  * This service should be overwritten in the end application
@@ -7,7 +7,8 @@ import { Injectable } from "@angular/core";
  * @export
  * @class AppIdProvider
  */
-@Injectable({ providedIn: 'root' })
+@AppService({ overridePriority: Priority.Lowest })
+@SingletonAppServiceContract()
 export class AppIdProvider {
   /**
    * Gets the identity application ID.

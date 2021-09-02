@@ -1,6 +1,6 @@
 {
   "name": "@kephas/ngx-oidc",
-  "version": "1.0.0-preview.3",
+  "version": "1.0.0-preview.4",
   "description": "Provides the integration of the OIDC API with Kephas and Angular 12+.",
   "repository": {
     "type": "git",

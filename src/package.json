@@ -16,7 +16,17 @@
     "pack-ngx-ace": "ng build --project=@kephas/ngx-ace",
     "pack-ngx-oidc": "ng build --project=@kephas/ngx-oidc",
     "pack-all-fwk": "ng build --project=@kephas/core && ng build --project=@kephas/reflection && ng build --project=@kephas/messaging && ng build --project=@kephas/commands && ng build --project=@kephas/ui",
-    "pack-all-ngx": "ng build --project=@kephas/ngx-core && ng build --project=@kephas/ngx-ace && ng build --project=@kephas/ngx-oidc"
+    "pack-all-ngx": "ng build --project=@kephas/ngx-core && ng build --project=@kephas/ngx-ace && ng build --project=@kephas/ngx-oidc",
+    "publish-core": "cd ./dist/kephas/core && npm publish",
+    "publish-reflection": "cd ./dist/kephas/reflection && npm publish",
+    "publish-messaging": "cd ./dist/kephas/messaging && npm publish",
+    "publish-commands": "cd ./dist/kephas/commands && npm publish",
+    "publish-ui": "cd ./dist/kephas/ui && npm publish",
+    "publish-all-fwk": "cd ./dist/kephas/core && npm publish && cd ../reflection && npm publish && cd ../messaging && npm publish && cd ../commands && npm publish && cd ../ui && npm publish",
+    "publish-ngx-core": "cd ./dist/kephas/ngx-core && npm publish",
+    "publish-ngx-ace": "cd ./dist/kephas/ngx-ace && npm publish",
+    "publish-ngx-oidc": "cd ./dist/kephas/ngx-oidc && npm publish",
+    "publish-all-ngx": "cd ./dist/kephas/ngx-core && npm publish && cd ../ngx-ace && npm publish && cd ../ngx-oidc && npm publish"
   },
   "private": true,
   "dependencies": {

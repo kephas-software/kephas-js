@@ -15,7 +15,7 @@ import { NavigationState } from '../navigationState';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  public message = new BehaviorSubject<string | null>(null);
+  public message = new BehaviorSubject<string | Error | null>(null);
 
   constructor(
     private authenticationService: AuthenticationService,

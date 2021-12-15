@@ -17,7 +17,7 @@ export interface SuccessAuthenticationResult {
 
 export interface FailureAuthenticationResult {
   status: AuthenticationResultStatus.Fail;
-  message: string;
+  message: string | Error;
 }
 
 export interface RedirectAuthenticationResult {
@@ -139,7 +139,7 @@ export class AuthenticationService {
         this.setUser(user);
         return this.success(state);
       } catch (popupError) {
-        if (popupError.message === 'Popup window closed') {
+        if ((popupError as Error).message === 'Popup window closed') {
           // The user explicitly cancelled the login action by closing an opened popup.
           return this.error('The user closed the window.');
         } else if (!popUpDisabled) {
@@ -152,7 +152,7 @@ export class AuthenticationService {
           return this.redirect();
         } catch (redirectError) {
           console.log('Redirect authentication error: ', redirectError);
-          return this.error(redirectError);
+          return this.error(redirectError as Error);
         }
       }
     }
@@ -185,7 +185,7 @@ export class AuthenticationService {
         return this.redirect();
       } catch (redirectSignOutError) {
         console.log('Redirect signout error: ', popupSignOutError);
-        return this.error(redirectSignOutError);
+        return this.error(redirectSignOutError as Error);
       }
     }
   }
@@ -198,7 +198,7 @@ export class AuthenticationService {
       return this.success(response && response.state);
     } catch (error) {
       console.log(`There was an error trying to log out '${error}'.`);
-      return this.error(error);
+      return this.error(error as Error);
     }
   }
 
@@ -234,7 +234,7 @@ export class AuthenticationService {
     return { useReplaceToNavigate: true, data: state };
   }
 
-  private error(message: string): IAuthenticationResult {
+  private error(message: string | Error): IAuthenticationResult {
     return { status: AuthenticationResultStatus.Fail, message };
   }
 

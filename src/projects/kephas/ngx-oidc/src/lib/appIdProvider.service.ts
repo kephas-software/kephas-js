@@ -1,4 +1,5 @@
 import { AppService, Priority, SingletonAppServiceContract } from "@kephas/core";
+import { NgTarget } from "@kephas/ngx-core";
 
 /**
  * This service should be overwritten in the end application
@@ -8,7 +9,7 @@ import { AppService, Priority, SingletonAppServiceContract } from "@kephas/core"
  * @class AppIdProvider
  */
 @AppService({ overridePriority: Priority.Lowest })
-@SingletonAppServiceContract()
+@SingletonAppServiceContract({ target: NgTarget })
 export class AppIdProvider {
   /**
    * Gets the identity application ID.

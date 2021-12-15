@@ -1,6 +1,6 @@
 {
   "name": "@kephas/ngx-ace",
-  "version": "1.0.0-preview.3",
+  "version": "1.0.0-rc.3",
   "description": "Provides the integration of the Ace editor with Kephas and Angular 12+.",
   "repository": {
     "type": "git",
@@ -17,15 +17,15 @@
   },
   "license": "MIT",
   "peerDependencies": {
-    "@angular/common": "^12.2.0",
-    "@angular/core": "^12.2.0",
-    "@angular/platform-browser": "^12.2.0",
-    "@kephas/commands": "^1.0.0-preview.2",
-    "@kephas/core": "^1.0.0-preview.2",
-    "@kephas/messaging": "^1.0.0-preview.2",
-    "@kephas/ngx-core": "^1.0.0-preview.3",
-    "@kephas/reflection": "^1.0.0-preview.2",
-    "@kephas/ui": "^1.0.0-preview.2",
+    "@angular/common": "^13.0.0",
+    "@angular/core": "^13.0.0",
+    "@angular/platform-browser": "^13.0.0",
+    "@kephas/commands": "~1.0.0-rc.3",
+    "@kephas/core": "~1.0.0-rc.3",
+    "@kephas/messaging": "~1.0.0-rc.3",
+    "@kephas/ngx-core": "~1.0.0-rc.3",
+    "@kephas/reflection": "~1.0.0-rc.3",
+    "@kephas/ui": "~1.0.0-rc.3",
     "brace": "^0.11.1",
     "rxjs": "^6.5.3 || ^7.0.0",
     "zone.js": "~0.11.4"
@@ -34,16 +34,16 @@
     "tslib": "^2.3.0"
   },
   "devDependencies": {
-    "@angular/common": "^12.2.0",
-    "@angular/core": "^12.2.0",
-    "@kephas/commands": "^1.0.0-preview.2",
-    "@kephas/core": "^1.0.0-preview.2",
-    "@kephas/messaging": "^1.0.0-preview.2",
-    "@kephas/reflection": "^1.0.0-preview.2",
-    "@kephas/ui": "^1.0.0-preview.2",
+    "@angular/common": "^13.0.0",
+    "@angular/core": "^13.0.0",
+    "@kephas/commands": "~1.0.0-rc.3",
+    "@kephas/core": "~1.0.0-rc.3",
+    "@kephas/messaging": "~1.0.0-rc.3",
+    "@kephas/reflection": "~1.0.0-rc.3",
+    "@kephas/ui": "~1.0.0-rc.3",
     "brace": "^0.11.1",
     "rxjs": "^6.5.3 || ^7.0.0",
-    "typescript": "4.2.4",
+    "typescript": "4.5.4",
     "zone.js": "~0.11.4"
   }
 }

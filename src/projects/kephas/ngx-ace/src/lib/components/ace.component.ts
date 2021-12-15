@@ -234,7 +234,7 @@ export class AceComponent extends ValueEditorBase<string | {} | null>
         });
 
         for (const queryString of queryStrings) {
-            const query = top.document.querySelectorAll(queryString);
+            const query = top!.document.querySelectorAll(queryString);
             for (let i = 0; i < query.length; i++) {
                 this._observer.observe(query[i], { attributes: true, attributeFilter: ['style'] });
             }

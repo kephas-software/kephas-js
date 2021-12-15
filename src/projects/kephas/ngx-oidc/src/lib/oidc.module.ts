@@ -6,6 +6,8 @@ import { LogoutComponent } from './logout/logout.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { AuthenticationSettingsProvider } from './authentication.settings';
+import { AppIdProvider } from './appIdProvider.service';
+import { resolveAppService } from '@kephas/ngx-core';
 
 const applicationPaths = AuthenticationSettingsProvider.instance.settings.applicationPaths;
 
@@ -27,6 +29,12 @@ const applicationPaths = AuthenticationSettingsProvider.instance.settings.applic
     )
   ],
   declarations: [LoginMenuComponent, LoginComponent, LogoutComponent],
-  exports: [LoginMenuComponent, LoginComponent, LogoutComponent]
+  exports: [LoginMenuComponent, LoginComponent, LogoutComponent],
+  providers: [
+    {
+      provide: AppIdProvider,
+      useFactory: resolveAppService(AppIdProvider),
+    },
+  ]
 })
 export class OidcModule { }

@@ -22,7 +22,7 @@ export interface ResponseMessage extends Expando {
      * @type {LogLevel}
      * @memberof ResponseMessage
      */
-    severity: LogLevel;
+    severity?: LogLevel;
 
     /**
      * The message.

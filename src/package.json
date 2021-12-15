@@ -27,8 +27,7 @@
     "publish-ngx-core": "cd ./dist/kephas/ngx-core && npm publish",
     "publish-ngx-ace": "cd ./dist/kephas/ngx-ace && npm publish",
     "publish-ngx-oidc": "cd ./dist/kephas/ngx-oidc && npm publish",
-    "publish-all-ngx": "cd ./dist/kephas/ngx-core && npm publish && cd ../ngx-ace && npm publish && cd ../ngx-oidc && npm publish"
-    "pack-all-ngx": "ng build --project=@kephas/ngx-core && ng build --project=@kephas/ngx-ace && ng build --project=@kephas/ngx-oidc",
+    "publish-all-ngx": "cd ./dist/kephas/ngx-core && npm publish && cd ../ngx-ace && npm publish && cd ../ngx-oidc && npm publish",
     "postinstall": "ngcc --properties es2017 browser module main --first-only --create-ivy-entry-points"
   },
   "private": true,

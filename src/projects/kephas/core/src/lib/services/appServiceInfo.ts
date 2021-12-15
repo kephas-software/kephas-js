@@ -1,3 +1,4 @@
+import { Expando } from "../expando";
 import { AbstractType } from "../type";
 import { AppServiceMetadata } from "./appServiceMetadata";
 import { ServiceError } from "./serviceError";
@@ -31,7 +32,7 @@ export enum AppServiceLifetime {
  * @export
  * @class AppServiceInfo
  */
-export class AppServiceInfo {
+export class AppServiceInfo implements Expando {
     /**
      * Gets a value indicating whether multiple services for this contract are allowed.
      *

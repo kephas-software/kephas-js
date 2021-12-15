@@ -13,7 +13,7 @@ export interface ErrorInfo extends Expando {
      * @type {LogLevel}
      * @memberof ErrorInfo
      */
-    severity: LogLevel;
+    severity?: LogLevel;
 
     /**
      * The error message.

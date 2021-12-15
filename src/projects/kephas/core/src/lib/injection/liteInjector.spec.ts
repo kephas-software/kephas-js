@@ -15,7 +15,7 @@ describe('LiteInjector.get', () => {
     */
     it('should get its registry as the AppServiceInfoRegistry (default)', () => {
         const registry = AppServiceInfoRegistry.Instance;
-        const injector = LiteInjector.Instance;
+        const injector = LiteInjector.instance;
 
         const actualRegistry = injector.resolve(AppServiceInfoRegistry);
         const sameRegistry = AppServiceInfoRegistry.Instance;

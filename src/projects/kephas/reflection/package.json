@@ -1,6 +1,6 @@
 {
   "name": "@kephas/reflection",
-  "version": "1.0.0-rc.4",
+  "version": "1.0.0-rc.6",
   "description": "Provides reflection capabilities, like TypeInfoRegistry, ITypeInfo, and IProperty.",
   "repository": {
     "type": "git",
@@ -15,7 +15,7 @@
   },
   "license": "MIT",
   "peerDependencies": {
-    "@kephas/core": "~1.0.0-rc.4"
+    "@kephas/core": "~1.0.0-rc.6"
   },
   "dependencies": {
     "tslib": "^2.3.0"

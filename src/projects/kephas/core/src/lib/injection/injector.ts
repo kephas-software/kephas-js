@@ -21,11 +21,11 @@ export abstract class Injector {
    * @type {Injector}
    * @memberof Injector
    */
-  public static get Instance(): Injector {
+  public static get instance(): Injector {
     return Injector._instance;
   }
 
-  public static set Instance(value: Injector) {
+  public static set instance(value: Injector) {
     if (value === Injector._instance) {
       return;
     }
@@ -42,18 +42,20 @@ export abstract class Injector {
      *
      * @template T
      * @param {Type<T>} type The service contract type.
+     * @param notFoundResolver A resolver for the case when a type cannot be resolved.
      * @returns {T} The requested service.
      * @memberof Injector
      */
-  abstract resolve<T>(type: Type<T> | AbstractType): T;
+  abstract resolve<T>(type: Type<T> | AbstractType, notFoundResolver?: (type: Type<T> | AbstractType) => any): T;
 
   /**
    * Gets an array of service instances.
    *
    * @template T
    * @param {Type<T>} type The service contract type.
+   * @param notFoundResolver A resolver for the case when a type cannot be resolved.
    * @returns {T[]} The array of the requested service.
    * @memberof Injector
    */
-  abstract resolveMany<T>(type: Type<T> | AbstractType): T[];
+  abstract resolveMany<T>(type: Type<T> | AbstractType, notFoundResolver?: (type: Type<T> | AbstractType) => any): T[];
 }

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Injector, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginMenuComponent } from './login-menu/login-menu.component';
 import { LoginComponent } from './login/login.component';
@@ -34,6 +34,7 @@ const applicationPaths = AuthenticationSettingsProvider.instance.settings.applic
     {
       provide: AppIdProvider,
       useFactory: resolveAppService(AppIdProvider),
+      deps: [Injector]
     },
   ]
 })

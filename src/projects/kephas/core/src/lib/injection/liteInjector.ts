@@ -13,7 +13,7 @@ import { InjectionError } from './injectionError';
  * @export
  * @class LiteInjector
  */
-@AppService({ overridePriority: Priority.Low, provider: _ => Injector.Instance })
+@AppService({ overridePriority: Priority.Low, provider: _ => Injector.instance })
 export class LiteInjector extends Injector {
   private _registry: AppServiceInfoRegistry;
   private _singletons = new WeakMap<AbstractType, any>();
@@ -47,22 +47,27 @@ export class LiteInjector extends Injector {
    *
    * @template T
    * @param {Type<T>} type The service contract type.
+   * @param notFoundResolver A resolver for the case when a type cannot be resolved.
    * @returns {T} The requested service.
    * @memberof LiteInjector
    */
-  public resolve<T>(type: Type<T> | AbstractType): T {
-    const serviceInfo = this._getServiceContract(type);
+  public resolve<T>(type: Type<T> | AbstractType, notFoundResolver?: (type: Type<T> | AbstractType) => any): T {
+    const serviceInfo = notFoundResolver ? this._tryGetServiceContract(type) : this._getServiceContract(type);
+    if (!serviceInfo) {
+      return notFoundResolver!(type);
+    }
+
     if (serviceInfo.lifetime === AppServiceLifetime.Singleton) {
       let service = this._singletons.get(type);
       if (!service) {
         const serviceMetadata = this._getSingleServiceMetadata(serviceInfo);
-        service = this._createInstance(serviceMetadata);
+        service = this._createInstance(serviceMetadata, notFoundResolver);
         this._singletons.set(type, service);
       }
       return service;
     }
     else {
-      return this._createInstance(this._getSingleServiceMetadata(serviceInfo));
+      return this._createInstance(this._getSingleServiceMetadata(serviceInfo), notFoundResolver);
     }
   }
 
@@ -71,22 +76,32 @@ export class LiteInjector extends Injector {
    *
    * @template T
    * @param {Type<T>} type The service contract type.
+   * @param notFoundResolver A resolver for the case when a type cannot be resolved.
    * @returns {T[]} The array of the requested service.
    * @memberof LiteInjector
    */
-  public resolveMany<T>(type: Type<T> | AbstractType): T[] {
-    const serviceInfo = this._getServiceContract(type);
+  public resolveMany<T>(type: Type<T> | AbstractType, notFoundResolver?: (type: Type<T> | AbstractType) => any): T[] {
+    const serviceInfo = notFoundResolver ? this._tryGetServiceContract(type) : this._getServiceContract(type);
+    if (!serviceInfo) {
+      // the resolver should know that it should return an array of items.
+      return notFoundResolver!(type);
+    }
+
     if (serviceInfo.lifetime === AppServiceLifetime.Singleton) {
       let services = this._singletons.get(type);
       if (services === undefined || services === null) {
-        services = [...serviceInfo.services].map(s => this._createInstance(s));
+        services = [...serviceInfo.services].map(s => this._createInstance(s, notFoundResolver));
         this._singletons.set(type, services);
       }
       return services;
     }
     else {
-      return [...serviceInfo.services].map(s => this._createInstance(s));
+      return [...serviceInfo.services].map(s => this._createInstance(s, notFoundResolver));
     }
+  }
+
+  private _tryGetServiceContract(type: AbstractType): AppServiceInfo | null {
+    return this._registry.getServiceContract(type);
   }
 
   private _getServiceContract(type: AbstractType): AppServiceInfo {
@@ -111,7 +126,7 @@ export class LiteInjector extends Injector {
     return services[0];
   }
 
-  private _createInstance(serviceMetadata: AppServiceMetadata<any>): any {
+  private _createInstance<T>(serviceMetadata: AppServiceMetadata<any>, notFoundResolver?: (type: Type<T> | AbstractType) => any): any {
     if (serviceMetadata.serviceInstance) {
       return serviceMetadata.serviceInstance;
     }
@@ -123,7 +138,7 @@ export class LiteInjector extends Injector {
     const serviceType = serviceMetadata.serviceType!;
     const paramTypes: Type<any>[] = Reflect.getOwnMetadata('design:paramtypes', serviceType);
     if (paramTypes) {
-      const ctorArgs = paramTypes.map(t => this.resolve(t));
+      const ctorArgs = paramTypes.map(t => this.resolve(t, notFoundResolver));
       return new serviceType(...ctorArgs);
     }
 
@@ -132,6 +147,6 @@ export class LiteInjector extends Injector {
 }
 
 // make sure the injector is set.
-if (!Injector.Instance) {
-  Injector.Instance = new LiteInjector();
+if (!Injector.instance) {
+  Injector.instance = new LiteInjector();
 }

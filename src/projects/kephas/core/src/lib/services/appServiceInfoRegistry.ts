@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import { Requires } from '../diagnostics/contracts/requires';
 import { AbstractType, Type } from '../type';
 import { AppServiceInfo, AppServiceLifetime } from './appServiceInfo';
-import { AppServiceMetadata, Priority } from './composition/appServiceMetadata';
+import { AppServiceMetadata, Priority } from './appServiceMetadata';
 import { ServiceError } from './serviceError';
 
 interface IAppServiceInfo {

@@ -1,6 +1,6 @@
-import { CompositionContext } from "../../composition/compositionContext";
-import { Type } from "../../type";
-import { AppServiceInfo } from "../appServiceInfo";
+import { Injector } from "../injection/injector";
+import { Type } from "../type";
+import { AppServiceInfo } from "./appServiceInfo";
 
 /**
  * Enumerates the priority values.
@@ -111,10 +111,10 @@ export class AppServiceMetadata<T> {
     /**
      * Gets or sets the service factory.
      *
-     * @type {(c: CompositionContext) => T}
+     * @type {(c: Injector) => T}
      * @memberof AppServiceMetadata
      */
-    public readonly serviceFactory?: (c: CompositionContext) => T;
+    public readonly serviceFactory?: (c: Injector) => T;
 
     private _serviceContract?: AppServiceInfo;
     private _serviceType?: Type<T>;
@@ -146,7 +146,7 @@ export class AppServiceMetadata<T> {
             processingPriority?: number | Priority;
             serviceName?: string;
             serviceType?: Type<T>;
-            serviceFactory?: (c: CompositionContext) => T;
+            serviceFactory?: (c: Injector) => T;
             serviceInstance?: T;
             [key: string]: any;
         } = {}) {

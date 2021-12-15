@@ -1,7 +1,7 @@
-import { CompositionContext } from "../composition/compositionContext";
+import { Injector } from "../injection/injector";
 import { Type } from "../type";
 import { AppServiceInfoRegistry } from "./appServiceInfoRegistry";
-import { AppServiceMetadata, Priority } from "./composition/appServiceMetadata";
+import { AppServiceMetadata, Priority } from "./appServiceMetadata";
 
 /**
  * Marks a class as being an application service. Its closest base registered as service contract is
@@ -24,7 +24,7 @@ export function AppService(
         overridePriority?: number | Priority;
         processingPriority?: number | Priority;
         serviceName?: string;
-        provider?: ((c: CompositionContext) => any) | {};
+        provider?: ((c: Injector) => any) | {};
         registry?: AppServiceInfoRegistry;
     } = {}) {
     return (type: Type<any>) => {
@@ -39,7 +39,7 @@ export function AppService(
                                     ? provider
                                     : undefined,
                 serviceFactory: typeof provider === 'function'
-                                    ? provider as ((c: CompositionContext) => any)
+                                    ? provider as ((c: Injector) => any)
                                     : undefined,
             }));
     };

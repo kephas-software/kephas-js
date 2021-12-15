@@ -1,12 +1,12 @@
 import { expect } from 'chai';
 import 'mocha';
 
-import { CommandProcessorClient } from '.';
-import { LiteCompositionContext } from '@kephas/core';
+import { LiteInjector } from '@kephas/core';
+import { CommandProcessorClient } from './commandProcessorClient';
 
 describe('CommandProcessorClient.composition', () => {
     it('should be available', () => {
-        const container = LiteCompositionContext.Instance;
+        const container = LiteInjector.Instance;
         const processor = container.get(CommandProcessorClient);
         expect(processor).to.be.instanceOf(CommandProcessorClient);
     });

@@ -4,7 +4,7 @@ import { Disposable } from "../disposable";
 import { Logger } from "../logging/logger";
 import { AppService } from "../services/appService";
 import { SingletonAppServiceContract } from "../services/appServiceContract";
-import { Priority } from "../services/composition/appServiceMetadata";
+import { Priority } from "../services/appServiceMetadata";
 import { Context } from "../services/context";
 import { AbstractType, Type } from "../type";
 
@@ -73,7 +73,7 @@ export class EventHub {
                 }
             }
             catch (err) {
-                this.logger.error(err);
+                this.logger.error(err as Error);
             }
         }
     }

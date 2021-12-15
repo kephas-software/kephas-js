@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import 'mocha';
 
 import { TypeInfoRegistry, TypeName } from '.';
-import { LiteCompositionContext } from '@kephas/core';
+import { LiteInjector } from '@kephas/core';
 
 describe('TypeInfoRegistry.constructor', () => {
     it('should register the primary types', () => {
@@ -15,7 +15,7 @@ describe('TypeInfoRegistry.constructor', () => {
 
 describe('TypeInfoRegistry.composition', () => {
     it('should register the static Instance as type info registry', () => {
-        const container = new LiteCompositionContext();
+        const container = new LiteInjector();
         expect(container.get(TypeInfoRegistry)).to.equal(TypeInfoRegistry.Instance);
     });
 });

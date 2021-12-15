@@ -1,5 +1,5 @@
 import { AbstractType } from "../type";
-import { AppServiceMetadata } from "./composition/appServiceMetadata";
+import { AppServiceMetadata } from "./appServiceMetadata";
 import { ServiceError } from "./serviceError";
 
 /**

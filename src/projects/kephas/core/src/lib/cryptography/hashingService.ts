@@ -1,7 +1,7 @@
 import { sha256 } from 'js-sha256';
 import { fromByteArray } from 'base64-js';
 import { AppService } from '../services/appService';
-import { Priority } from '../services/composition/appServiceMetadata';
+import { Priority } from '../services/appServiceMetadata';
 import { SingletonAppServiceContract } from '../services/appServiceContract';
 import { Context } from '../services/context';
 

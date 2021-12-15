@@ -1,7 +1,7 @@
 import { Expando } from "../expando";
 import { AppService } from "../services/appService";
 import { SingletonAppServiceContract } from "../services/appServiceContract";
-import { Priority } from "../services/composition/appServiceMetadata";
+import { Priority } from "../services/appServiceMetadata";
 
 /**
  * Enumerates the logging levels.

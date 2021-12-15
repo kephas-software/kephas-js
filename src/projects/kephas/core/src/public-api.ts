@@ -15,7 +15,7 @@ export * from './lib/commands/args';
 
 export * from './lib/services/context';
 export * from './lib/services/serviceError';
-export * from './lib/services/composition/appServiceMetadata';
+export * from './lib/services/appServiceMetadata';
 export * from './lib/services/appServiceInfo';
 export * from './lib/services/appServiceInfoRegistry';
 export * from './lib/services/appService';
@@ -25,9 +25,9 @@ export * from './lib/services/serviceHelper';
 
 export * from './lib/logging/logger';
 
-export * from './lib/composition/compositionContext';
-export * from './lib/composition/compositionError';
-export * from './lib/composition/liteCompositionContext';
+export * from './lib/injection/injector';
+export * from './lib/injection/injectionError';
+export * from './lib/injection/liteInjector';
 
 export * from './lib/serialization/serializable';
 export * from './lib/deferrable';

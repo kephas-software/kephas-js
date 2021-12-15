@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import 'mocha';
 
-import { AppServiceInfoRegistry, Logger, LiteCompositionContext } from '@kephas/core';
+import { AppServiceInfoRegistry, Logger, LiteInjector } from '@kephas/core';
 import { NotificationService } from '.';
 
 describe('NotificationService.composition', () => {
@@ -11,7 +11,7 @@ describe('NotificationService.composition', () => {
     });
 
     it('should be properly initialized', () => {
-        let injector = new LiteCompositionContext(AppServiceInfoRegistry.Instance);
+        let injector = new LiteInjector(AppServiceInfoRegistry.Instance);
         let logger = injector.get(Logger);
         let notification = injector.get(NotificationService);
 

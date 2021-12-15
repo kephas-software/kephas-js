@@ -1,7 +1,7 @@
 {
   "name": "@kephas/ngx-core",
-  "version": "1.0.0-preview.3",
-  "description": "Provides integration capabilities with Angular 12+.",
+  "version": "1.0.0-rc.3",
+  "description": "Provides integration capabilities with Angular 13+.",
   "repository": {
     "type": "git",
     "url": "https://github.com/kephas-software/kephas-js/tree/master/src/projects/kephas/ngx-core"
@@ -16,13 +16,13 @@
   },
   "license": "MIT",
   "peerDependencies": {
-    "@angular/common": "^12.2.0",
-    "@angular/core": "^12.2.0",
-    "@kephas/commands": "^1.0.0-preview.2",
-    "@kephas/core": "^1.0.0-preview.2",
-    "@kephas/messaging": "^1.0.0-preview.2",
-    "@kephas/reflection": "^1.0.0-preview.2",
-    "@kephas/ui": "^1.0.0-preview.2",
+    "@angular/common": "^13.0.0",
+    "@angular/core": "^13.0.0",
+    "@kephas/commands": "~1.0.0-preview.2",
+    "@kephas/core": "~1.0.0-rc.3",
+    "@kephas/messaging": "~1.0.0-rc.3",
+    "@kephas/reflection": "~1.0.0-rc.3",
+    "@kephas/ui": "~1.0.0-rc.3",
     "rxjs": "^6.5.3 || ^7.0.0",
     "zone.js": "~0.11.4"
   },
@@ -30,15 +30,15 @@
     "tslib": "^2.3.0"
   },
   "devDependencies": {
-    "@angular/common": "^12.2.0",
-    "@angular/core": "^12.2.0",
-    "@kephas/commands": "^1.0.0-preview.2",
-    "@kephas/core": "^1.0.0-preview.2",
-    "@kephas/messaging": "^1.0.0-preview.2",
-    "@kephas/reflection": "^1.0.0-preview.2",
-    "@kephas/ui": "^1.0.0-preview.2",
+    "@angular/common": "^13.0.0",
+    "@angular/core": "^13.0.0",
+    "@kephas/commands": "~1.0.0-rc.3",
+    "@kephas/core": "~1.0.0-rc.3",
+    "@kephas/messaging": "~1.0.0-rc.3",
+    "@kephas/reflection": "~1.0.0-rc.3",
+    "@kephas/ui": "~1.0.0-rc.3",
     "rxjs": "^6.5.3 || ^7.0.0",
-    "typescript": "4.2.4",
+    "typescript": "4.5.4",
     "zone.js": "~0.11.4"
   }
 }

@@ -2,6 +2,7 @@ import { HttpInterceptor as AngularHttpInterceptor, HttpRequest, HttpHandler, Ht
 import { SingletonAppServiceContract } from '@kephas/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { NgTarget } from '../../angularTarget';
 
 /**
  * Base class for HTTP interceptors.
@@ -9,7 +10,7 @@ import { Observable } from 'rxjs';
  * @export
  * @extends {AngularHttpInterceptor}
  */
-@SingletonAppServiceContract({ allowMultiple: true, contractToken: HTTP_INTERCEPTORS })
+@SingletonAppServiceContract({ allowMultiple: true, contractToken: HTTP_INTERCEPTORS, target: NgTarget })
 export abstract class HttpInterceptor implements AngularHttpInterceptor {
     /**
      * Identifies and handles a given HTTP request.

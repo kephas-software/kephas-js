@@ -116,7 +116,7 @@ export abstract class ValueEditorBase<TValue>
 
             this.onValueChanged(oldValue, value);
         } catch (error) {
-            this.logger.error(error, 'Error while updating the editor.');
+            this.logger.error(error as Error, 'Error while updating the editor.');
             throw error;
         } finally {
             this.valueChangeFromValue = prevValueChangeFromValue;

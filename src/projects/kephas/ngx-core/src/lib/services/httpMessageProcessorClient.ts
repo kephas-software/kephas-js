@@ -152,6 +152,10 @@ export class HttpMessageProcessorClient extends MessageProcessorClient {
             response.severity = (LogLevel as Expando)[response.severity as string];
         }
 
+        if (!response.severity) {
+            response.severity = LogLevel.Info;
+        }
+
         if (response.severity <= LogLevel.Error) {
             throw new MessagingError(response.message!, response);
         }

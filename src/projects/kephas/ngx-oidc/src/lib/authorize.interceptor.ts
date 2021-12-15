@@ -2,10 +2,10 @@ import { HttpHandler, HttpEvent, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthenticationService } from './authentication.service';
 import { mergeMap } from 'rxjs/operators';
-import { AppService } from '@kephas/core';
 import { HttpInterceptor } from '@kephas/ngx-core';
+import { Injectable } from '@angular/core';
 
-@AppService()
+@Injectable()
 export class AuthorizeInterceptor extends HttpInterceptor {
   constructor(private authorize: AuthenticationService) {
     super();

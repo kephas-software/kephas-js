@@ -1,6 +1,6 @@
 {
   "name": "@kephas/ngx-core",
-  "version": "1.0.0-preview.2",
+  "version": "1.0.0-preview.3",
   "description": "Provides integration capabilities with Angular 12+.",
   "repository": {
     "type": "git",

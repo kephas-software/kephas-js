@@ -1,3 +1,4 @@
+import { Injectable } from '@angular/core';
 import { AppService, SingletonAppServiceContract } from '@kephas/core';
 import { Profile, User, UserManager, } from 'oidc-client';
 import { BehaviorSubject, concat, from, Observable } from 'rxjs';
@@ -33,8 +34,7 @@ export interface IUser extends Profile {
   name?: string;
 }
 
-@AppService()
-@SingletonAppServiceContract()
+@Injectable({ providedIn: 'root' })
 export class AuthenticationService {
   private _lastActivityTime?: Date;
 

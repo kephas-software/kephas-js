@@ -1,4 +1,5 @@
-import { AppService, Priority, SingletonAppServiceContract } from '@kephas/core';
+import { Injectable } from '@angular/core';
+import { AppIdProvider } from './appIdProvider.service';
 
 export const ReturnUrlType = 'returnUrl';
 
@@ -63,22 +64,19 @@ export interface AuthenticationSettings {
   popUpDisabled: boolean;
 }
 
-@AppService({ overridePriority: Priority.Lowest })
-@SingletonAppServiceContract()
+@Injectable({ providedIn: 'root' })
 export class AuthenticationSettingsProvider {
+  public static readonly instance = new AuthenticationSettingsProvider(new AppIdProvider());
 
   readonly settings: AuthenticationSettings;
 
   /**
-   * Initializes a new instance of the AuthorizationSettingsProvider class.
-   */
-  /**
    * Creates an instance of AuthenticationSettingsProvider.
-   * @param {string} [identityAppId] The identity application's ID.
+   * @param {AppIdProvider} appIdProvider The application ID provider.
    * @memberof AuthenticationSettingsProvider
    */
-  constructor(identityAppId?: string) {
-    this.settings = this.getSettings(identityAppId ?? '[TODO-APP-ID]')
+  constructor(appIdProvider: AppIdProvider) {
+    this.settings = this.getSettings(appIdProvider.getIdentityAppId())
   }
 
   protected getSettings(identityAppId: string): AuthenticationSettings {

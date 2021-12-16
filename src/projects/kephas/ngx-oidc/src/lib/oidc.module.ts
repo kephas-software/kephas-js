@@ -46,7 +46,6 @@ const applicationPaths = AuthenticationSettingsProvider.instance.settings.applic
       provide: HTTP_INTERCEPTORS,
       multi: true,
       useClass: AuthorizeInterceptor,
-      deps: [AuthenticationService]
      }
   ]
 })

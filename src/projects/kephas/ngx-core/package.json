@@ -1,6 +1,6 @@
 {
   "name": "@kephas/ngx-core",
-  "version": "1.0.0-rc.8",
+  "version": "1.0.0-rc.9",
   "description": "Provides integration capabilities with Angular 13+.",
   "repository": {
     "type": "git",
@@ -18,11 +18,11 @@
   "peerDependencies": {
     "@angular/common": "^13.0.0",
     "@angular/core": "^13.0.0",
-    "@kephas/commands": "~1.0.0-preview.2",
-    "@kephas/core": "~1.0.0-rc.8",
-    "@kephas/messaging": "~1.0.0-rc.8",
-    "@kephas/reflection": "~1.0.0-rc.8",
-    "@kephas/ui": "~1.0.0-rc.8",
+    "@kephas/commands": "~1.0.0",
+    "@kephas/core": "~1.0.0",
+    "@kephas/messaging": "~1.0.0",
+    "@kephas/reflection": "~1.0.0",
+    "@kephas/ui": "~1.0.0",
     "rxjs": "^6.5.3 || ^7.0.0",
     "zone.js": "~0.11.4"
   },
@@ -32,11 +32,11 @@
   "devDependencies": {
     "@angular/common": "^13.0.0",
     "@angular/core": "^13.0.0",
-    "@kephas/commands": "~1.0.0-rc.8",
-    "@kephas/core": "~1.0.0-rc.8",
-    "@kephas/messaging": "~1.0.0-rc.8",
-    "@kephas/reflection": "~1.0.0-rc.8",
-    "@kephas/ui": "~1.0.0-rc.8",
+    "@kephas/commands": "~1.0.0",
+    "@kephas/core": "~1.0.0",
+    "@kephas/messaging": "~1.0.0",
+    "@kephas/reflection": "~1.0.0",
+    "@kephas/ui": "~1.0.0",
     "rxjs": "^6.5.3 || ^7.0.0",
     "typescript": "4.5.4",
     "zone.js": "~0.11.4"

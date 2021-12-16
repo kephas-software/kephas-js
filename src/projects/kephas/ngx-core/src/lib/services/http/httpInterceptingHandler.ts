@@ -6,7 +6,7 @@ import { Injector, Injectable } from '@angular/core';
 * `HttpHandler` which applies an `HttpInterceptor` to an `HttpRequest`.
 *
 */
-export class HttpInterceptorHandler implements HttpHandler {
+export class HttpInterceptorForwarder implements HttpHandler {
   constructor(private next: HttpHandler, private interceptor: HttpInterceptor) {
   }
 
@@ -25,7 +25,7 @@ export class HttpInterceptorHandler implements HttpHandler {
 * @see `HttpInterceptor`
 */
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class HttpInterceptingHandler implements HttpHandler {
   private chain: HttpHandler | null = null;
 
@@ -42,7 +42,7 @@ export class HttpInterceptingHandler implements HttpHandler {
     if (this.chain === null) {
       const interceptors = this.injector.get(HTTP_INTERCEPTORS, []);
       this.chain = interceptors.reduceRight(
-        (next, interceptor) => new HttpInterceptorHandler(next, interceptor), this.backend);
+        (next, interceptor) => new HttpInterceptorForwarder(next, interceptor), this.backend);
     }
     return this.chain.handle(req);
   }

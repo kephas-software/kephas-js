@@ -64,7 +64,7 @@ export interface AuthenticationSettings {
   popUpDisabled: boolean;
 }
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class AuthenticationSettingsProvider {
   public static readonly instance = new AuthenticationSettingsProvider(new AppIdProvider());
 

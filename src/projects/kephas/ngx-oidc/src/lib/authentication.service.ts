@@ -34,7 +34,7 @@ export interface IUser extends Profile {
   name?: string;
 }
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class AuthenticationService {
   private _lastActivityTime?: Date;
 

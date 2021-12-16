@@ -1,6 +1,6 @@
 {
   "name": "@kephas/core",
-  "version": "1.0.0-rc.6",
+  "version": "1.0.0-rc.8",
   "description": "Provides a common infrastructure for all the other Kephas Framework components: ambient services, dynamic reflection, composition, application management, and others.",
   "repository": {
     "type": "git",

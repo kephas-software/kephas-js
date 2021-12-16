@@ -52,6 +52,26 @@ export class RootProvidersRegistry {
     return providers;
   }
 
+  /**
+   * Loads asynchronously the modules to make sure that the
+   * overridden services area also loaded into the service registry.
+   * First of all, loads the Kephas modules, afterwards
+   * loads the application modules invoking the provided delegate.
+   */
+  public static async loadModules(loadAppModules?: () => Promise<void>): Promise<void> {
+    await import('@kephas/core');
+    await import('@kephas/reflection');
+    await import('@kephas/commands');
+    await import('@kephas/messaging');
+    await import('@kephas/ui');
+
+    await import('@angular/common/http');
+
+    if (loadAppModules) {
+      await loadAppModules();
+    }
+  }
+
   private static getDependencies(serviceType: Type<any>): any[] {
     let deps = Reflect.getMetadata('design:paramtypes', serviceType);
     if (!deps && serviceType.ctorParameters) {

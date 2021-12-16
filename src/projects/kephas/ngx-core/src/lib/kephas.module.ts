@@ -6,6 +6,7 @@ import { TypeInfoRegistry } from "@kephas/reflection";
 import { NotificationService } from "@kephas/ui";
 import { AppSettings } from "./services/appSettings";
 import { Configuration } from "./services/configuration";
+import { HttpInterceptingHandler } from "./services/http/httpInterceptingHandler";
 
 export function resolveAppService<T>(type: AbstractType | Type<T>) {
   Injectable()(type);
@@ -75,6 +76,7 @@ export function resolveAppService<T>(type: AbstractType | Type<T>) {
       useFactory: resolveAppService(Configuration),
       deps: [Injector]
     },
+    HttpInterceptingHandler,
   ]
 })
 export class KephasModule {

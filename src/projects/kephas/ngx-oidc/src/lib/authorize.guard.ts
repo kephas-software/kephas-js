@@ -5,9 +5,7 @@ import { tap } from 'rxjs/operators';
 import { AuthenticationService } from './authentication.service';
 import { AuthenticationSettingsProvider, QueryParameterNames } from './authentication.settings';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class AuthorizeGuard implements CanActivate {
   constructor(
     private authService: AuthenticationService,

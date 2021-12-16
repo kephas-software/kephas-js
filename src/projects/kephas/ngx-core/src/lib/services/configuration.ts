@@ -1,5 +1,5 @@
 import { Type } from '@angular/core';
-import { HttpClient, HttpResponse as HttpResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import {
     SingletonAppServiceContract, AppService, Priority,
     AsyncInitializable,
@@ -57,10 +57,10 @@ export class Configuration implements AsyncInitializable {
         let sectionName = settingsType.name;
         const ending = 'Settings';
         if (sectionName.endsWith(ending)) {
-            sectionName = sectionName.substr(0, sectionName.length - ending.length);
+            sectionName = sectionName.substring(0, sectionName.length - ending.length);
         }
 
-        sectionName = sectionName[0].toLowerCase() + sectionName.substr(1, sectionName.length - 1);
+        sectionName = sectionName[0].toLowerCase() + sectionName.substring(1);
 
         return (Configuration.configurationFile as Expando)[sectionName];
     }

@@ -3,11 +3,14 @@ import { CommonModule } from '@angular/common';
 import { LoginMenuComponent } from './login-menu/login-menu.component';
 import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { AuthenticationSettingsProvider } from './authentication.settings';
 import { AppIdProvider } from './appIdProvider.service';
 import { resolveAppService } from '@kephas/ngx-core';
+import { AuthenticationService } from './authentication.service';
+import { AuthorizeGuard } from './authorize.guard';
+import { AuthorizeInterceptor } from './authorize.interceptor';
 
 const applicationPaths = AuthenticationSettingsProvider.instance.settings.applicationPaths;
 
@@ -36,6 +39,15 @@ const applicationPaths = AuthenticationSettingsProvider.instance.settings.applic
       useFactory: resolveAppService(AppIdProvider),
       deps: [Injector]
     },
+    AuthenticationSettingsProvider,
+    AuthenticationService,
+    AuthorizeGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      multi: true,
+      useClass: AuthorizeInterceptor,
+      deps: [AuthenticationService]
+     }
   ]
 })
 export class OidcModule { }

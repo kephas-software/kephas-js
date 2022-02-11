@@ -85,14 +85,26 @@ export class HttpCommandProcessorClient extends CommandProcessorClient {
             baseUrl = baseUrl + '/';
         }
 
-        let url = `${baseUrl}${this.baseRoute}${command}/`;
-        if (args) {
-            url = url + '?' + Object.keys(args)
-                .map(key => `${key}=${(args as Expando)[key]}`)
-                .join('&');
-        }
+        return `${baseUrl}${this.baseRoute}${command}`;
+    }
 
-        return url;
+    /**
+     * Gets the command GET parameters.
+     *
+     * @protected
+     * @param {{}} [args]
+     * @param {CommandClientContext} [options]
+     * @return {*}  {HttpParams}
+     * @memberof HttpCommandProcessorClient
+     */
+    protected getHttpGetParams(args?: {}, options?: CommandClientContext): HttpParams {
+      let params = new HttpParams();
+      if (args) {
+        Object.keys(args)
+            .forEach(key => params.set(key, (args as Expando)[key]));
+      }
+
+      return params;
     }
 
     /**
@@ -128,7 +140,9 @@ export class HttpCommandProcessorClient extends CommandProcessorClient {
         responseType?: 'json';
         withCredentials?: boolean;
     } | undefined {
-        return undefined;
+        return {
+          params: this.getHttpGetParams(args, options),
+        };
     }
 
     private _processResponse<T extends CommandResponse>(response: T, options?: CommandClientContext): T {

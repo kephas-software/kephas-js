@@ -1,6 +1,6 @@
 {
   "name": "@kephas/ngx-core",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Provides integration capabilities with Angular 13+.",
   "repository": {
     "type": "git",

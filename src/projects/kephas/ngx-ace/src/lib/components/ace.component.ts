@@ -11,12 +11,18 @@ import { Editor, edit } from 'brace';
 import 'brace/theme/monokai';
 
 import 'brace/mode/abap';
+import 'brace/mode/csharp';
 import 'brace/mode/lua';
 import 'brace/mode/sh';
 import 'brace/mode/sql';
 import 'brace/mode/powershell';
 import 'brace/mode/text';
 import 'brace/mode/json';
+import 'brace/mode/python';
+import 'brace/mode/markdown';
+import 'brace/mode/razor';
+import 'brace/mode/xml';
+import 'brace/mode/yaml';
 
 /**
  * Value editor based on Ace.

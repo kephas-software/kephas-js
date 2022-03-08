@@ -1,6 +1,6 @@
 {
   "name": "@kephas/ngx-ace",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Provides the integration of the Ace editor with Kephas and Angular 12+.",
   "repository": {
     "type": "git",

@@ -1,4 +1,4 @@
-import { Observable, BehaviorSubject, of } from 'rxjs';
+import { Observable, BehaviorSubject, of, Subscription } from 'rxjs';
 import { catchError, finalize, map, tap } from 'rxjs/operators';
 import { MessageProcessorClient, ResponseMessage } from '@kephas/messaging';
 import { Expando, Type } from '@kephas/core';
@@ -19,8 +19,8 @@ export interface MessageState<TMessage> extends Expando {
  * @template TValue
  */
 export abstract class MessageQuery<TMessage, TResponseMessage extends ResponseMessage, TValue> extends BehaviorSubject<TValue> {
-  static #execId = 0;
-  static #pendingExecs: Expando = {};
+  static #subId = 0;
+  static #pendingSubs: Expando = {};
 
   #loading = false;
   #lastError: any;
@@ -64,11 +64,14 @@ export abstract class MessageQuery<TMessage, TResponseMessage extends ResponseMe
   }
 
   public execute(state?: MessageState<TMessage>): void {
-    const execId = (MessageQuery.#execId++).toString();
-    MessageQuery.#pendingExecs[execId] = this.fetch(state?.message, state)
-      .pipe(
-        tap(x => super.next(x)),
-        finalize(() => delete MessageQuery.#pendingExecs[execId]));
+    const subId = (MessageQuery.#subId++).toString();
+    MessageQuery.#pendingSubs[subId] = this.fetch(state?.message, state)
+      .subscribe(x => {
+        super.next(x);
+        const sub = MessageQuery.#pendingSubs[subId] as Subscription;
+        sub.unsubscribe();
+        delete MessageQuery.#pendingSubs[subId];
+      });
   }
 
   protected fetch(message: any, state?: MessageState<TMessage>): Observable<TValue> {

@@ -1,4 +1,4 @@
-import { Observable, BehaviorSubject, of } from 'rxjs';
+import { Observable, BehaviorSubject, of, Subscription } from 'rxjs';
 import { catchError, finalize, map, tap } from 'rxjs/operators';
 import { CommandProcessorClient } from '@kephas/commands';
 import { Expando } from '@kephas/core';
@@ -20,8 +20,8 @@ export interface CommandState<TArgs> extends Expando {
  * @template TValue
  */
 export abstract class CommandQuery<TArgs, TResponseMessage, TValue> extends BehaviorSubject<TValue> {
-  static #execId = 0;
-  static #pendingExecs: Expando = {};
+  static #subId = 0;
+  static #pendingSubs: Expando = {};
 
   #loading = false;
   #lastError: any;
@@ -76,11 +76,14 @@ export abstract class CommandQuery<TArgs, TResponseMessage, TValue> extends Beha
    * @memberof CommandQuery
    */
   public execute(state?: CommandState<TArgs>): void {
-    const execId = (CommandQuery.#execId++).toString();
-    CommandQuery.#pendingExecs[execId] = this.fetch(state?.command ?? this.command, state?.args ?? this.args!, state)
-      .pipe(
-        tap(x => super.next(x)),
-        finalize(() => delete CommandQuery.#pendingExecs[execId]));
+    const subId = (CommandQuery.#subId++).toString();
+    CommandQuery.#pendingSubs[subId] = this.fetch(state?.command ?? this.command, state?.args ?? this.args!, state)
+      .subscribe(x => {
+        super.next(x);
+        const sub = CommandQuery.#pendingSubs[subId] as Subscription;
+        sub.unsubscribe();
+        delete CommandQuery.#pendingSubs[subId];
+      });
   }
 
   protected fetch(command: string, args?: TArgs, state?: CommandState<TArgs>): Observable<TValue> {

@@ -20,9 +20,6 @@ export interface CommandState<TArgs> extends Expando {
  * @template TValue
  */
 export abstract class CommandQuery<TArgs, TResponseMessage, TValue> extends BehaviorSubject<TValue> {
-  static #subId = 0;
-  static #pendingSubs: Expando = {};
-
   #loading = false;
   #lastError: any;
 
@@ -76,14 +73,9 @@ export abstract class CommandQuery<TArgs, TResponseMessage, TValue> extends Beha
    * @memberof CommandQuery
    */
   public execute(state?: CommandState<TArgs>): void {
-    const subId = (CommandQuery.#subId++).toString();
-    CommandQuery.#pendingSubs[subId] = this.fetch(state?.command ?? this.command, state?.args ?? this.args!, state)
-      .subscribe(x => {
-        super.next(x);
-        const sub = CommandQuery.#pendingSubs[subId] as Subscription;
-        sub.unsubscribe();
-        delete CommandQuery.#pendingSubs[subId];
-      });
+    // no need to unsubscribe, as this is an auto-complete observable.
+    this.fetch(state?.command ?? this.command, state?.args ?? this.args!, state)
+      .subscribe(x => super.next(x));
   }
 
   protected fetch(command: string, args?: TArgs, state?: CommandState<TArgs>): Observable<TValue> {

@@ -7,6 +7,9 @@ export * from './lib/angularTarget';
 export * from './lib/components/widgetBase';
 export * from './lib/components/valueEditorBase';
 
+export * from './lib/queries/commandQuery';
+export * from './lib/queries/messageQuery';
+
 export * from './lib/services/http/browserXhrFactory';
 export * from './lib/services/http/httpInterceptingHandler';
 
